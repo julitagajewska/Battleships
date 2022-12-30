@@ -1,43 +1,26 @@
-import React from 'react';
-import { useState } from 'react';
-import './ShipsContainer.css';
+import React from 'react'
+import './ShipsContainer.css'
 
 export default function ShipsContainer(props) {
 
     let draggedShip;
     let draggedShipElement;
 
-    let [ships] = useState(props.ships);
-    let [shipContainers] = useState([]);
-
-    function dragStart(e) {
+    const dragStart = (e) => {
         draggedShip = e.target;
 
         let shipType = draggedShip.classList[0];
-        let shipOrientation = draggedShip.classList[2];
         let shipLength = draggedShip.classList[3];
         let shipOwner = draggedShip.classList[4];
 
-        let draggedElementId;
-
-        let draggedElementIdArray = draggedShipElement.id.split('-');
-        draggedElementId = draggedElementIdArray[2];
+        let draggedElementId = draggedShipElement.id.split('-')[2];
 
         e.dataTransfer.setData("ship-type", shipType);
         e.dataTransfer.setData("ship-length", shipLength);
-        e.dataTransfer.setData("ship-orientation", shipOrientation);
         e.dataTransfer.setData("dragged-element-id", draggedElementId);
         e.dataTransfer.setData("ship-owner", shipOwner);
 
-        props.setEdges(parseInt(draggedElementId), shipOrientation, parseInt(shipLength));
-    }
-
-    const dragEnd = (e) => {
-
-    }
-
-    const dragDrop = (e) => {
-
+        // Set nowe tilesNotAllowed
     }
 
     const mouseDown = (e) => {
@@ -47,6 +30,7 @@ export default function ShipsContainer(props) {
     return (
         <div className={`${'ships-container-' + props.orientation}`} id="ships-container">
             {props.ships.map((ship) => {
+
                 let shipElements = []
                 let shipElementId = 0;
 
@@ -68,7 +52,8 @@ export default function ShipsContainer(props) {
                 let shipContainer = (
                     <div
                         key={props.username + '-' + ship.shipType}
-                        className={`${ship.shipType} 
+                        className={`
+                            ${ship.shipType} 
                             ${'ship-container-' + props.orientation} 
                             ${props.orientation} 
                             ${ship.shipLength}
@@ -76,20 +61,17 @@ export default function ShipsContainer(props) {
                             `}
                         draggable={true}
                         onDragStart={dragStart}
-                        onDrop={dragDrop}
-                        onDragEnd={dragEnd}
                         onMouseDown={(e) => {
                             draggedShip = e.target;
                         }}>
+
                         {shipElements}
                     </div>);
 
-                shipContainers.push(shipContainer);
-
                 return (
-                    shipContainer 
-                );
+                    shipContainer
+                )
             })}
-        </div>
-    );
+        </div >
+    )
 }

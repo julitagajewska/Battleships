@@ -1,5 +1,5 @@
-.ships-container {
-    width: 290px;
+.ships-container-horizontal {
+    width: 350px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -7,10 +7,28 @@
     background-color: cadetblue;
 }
 
-.ship-container {
+.ships-container-vertical {
+    width: 350px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: 5px;
+    background-color: antiquewhite;
+}
+
+.ship-container-horizontal {
     width: fit-content;
     display: flex;
+    flex-direction: row;
     margin: 10px 20px 10px 20px;
+}
+
+.ship-container-vertical {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    margin: 20px 10px 20px 10px;
 }
 
 .ship-element {

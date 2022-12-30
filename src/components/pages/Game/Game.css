@@ -49,3 +49,7 @@
 .carrier {
     background-color: indianred !important;
 }
+
+.disabled {
+    cursor: none;
+}
