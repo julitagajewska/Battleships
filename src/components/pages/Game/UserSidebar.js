@@ -11,8 +11,12 @@ export default function UserSidebar(props) {
                 ships={props.ships}
                 username={props.username}
                 setEdges={props.setEdges}
-                orientation={props.orientation} />
-            <button onClick={() => props.toggleOrientation()}>Rotate ships</button>
+                orientation={props.orientation}
+                setTilesNotAllowed={props.setTilesNotAllowed}
+                setTilesNotAllowedEmpty={props.setTilesNotAllowedEmpty}
+                toggleAdjacentVisibility={props.toggleAdjacentVisibility} />
+            <button onClick={() => props.toggleOrientation()}>Rotate</button>
+            <button onClick={() => props.resetShips(props.username)}>Reset</button>
         </div>
     );
 

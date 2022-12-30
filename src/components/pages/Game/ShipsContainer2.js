@@ -20,11 +20,19 @@ export default function ShipsContainer(props) {
         e.dataTransfer.setData("dragged-element-id", draggedElementId);
         e.dataTransfer.setData("ship-owner", shipOwner);
 
-        // Set nowe tilesNotAllowed
+        props.setTilesNotAllowed(shipLength, draggedElementId, shipOwner);
+        props.toggleAdjacentVisibility(true);
+
     }
 
     const mouseDown = (e) => {
         draggedShipElement = e.target;
+    }
+
+    const dragEnd = (e) => {
+        props.setTilesNotAllowedEmpty([]);
+        props.toggleAdjacentVisibility(false);
+        console.log('drag end')
     }
 
     return (
@@ -57,10 +65,10 @@ export default function ShipsContainer(props) {
                             ${'ship-container-' + props.orientation} 
                             ${props.orientation} 
                             ${ship.shipLength}
-                            ${props.username}
-                            `}
+                            ${props.username}`}
                         draggable={true}
                         onDragStart={dragStart}
+                        onDragEnd={dragEnd}
                         onMouseDown={(e) => {
                             draggedShip = e.target;
                         }}>
