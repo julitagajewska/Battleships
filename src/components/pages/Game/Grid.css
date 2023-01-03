@@ -15,6 +15,96 @@
     border: 1px solid lightblue;
 }
 
+.battle-grid {
+    height: 520px;
+    min-width: 520px;
+    max-width: 520px;
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: lightblue;
+}
+
+.battle-grid .tile {
+    width: 50px;
+    height: 50px;
+    background-color: steelblue;
+    border: 1px solid lightblue;
+}
+
+.battle-grid .tile:hover {
+    cursor: pointer;
+    background-color: darkblue;
+}
+
 .taken {
     background-color: red !important;
+}
+
+.ships-overview-container {
+    background-color: lightblue;
+    padding: 30px;
+    width: fit-content;
+    height: fit-content;
+}
+
+.overview-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 200px;
+    padding: 5px;
+}
+
+.overview-grid-tile {
+    width: 18px;
+    height: 18px;
+    background-color: steelblue;
+    border: 1px solid lightblue;
+}
+
+.overview-hit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.overview-miss {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: darkred;
+    font-weight: bold;
+}
+
+.overview-sink {
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+.clicked {
+    background-color: lightskyblue !important;
+    cursor: not-allowed;
+}
+
+.miss {
+    background-color: lightgray !important;
+}
+
+.hit {
+    background-color: darkred !important;
+}
+
+.sink {
+    background-color: darkgreen !important;
+}
+
+.blocked {
+    cursor: not-allowed !important;
+    pointer-events: all !important;
 }

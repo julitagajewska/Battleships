@@ -1,5 +1,4 @@
 import React from 'react';
-import GridRow from './GridRow';
 import './Grid.css'
 
 export default function Grid(props) {
@@ -24,12 +23,14 @@ export default function Grid(props) {
         let shipType = e.dataTransfer.getData("ship-type");
 
         let firstElementId, lastElementId;
+        let shipElementCounter = 0;
+        let coordinates = [];
 
         if (props.orientation === 'horizontal') {
             firstElementId = parseInt(droppedOnTile.id) - draggedElementId;
             lastElementId = firstElementId + shipLength - 1;
 
-            if (props.canDrop(parseInt(droppedOnTile.id), firstElementId, lastElementId) === false) {
+            if (props.canDrop(parseInt(droppedOnTile.id), firstElementId, lastElementId, props.orientation) === false) {
                 e.preventDefault();
                 return;
             }
@@ -37,8 +38,12 @@ export default function Grid(props) {
             for (let i = firstElementId; i <= lastElementId; i++) {
                 let newArray = props.tiles;
                 newArray[i].shipType = shipType;
+                newArray[i].shipElementId = shipElementCounter;
+                newArray[i].user = shipOwner;
 
+                coordinates.push(i);
                 props.setShipsGrid(newArray, shipOwner);
+                shipElementCounter++;
             }
 
             droppedOnTile.classList.add(shipType);
@@ -47,7 +52,7 @@ export default function Grid(props) {
             firstElementId = parseInt(droppedOnTile.id) - (draggedElementId * 10)
             lastElementId = firstElementId + (shipLength * 10) - 10;
 
-            if (props.canDrop(parseInt(droppedOnTile.id), firstElementId, lastElementId) === false) {
+            if (props.canDrop(parseInt(droppedOnTile.id), firstElementId, lastElementId, props.orientation) === false) {
                 e.preventDefault();
                 return;
             }
@@ -56,44 +61,109 @@ export default function Grid(props) {
                 let newArray = props.tiles;
                 newArray[i].shipType = shipType;
 
+                coordinates.push(i);
                 props.setShipsGrid(newArray, shipOwner);
             }
 
             droppedOnTile.classList.add(shipType);
         }
 
-        props.removeShip(shipOwner, shipType);
+        props.setCoordinates(shipOwner, shipType, coordinates);
         props.setAdjacentTiles(shipOwner, droppedOnTile);
         props.setTilesNotAllowedEmpty([]);
         props.toggleAdjacentVisibility(false);
     }
 
 
+    if (props.type === 'placement') {
+        return (
+            <div className={`${props.type}-grid`}>
+                {props.tiles.map((tile) => {
 
-    return (
+                    let visibilityClass = "";
 
-        <div className={`${props.type}-grid`}>
-            {props.tiles.map((tile) => {
+                    if (props.adjecentVisibility === true && props.adjacentTiles.includes(tile.id)) {
+                        visibilityClass = "taken"
+                    }
 
-                let visibilityClass = "";
+                    return (
+                        <div
+                            className={`tile ${tile.shipType} ${visibilityClass}`}
+                            key={tile.id}
+                            id={tile.id}
+                            onDragOver={(e) => e.preventDefault()}
+                            onDragLeave={(e) => e.preventDefault()}
+                            onDragEnter={dragEnter}
+                            onDrop={dragDrop}>
+                        </div>
+                    )
+                })}
+            </div>
+        )
+    }
 
-                if (props.adjecentVisibility === true && props.adjacentTiles.includes(tile.id)) {
-                    visibilityClass = "taken"
-                }
+    if (props.type === 'ships-overview') {
+        return (
+            <div className='ships-overview-container'>
+                SHIPS OVERVIEW
+                <div className="overview-grid">
+                    {props.shipTiles.map((tile) => {
 
-                return (
-                    <div
-                        className={`tile ${tile.shipType} ${visibilityClass}`}
-                        key={tile.id}
-                        id={tile.id}
-                        onDragOver={(e) => e.preventDefault()}
-                        onDragLeave={(e) => e.preventDefault()}
-                        onDragEnter={dragEnter}
-                        onDrop={dragDrop}>
-                    </div>
-                )
-            })}
+                        if (props.battleTiles[tile.id].state === 'miss') {
+                            return (
+                                <div key={`${tile.key}-overview-${tile.id}`} className={`overview-grid-tile overview-miss`}>
+                                    X
+                                </div>
+                            );
+                        }
 
-        </div>
-    )
+                        if (props.battleTiles[tile.id].state === 'hit') {
+                            return (
+                                <div key={`${tile.key}-overview-${tile.id}`} className={`overview-grid-tile overview-hit ${tile.shipType}`}>
+                                    X
+                                </div>
+                            );
+                        }
+
+                        if (props.battleTiles[tile.id].state === 'sink') {
+                            return (
+                                <div key={`${tile.key}-overview-${tile.id}`} className={`overview-grid-tile overview-sink`}>
+                                    X
+                                </div>
+                            );
+                        }
+
+                        return (
+                            <div key={`${tile.key}-overview-${tile.id}`} className={`overview-grid-tile ${tile.shipType}`}>
+
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+        );
+    }
+
+    if (props.type === 'battle') {
+        return (
+            <div className={`battle-grid`}>
+                {/* {console.log(props.tiles)} */}
+                {/* {console.log(`Battlegrid: ${props.username}`)} */}
+                {props.tiles.map((tile) => {
+                    return (
+                        <div
+                            className={`tile ${tile.state}
+                             ${props.shotFired === true ? "blocked" : ""}
+                             ${tile.state !== null ? "blocked" : ""}`}
+                            key={`battle-grid-${tile.id}`}
+                            id={tile.id}
+                            onClick={(e) => props.shoot(e)}
+                        >
+                        </div>
+                    )
+                })}
+            </div>
+        )
+    }
+
 }
