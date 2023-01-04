@@ -2,9 +2,21 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+.container {
+  display: table !important;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+.header__container {
+  display: table-row;
+  height: 50px;
+}
+
+.main-content__container {
+  display: table-row;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -32,6 +44,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
