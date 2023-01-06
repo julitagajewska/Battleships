@@ -1,0 +1,23 @@
+.last-game-overview-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+}
+
+.section-usernames {
+    display: inline;
+    width: fit-content;
+    font-size: 20px;
+}
+
+.section {
+    display: inline;
+    width: fit-content;
+    font-size: 20px;
+}
+
+.last-game-overview-icon {
+    cursor: pointer;
+}

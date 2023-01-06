@@ -22,7 +22,7 @@ export default class EnterName extends Component {
 
     render() {
         return (
-            <div>
+            <div className="upper-layer">
                 <form onSubmit={this.handleSubmit}>
                     <label>Nazwa przeciwnika:</label>
                     <input type="text" value={this.state.value} onChange={this.handleChange} />

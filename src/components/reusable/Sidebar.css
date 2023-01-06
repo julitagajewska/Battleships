@@ -1,0 +1,110 @@
+:root {
+    --sidebar-color: rgba(77, 77, 77, 0.1)
+}
+
+.sidebar-left {
+    background-color: var(--sidebar-color);
+    background: linear-gradient(to top,
+            rgba(77, 77, 77, 0.4),
+            rgba(77, 77, 77, 0.2));
+    backdrop-filter: blur(8px);
+    width: 28%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.sidebar-content {
+    padding: 0 3rem 0 3rem;
+}
+
+.sidebar-right {
+    background-color: var(--sidebar-color);
+    background: linear-gradient(to top,
+            rgba(77, 77, 77, 0.4),
+            rgba(77, 77, 77, 0.2));
+    backdrop-filter: blur(8px);
+    width: 28%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.in-left {
+    margin-left: -28%;
+    transition-property: margin-left;
+    transition-duration: 1s;
+}
+
+.in-right {
+    margin-right: -28%;
+    transition-property: margin-right;
+    transition-duration: 1s;
+}
+
+.in-right-button {
+    margin-right: 0;
+    transition-property: margin-right;
+    transition-duration: 1s;
+}
+
+.out-left {
+    margin-left: 0;
+    transition-property: margin-left;
+    transition-duration: 1s;
+}
+
+
+.out-right {
+    margin-right: 0;
+    transition-property: margin-right, right;
+    transition-duration: 1s;
+}
+
+.out-right-button {
+    margin-right: 0;
+    transition-property: margin-right;
+    transition-duration: 1s;
+}
+
+.info-sidebar-button-left {
+    width: 3rem;
+    height: 4rem;
+    background-color: var(--sidebar-color);
+    background: linear-gradient(to top,
+            rgba(77, 77, 77, 0.27),
+            rgba(77, 77, 77, 0.25));
+    border-radius: 0 1rem 1rem 0;
+    position: fixed;
+    left: 28%;
+    top: 25%;
+    backdrop-filter: blur(8px);
+    z-index: 11;
+}
+
+.info-sidebar-button-right {
+    width: 3rem;
+    height: 4rem;
+    background-color: var(--sidebar-color);
+    background: linear-gradient(to top,
+            rgba(77, 77, 77, 0.27),
+            rgba(77, 77, 77, 0.25));
+    backdrop-filter: blur(8px);
+    border-radius: 1rem 0 0 1rem;
+    position: fixed;
+    right: 28%;
+    top: 25%;
+    z-index: 11;
+}
+
+.info-sidebar-button-right:hover {
+    cursor: pointer
+}
+
+.info-sidebar-button-left:hover {
+    cursor: pointer
+}

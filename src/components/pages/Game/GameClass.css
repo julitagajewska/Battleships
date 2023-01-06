@@ -4,6 +4,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
+    z-index: 4;
 }
 
 .game-container {
@@ -12,6 +13,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
+    z-index: 4;
 }
 
 .ships-container {

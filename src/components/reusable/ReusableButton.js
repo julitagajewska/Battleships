@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import './ReusableButton.css'
 
 export default function ReusableButton(props) {
     return (

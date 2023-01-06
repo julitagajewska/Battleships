@@ -1,0 +1,75 @@
+.image-username-container {
+    height: fit-content;
+    padding: 2rem 0 2rem 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    border-bottom: 1px white solid;
+}
+
+.user-data-container {
+    border-bottom: 1px white solid;
+    padding-bottom: 1rem;
+}
+
+.last-games-container {
+    padding-bottom: 1rem;
+    border-bottom: 1px white solid;
+}
+
+.username {
+    display: block;
+    font-size: 36px;
+    color: black;
+    font-weight: bold;
+    margin-left: 2rem;
+}
+
+.user-profile-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 24px;
+    margin: 0;
+    margin: 1rem 0 1rem 0;
+}
+
+.header-icon {
+    margin-right: 1rem;
+}
+
+.delete-button-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3.25rem 0 2rem 0;
+}
+
+.delete-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #FFE9CF;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 1rem 3rem 1rem 2rem;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    width: fit-content;
+    text-decoration: none;
+    transition: all 0.3s ease 0s;
+}
+
+.delete-button .button-icon {
+    margin-right: 1.5rem;
+}
+
+.delete-button:hover {
+    background-color: #005B95;
+    color: white;
+}
