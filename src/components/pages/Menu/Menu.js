@@ -6,11 +6,17 @@ import RoutingButton from '../../reusable/RoutingButton';
 import './Menu.css';
 import Profile from '../Profile/Profile';
 import ReusableSidebar from '../../reusable/Sidebar.js';
+import { useAuth } from '../../utils/auth';
+import { useNavigate } from 'react-router-dom';
 
 export default function Menu(props) {
 
-    const doNothing = () => {
-        alert("Nic nie robię :3")
+    const auth = useAuth();
+    const navigate = useNavigate();
+
+    const logOut = () => {
+        auth.logout();
+        navigate("../logout")
     }
 
     return (
@@ -19,8 +25,14 @@ export default function Menu(props) {
             <div className="menu-buttons-group">
                 <RoutingButton to="/game" value="NOWA GRA" type="menu new-game" iconVisible="true" icon={<TbSwords className='button-icon' size={"30px"} />} />
                 <RoutingButton to="/settings" value="USTAWIENIA" type="menu settings" iconVisible="true" icon={<HiWrenchScrewdriver className='button-icon' size={"30px"} />} />
-                <RoutingButton to="/logOut" value="WYLOGUJ SIĘ" type="menu log-out" iconVisible="true" icon={<BsDoorOpenFill className='button-icon' size={"30px"} />} />
+                <button className="menu-button" onClick={() => logOut()}>
+                    <BsDoorOpenFill className='button-icon' size={"30px"} />
+                    WYLOGUJ SIĘ
+                </button>
             </div>
+            <ReusableSidebar type={"right"} startAnimation={props.startAnimation} toggle={props.toggle}
+                children={<Profile />}>
+            </ReusableSidebar>
         </div>
 
     )

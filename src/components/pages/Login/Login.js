@@ -1,7 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useAuth } from '../../utils/auth';
+import { useNavigate } from 'react-router-dom';
 import FormInput from '../../reusable/FormInput';
 
 export default function Login() {
+
+    const [user, setUser] = useState('');
+    const auth = useAuth(user);
+
+    const navigate = useNavigate();
 
     const [values, setValues] = useState({
         username: "",
@@ -38,11 +45,17 @@ export default function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(values)
+        console.log(values);
+        console.log(user);
+        auth.login(user);
+        navigate("/");
     };
 
     const onChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value });
+        if (e.target.name === "username") {
+            setUser(e.target.value)
+        }
     };
 
     return (

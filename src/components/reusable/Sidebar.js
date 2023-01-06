@@ -3,7 +3,7 @@ import './Sidebar.css';
 
 export default function Sidebar(props) {
 
-    const transitionProperties = props.startInfoAnimation ? `out-${props.type}` : `in-${props.type}`;
+    const transitionProperties = props.startAnimation ? `out-${props.type}` : `in-${props.type}`;
 
     return (
         <div>
