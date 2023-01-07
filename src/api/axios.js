@@ -17,6 +17,28 @@ export const getUsers = async () => {
     return users;
 }
 
+export const getUser = async (username) => {
+    let users = await getUsers();
+    let tragetUser;
+
+    users.filter((user) => {
+        if (user.username === username) {
+            tragetUser = user;
+        }
+    })
+
+    console.log(tragetUser);
+    return tragetUser;
+}
+
+export const editUser = async (user) => {
+    try {
+        await axios.put(`users/${user.id}`, user)
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const getNewId = async () => {
     let users = [];
     let response = await axios.get('users');
@@ -59,4 +81,35 @@ export const registerUser = async (user) => {
     } catch (error) {
         console.log(error);
     }
+}
+
+export const checkIfUserExists = async (username) => {
+    let users = await getUsers();
+    let result = false;
+
+    users.forEach((user) => {
+        if (user.username === username) {
+            result = true;
+        }
+    })
+
+    return result;
+}
+
+export const checkPassword = async (username, password) => {
+    let users = await getUsers();
+    let result = false;
+
+    users.forEach((user) => {
+        if (user.username === username) {
+            console.log(user)
+            if (user.password === password) {
+                result = true;
+            }
+        }
+    })
+
+    console.log(result);
+
+    return result;
 }

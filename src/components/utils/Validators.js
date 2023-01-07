@@ -1,0 +1,47 @@
+export function checkUsernameLength(input) {
+    const regex = /^[\w\W]{3,10}$/;
+    let result = regex.test(input);
+    return result
+}
+
+export function checkPasswordLength(input) {
+    const regex = /^[\w\W]{3,15}$/;
+    let result = regex.test(input);
+    return result
+}
+
+export function hasSpace(input) {
+    const regex = /\s/;
+    let result = regex.test(input);
+    return result
+}
+
+export function hasSpecialCharacter(input) {
+    const regex = /[!@#$%^&*()\\[\]{}+=~`|:;"'<>,./?]/;
+    let result = regex.test(input);
+    return result
+}
+
+export function hasLowerCaseCharacter(input) {
+    const regex = /[a-z]/;
+    let result = regex.test(input);
+    return result
+}
+
+export function hasUpperCaseCharacter(input) {
+    const regex = /[A-Z]/;
+    let result = regex.test(input);
+    return result
+}
+
+export function hasNumber(input) {
+    const regex = /[0-9]/;
+    let result = regex.test(input);
+    return result
+}
+
+export function isEmail(input) {
+    const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    let result = regex.test(input);
+    return result
+}
