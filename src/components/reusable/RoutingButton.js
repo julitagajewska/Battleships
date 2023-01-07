@@ -4,6 +4,6 @@ import './RoutingButton.css'
 
 export default function RoutingButton(props) {
     return (
-        <Link to={props.to} className={`${props.type}`}>{props.iconVisible ? props.icon : ''}{props.value}</Link>
+        <Link to={props.to} onClick={() => props.sound()} className={`${props.type}`}>{props.iconVisible ? props.icon : ''}{props.value}</Link>
     )
 }

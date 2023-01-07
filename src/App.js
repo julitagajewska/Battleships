@@ -18,6 +18,7 @@ import api from './api/axios';
 import { getNewId } from './api/axios'
 import ConfirmProfileDelete from './components/pages/Profile/ConfirmProfileDelete';
 import ProfileDeleted from './components/pages/Profile/ProfileDeleted';
+import { SoundProvider } from './components/utils/Sound';
 
 export default class App extends Component {
 
@@ -35,12 +36,12 @@ export default class App extends Component {
 
   }
 
-  //abcd
   toggleInfoVisibility() {
     let visibility = this.state.startInfoAnimation === true ? false : true;
     this.setState((prevState) => ({
       startInfoAnimation: visibility
     }));
+    console.log(this.state.startInfoAnimation)
   }
 
   toggleProfileVisibility() {
@@ -60,43 +61,55 @@ export default class App extends Component {
   render() {
 
     return (
-      <AuthProvider>
-        <div>
-          <div className="container">
-            <Background backgroundToggle={this.state.backgroundFadeDown} />
+      <SoundProvider>
+        <AuthProvider>
+          <div>
+            <div className="container">
+              <Background backgroundToggle={this.state.backgroundFadeDown} />
 
-            <ReusableSidebar type={"left"} startAnimation={this.state.startInfoAnimation} toggle={this.toggleInfoVisibility}
-              children={
-                <>
-                  <button onClick={() => this.toggleBackgroundFade()}>hehe</button>
-                  <Info />
-                </>}>
-            </ReusableSidebar>
+              {/* <ReusableSidebar type={"left"} startAnimation={this.state.startInfoAnimation} toggle={this.toggleInfoVisibility}
+                children={
+                  <>
+                    <button onClick={() => this.toggleBackgroundFade()}>hehe</button>
+                    <Info />
+                  </>}>
+              </ReusableSidebar> */}
 
-            <Routes>
-              <Route element={<PrivateRoutes />}>
-                <Route path="/" element={
-                  <Menu
-                    type={"right"}
-                    toggle={this.toggleProfileVisibility}
-                    children={<Profile />}
-                    startAnimation={this.state.startProfileAnimation} />}
-                />
-                <Route path="/game" element={<Game />} />
-                <Route path="/settings" element={<Menu backgroundToggle={this.state.backgroundFadeDown} />} />
-              </Route>
+              <Routes>
+                <Route element={<PrivateRoutes />}>
+                  <Route path="/" element={
+                    <Menu
+                      type={"right"}
+                      toggleLeft={this.toggleInfoVisibility}
+                      toggleRight={this.toggleProfileVisibility}
+                      childrenRight={<Profile />}
+                      startAnimationLeft={this.state.startInfoAnimation}
+                      startAnimationRight={this.state.startProfileAnimation} />}
+                  />
+                  <Route path="/game" element={<Game />} />
+                  <Route path="/settings" element={<Menu backgroundToggle={this.state.backgroundFadeDown} />} />
+                </Route>
 
-              <Route path="/register" element={<Register />} />
-              <Route path="/logout" element={<Logout />} />
-              <Route path="/login" element={<Login backgroundToggle={this.toggleBackgroundFade} />} />
-              <Route path="/notLoggedIn" element={<NotLoggedIn />} />
-              <Route path="/confirmProfileDelete" element={<ConfirmProfileDelete />} />
-              <Route path="/profileDeleted" element={<ProfileDeleted />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+                <Route path="/register" element={<Register />} />
+                <Route path="/logout" element={<Logout />} />
+                <Route path="/login" element={<Login backgroundToggle={this.toggleBackgroundFade} />} />
+                <Route path="/notLoggedIn" element={
+                  <NotLoggedIn
+                    type={"left"}
+                    toggleLeft={this.toggleInfoVisibility}
+                    startAnimationLeft={this.state.startInfoAnimation} />} />
+                <Route path="/confirmProfileDelete" element={<ConfirmProfileDelete />} />
+                <Route path="/profileDeleted" element={<ProfileDeleted />} />
+                <Route path="*" element={
+                  <NotFound
+                    type={"left"}
+                    toggleLeft={this.toggleInfoVisibility}
+                    startAnimationLeft={this.state.startInfoAnimation} />} />
+              </Routes>
+            </div>
           </div>
-        </div>
-      </AuthProvider>
+        </AuthProvider>
+      </SoundProvider>
     );
   }
 }

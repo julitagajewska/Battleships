@@ -67,7 +67,7 @@ export default function Profile(props) {
     return (
         <div className="profile-container">
             <div className="image-username-container">
-                <ProfilePicture src={auth.user.image} toggleInput={togglePictureInput} isVisible={pictureInput} />
+                <ProfilePicture sound={props.sound} src={auth.user.image} toggleInput={togglePictureInput} isVisible={pictureInput} />
                 <div>
                     <p className="username">{auth.user.username}</p>
                 </div>

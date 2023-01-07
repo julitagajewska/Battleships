@@ -48,6 +48,14 @@
     transition: all 0.3s ease 0s;
 }
 
+.new-game {
+    background-color: #4fc0d4;
+}
+
+.settings {
+    background-color: #98d9d3;
+}
+
 .menu-button p {
     margin: 0;
     padding-top: 0.5rem
