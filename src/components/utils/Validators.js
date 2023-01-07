@@ -45,3 +45,9 @@ export function isEmail(input) {
     let result = regex.test(input);
     return result
 }
+
+export function isValidURL(input) {
+    const regex = /^(http(s)?:\/\/.)(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)/;
+    let result = regex.test(input);
+    return result
+}

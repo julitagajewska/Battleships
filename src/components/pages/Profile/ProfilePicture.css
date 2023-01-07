@@ -12,6 +12,16 @@
     width: 150px;
 }
 
+.active {
+    background-color: #005B95 !important;
+    color: white !important;
+}
+
+.active:hover {
+    background-color: #003557 !important;
+    color: white !important;
+}
+
 .change-profile-picture-button {
     height: 30px;
     width: 30px;

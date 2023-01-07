@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ProfilePicture from './ProfilePicture'
 import './Profile.css';
 import EditableText from '../../reusable/EditableText';
@@ -10,6 +10,8 @@ import { GrUser } from 'react-icons/gr';
 import { useAuth } from '../../utils/auth';
 import axios, { editUser, deleteUser } from '../../../api/axios';
 import { useNavigate, Link } from 'react-router-dom';
+import ErrorMessage from '../../reusable/ErrorMessage';
+import { isValidURL } from '../../utils/Validators'
 
 let panda = "https://i.pinimg.com/564x/6c/86/41/6c864199a6b727ba2ecb863c121991bc.jpg"
 
@@ -21,6 +23,25 @@ export default function Profile(props) {
     let [update, setUpdate] = useState(true)
     let [pictureInput, setPictureInput] = useState(false)
     let [pictureUrl, setPictureUrl] = useState(auth.user.image)
+    let [isUrlValid, setIsUrlValid] = useState(true);
+    let [errorMessage, setErrorMessage] = useState([]);
+    let [urlFocus, setUrlFocus] = useState(false);
+
+    useEffect(() => {
+        let valid = true;
+        if (isValidURL(pictureUrl) !== true) {
+            setErrorMessage([<p>Wprowadzono zły URL</p>])
+            valid = false;
+        } else {
+            setErrorMessage([]);
+        }
+
+        setIsUrlValid(valid);
+
+        console.log(isValidURL(pictureUrl))
+        console.log(errorMessage)
+        console.log(isUrlValid)
+    }, [pictureUrl])
 
     const togglePictureInput = () => {
         setPictureInput(!pictureInput)
@@ -46,19 +67,38 @@ export default function Profile(props) {
     return (
         <div className="profile-container">
             <div className="image-username-container">
-                <ProfilePicture src={auth.user.image} toggleInput={togglePictureInput} />
+                <ProfilePicture src={auth.user.image} toggleInput={togglePictureInput} isVisible={pictureInput} />
                 <div>
                     <p className="username">{auth.user.username}</p>
                 </div>
                 {pictureInput ?
                     <div className="image-url-input-group">
-                        <input type="text" placeholder="url" onChange={(e) => setPictureUrl(e.target.value)} />
-                        <button onClick={saveImageUrl}>
-                            <BsCheckLg size={"14px"} />
-                        </button>
+
+                        <div className="profile-picture-input-upper-row">
+                            <input
+                                type="text"
+                                placeholder="url"
+                                onChange={(e) => setPictureUrl(e.target.value)}
+                                onFocus={() => setUrlFocus(true)}
+                                onBlur={() => setUrlFocus(false)} />
+                            <button onClick={saveImageUrl} disabled={isUrlValid ? false : true}>
+                                <BsCheckLg size={"14px"} />
+                            </button>
+                        </div>
+
+                        <div className="profile-picture-input-lower-row">
+                            {urlFocus && isValidURL ?
+                                <ErrorMessage status={false} message={
+                                    <ul>
+                                        {errorMessage.map((error) => {
+                                            return error
+                                        })}
+                                    </ul>} />
+                                : <></>}
+                        </div>
+
                     </div>
                     : <></>}
-
             </div>
 
             <div className="user-data-container">
