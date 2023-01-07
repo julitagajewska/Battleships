@@ -1,12 +1,9 @@
-import React, { useState } from 'react'
-import ErrorMessage from './ErrorMessage'
+import React from 'react'
 import { checkUsernameLength, hasSpecialCharacter, hasSpace } from '../utils/Validators';
 
 export default function UsernameInput(props) {
 
-    const { reference, onChange, setValue, setValid, setFocus, placeholder, ...others } = props;
-
-    const [usernameErrorMessage, setusernameErrorMessage] = useState([]);
+    const { required, reference, setErrors, setUsernameTaken, setValue, setValid, setFocus, placeholder, ...others } = props;
 
     const onInputChange = (e) => {
         let isValid = true;
@@ -14,19 +11,19 @@ export default function UsernameInput(props) {
 
         // Length
         if (checkUsernameLength(e.target.value) === false) {
-            errors.push(<li key="username-length-error">Nazwa użytkownika może mieć od 3 do 10 znaków</li>)
+            errors.push(<p key="username-length-error">Nazwa użytkownika może mieć od 3 do 10 znaków</p>)
         }
 
         // Spaces
         if (hasSpace(e.target.value) === true) {
-            errors.push(<li key="username-space-error">Nazwa użytkownika nie może zaweirać spacji</li>)
+            errors.push(<p key="username-space-error">Nazwa użytkownika nie może zaweirać spacji</p>)
         }
 
         // Special character
         if (hasSpecialCharacter(e.target.value) === true) {
-            errors.push(<li key="username-special-character-error">
+            errors.push(<p key="username-special-character-error">
                 Nazwa użytkownika nie może zawierać znaków: {"[!@#$%^&*()\\[\]{}+=~`|:;\"'<>,./?]"}
-            </li>);
+            </p>);
         }
 
         // set isValid
@@ -36,9 +33,13 @@ export default function UsernameInput(props) {
             isValid = false;
         }
 
+        if (setUsernameTaken !== undefined) {
+            setUsernameTaken([])
+        }
+
         setValid(isValid)
-        setusernameErrorMessage(errors);
-        onChange(e);
+        setErrors(errors);
+        setValue(e.target.value);
     }
 
 
@@ -48,22 +49,13 @@ export default function UsernameInput(props) {
                 type="text"
                 id="username"
                 autoComplete="off"
-                required
+                required={required}
 
                 ref={reference}
                 placeholder={placeholder}
                 onChange={(e) => onInputChange(e)}
                 onFocus={() => setFocus(true)}
                 onBlur={() => setFocus(false)} />
-            <ErrorMessage status={false} message={
-                <div>
-                    <ul>
-                        {usernameErrorMessage.map((error) => {
-                            return error
-                        })}
-                    </ul>
-                </div>
-            } />
         </div>
     )
 }

@@ -17,18 +17,18 @@ export function hasSpace(input) {
 }
 
 export function hasSpecialCharacter(input) {
-    const regex = /[!@#$%^&*()\\[\]{}+=~`|:;"'<>,./?]/;
+    const regex = /[!@#$%^&*()\\[\]{}+=~`|:;"'<>,./?-]/;
     let result = regex.test(input);
     return result
 }
 
-export function hasLowerCaseCharacter(input) {
+export function hasLowerCaseLetter(input) {
     const regex = /[a-z]/;
     let result = regex.test(input);
     return result
 }
 
-export function hasUpperCaseCharacter(input) {
+export function hasUpperCaseLetter(input) {
     const regex = /[A-Z]/;
     let result = regex.test(input);
     return result

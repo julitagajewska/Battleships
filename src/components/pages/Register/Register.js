@@ -145,7 +145,7 @@ export default function Rejsetracja() {
                                         <ErrorMessage status={false} message={
                                             <p>
                                                 Wprowadzono błędny adres e-mail.<br />
-                                                Dozwolony format: {"[abc@def.gh]"} <br />
+                                                Dozwolony format adresu e-mail: {"[abc@def.gh]"} <br />
                                             </p>
                                         } />
                                         :

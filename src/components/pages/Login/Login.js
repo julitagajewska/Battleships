@@ -12,7 +12,7 @@ import UsernameInput from '../../reusable/UsernameInput';
 export default function Login() {
 
     const [user, setUser] = useState('');
-    const [usernameErrorMessage, setusernameErrorMessage] = useState('');
+    const [usernameErrorMessage, setusernameErrorMessage] = useState([]);
     const [passwordErrorMessage, setpasswordErrorMessage] = useState('');
     const auth = useAuth(user);
 
@@ -44,30 +44,6 @@ export default function Login() {
     useEffect(() => {
         usernameRef.current.focus();
     }, [])
-
-    useEffect(() => {
-        console.log(validUsername)
-        // let result = true;
-        // let message = [];
-
-        // let hasSpecialCharacterResult = hasSpecialCharacter.test(username);
-        // let hasUsernameCorrectLengthResult = checkUsernameLength(username);
-        // let hasSpaceResult = hasSpace.test(username);
-
-        // console.log(hasUsernameCorrectLengthResult)
-
-        // if (hasSpecialCharacterResult) { message.push(<li key="username-special-character-error">Nazwa użytkownika nie może zawierać znaków: {"[!@#$%^&*()\\[\]{}+=~`|:;\"'<>,./?]"} </li>) }
-        // if (hasUsernameCorrectLengthResult[0] === false) { message.push(hasUsernameCorrectLengthResult[1]) }
-        // if (hasSpaceResult) { message.push(<li key="username-space-error">Nazwa użytkownika nie może zaweirać spacji</li>) }
-
-        // setUsernameErrorMsg(message);
-
-        // if (hasSpecialCharacterResult || hasUsernameCorrectLengthResult[0] === false || hasSpaceResult) {
-        //     result = false
-        // }
-
-        // setValidUsername(result)
-    }, [username]);
 
     useEffect(() => {
         let result = true;
@@ -142,6 +118,8 @@ export default function Login() {
         e.preventDefault();
         let error = '';
 
+        console.log(username)
+
         // Nie ma takiego użytkownika
         let result = await checkIfUserExists(username);
         if (result === false) {
@@ -199,11 +177,27 @@ export default function Login() {
 
                 <UsernameInput
                     reference={usernameRef}
-                    onChange={setUsername}
+                    setValue={setUsername}
                     setFocus={setUsernameFocus}
                     setValid={setValidUsername}
                     placeholder='Podaj nazwę użytkownika ...'
+                    setErrors={setusernameErrorMessage}
+                    required={true}
                 />
+
+                {
+                    usernameFocus && !validUsername ?
+                        <ErrorMessage status={false} message={
+                            <div>
+                                <ul>
+                                    {usernameErrorMessage.map((error) => {
+                                        return error
+                                    })}
+                                </ul>
+                            </div>}
+                        />
+                        : <></>
+                }
 
                 {/* <div className="input-group">
                     <label htmlFor="username">Nazwa użytkownika:</label>

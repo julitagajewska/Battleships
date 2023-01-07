@@ -24,3 +24,10 @@
     cursor: pointer;
     padding-right: 0.75rem;
 }
+
+.edit-form-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}

@@ -5,7 +5,11 @@ import { RxEyeOpen } from 'react-icons/rx';
 import { RxEyeClosed } from 'react-icons/rx';
 import { BsCheckLg } from 'react-icons/bs';
 import { useAuth } from '../utils/auth';
-import axios, { editUser } from '../../api/axios';
+import axios, { editUser, checkUsername } from '../../api/axios';
+import UsernameInput from './UsernameInput';
+import MailInput from './MailInput';
+import PasswordInput from './PasswordInput';
+import ErrorMessage from './ErrorMessage';
 
 export default function EditableText(props) {
 
@@ -20,10 +24,10 @@ export default function EditableText(props) {
     const [passwordDisplay, setPasswordDisplay] = useState('');
     const [editMode, setEditMode] = useState(false);
     const [value, setValue] = useState(props.value);
-    const [isValid, setIsValid] = useState(false);
-    const [user, setUser] = useState(auth.user);
-
-    console.log(value)
+    const [valid, setValid] = useState(true);
+    const [errors, setErrors] = useState([]);
+    const [usernameTaken, setUsernameTaken] = useState([]);
+    const [focus, setFocus] = useState(false);
 
     useEffect(() => {
         setToggle(!toggle)
@@ -44,8 +48,23 @@ export default function EditableText(props) {
     }, [toggle, editMode])
 
     const handleSubmit = async (e) => {
+
         e.preventDefault();
         let editedUser = auth.user;
+
+        if (props.id === 'username') {
+            if (editedUser.username !== value) {
+                let result = await checkUsername(value);
+                if (result === false) {
+                    setUsernameTaken([
+                        <p key="username-taken-error">Podana nazwa użytkownika jest zajęta</p>
+                    ])
+                    setValid(false);
+                    return;
+                }
+            }
+        }
+
         editedUser[props.id] = value;
 
         await editUser(editedUser);
@@ -56,13 +75,73 @@ export default function EditableText(props) {
 
     if (editMode === true) {
         return (
-            <div className="label-value-container">
-                <form onSubmit={handleSubmit}>
-                    <label>{props.label}</label>
-                    <input type="text" placeholder={props.value} onChange={(e) => setValue(e.target.value)} />
-                    <button type='submit'><BsCheckLg className="icon" size={"1.25rem"} /></button>
-                </form>
+            <div>
+                <div className="label-value-container">
+                    <form className="edit-form-container" onSubmit={handleSubmit}>
+                        <label>{props.label}</label>
+                        {props.id === 'username' ?
+                            <UsernameInput
+                                placeholder={props.value}
+                                setUsernameTaken={setUsernameTaken}
+                                setFocus={setFocus}
+                                setValue={setValue}
+                                setValid={setValid}
+                                setErrors={setErrors}
+                                required={false}
+                            />
+                            : <></>}
+                        {props.id === 'mail' ?
+                            <MailInput
+                                placeholder={props.value}
+                                setFocus={setFocus}
+                                setValue={setValue}
+                                setValid={setValid}
+                                setErrors={setErrors}
+                                required={false} />
+                            : <></>}
+                        {props.id === 'password' ?
+                            <PasswordInput
+                                placeholder={props.value}
+                                setFocus={setFocus}
+                                setValue={setValue}
+                                setValid={setValid}
+                                setErrors={setErrors}
+                                required={false} />
+                            : <></>}
+                        <button type='submit' disabled={!valid ? true : false}><BsCheckLg className="icon" size={"1.25rem"} /></button>
+                    </form>
+                </div>
+                {
+                    focus && !valid ?
+                        <div>
+                            <ErrorMessage status={false} message={
+                                <div>
+                                    <ul>
+                                        {errors.map((error) => {
+                                            return error
+                                        })}
+                                    </ul>
+                                </div>}
+                            />
+                        </div>
+                        : <></>
+                }
+                {
+                    usernameTaken !== [] ?
+                        <div>
+                            <ErrorMessage status={false} message={
+                                <div>
+                                    <ul>
+                                        {usernameTaken.map((error) => {
+                                            return error
+                                        })}
+                                    </ul>
+                                </div>}
+                            />
+                        </div> : <></>
+                }
             </div>
+
         );
     }
 
