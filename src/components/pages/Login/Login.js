@@ -14,7 +14,9 @@ export default function Login() {
     const [user, setUser] = useState('');
     const [usernameErrorMessage, setusernameErrorMessage] = useState([]);
     const [passwordErrorMessage, setpasswordErrorMessage] = useState('');
+
     const auth = useAuth(user);
+    const navigate = useNavigate();
 
     const usernameRef = useRef();
     const errorRef = useRef();
@@ -78,8 +80,6 @@ export default function Login() {
 
         setValidPassword(result);
     }, [password])
-
-    const navigate = useNavigate();
 
     const [values, setValues] = useState({
         username: "",

@@ -39,6 +39,14 @@ export const editUser = async (user) => {
     }
 }
 
+export const deleteUser = async (user) => {
+    try {
+        await axios.delete(`users/${user.id}`, user)
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const getNewId = async () => {
     let users = [];
     let response = await axios.get('users');

@@ -16,6 +16,8 @@ import Logout from './components/pages/Logout/Logout';
 import Register from './components/pages/Register/Register';
 import api from './api/axios';
 import { getNewId } from './api/axios'
+import ConfirmProfileDelete from './components/pages/Profile/ConfirmProfileDelete';
+import ProfileDeleted from './components/pages/Profile/ProfileDeleted';
 
 export default class App extends Component {
 
@@ -88,6 +90,8 @@ export default class App extends Component {
               <Route path="/logout" element={<Logout />} />
               <Route path="/login" element={<Login backgroundToggle={this.toggleBackgroundFade} />} />
               <Route path="/notLoggedIn" element={<NotLoggedIn />} />
+              <Route path="/confirmProfileDelete" element={<ConfirmProfileDelete />} />
+              <Route path="/profileDeleted" element={<ProfileDeleted />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
