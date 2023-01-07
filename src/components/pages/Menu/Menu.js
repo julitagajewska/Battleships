@@ -8,11 +8,18 @@ import Profile from '../Profile/Profile';
 import ReusableSidebar from '../../reusable/Sidebar.js';
 import { useAuth } from '../../utils/auth';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import api, { getNewId } from '../../../api/axios';
+import { getUsers } from '../../../api/axios'
 
 export default function Menu(props) {
 
     const auth = useAuth();
     const navigate = useNavigate();
+
+    const displayUsers = async () => {
+        const response = await getNewId();
+    }
 
     const logOut = () => {
         auth.logout();
@@ -27,8 +34,9 @@ export default function Menu(props) {
                 <RoutingButton to="/settings" value="USTAWIENIA" type="menu settings" iconVisible="true" icon={<HiWrenchScrewdriver className='button-icon' size={"30px"} />} />
                 <button className="menu-button" onClick={() => logOut()}>
                     <BsDoorOpenFill className='button-icon' size={"30px"} />
-                    WYLOGUJ SIĘ
+                    <p>WYLOGUJ SIĘ</p>
                 </button>
+                <button onClick={() => displayUsers()}>get Users</button>
             </div>
             <ReusableSidebar type={"right"} startAnimation={props.startAnimation} toggle={props.toggle}
                 children={<Profile />}>

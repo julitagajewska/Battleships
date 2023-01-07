@@ -13,6 +13,9 @@ import { AuthProvider } from './components/utils/auth';
 import NotLoggedIn from './components/pages/Login/NotLoggedIn';
 import PrivateRoutes from './components/utils/PrivateRoutes';
 import Logout from './components/pages/Logout/Logout';
+import Register from './components/pages/Register/Register';
+import api from './api/axios';
+import { getNewId } from './api/axios'
 
 export default class App extends Component {
 
@@ -30,6 +33,7 @@ export default class App extends Component {
 
   }
 
+  //abcd
   toggleInfoVisibility() {
     let visibility = this.state.startInfoAnimation === true ? false : true;
     this.setState((prevState) => ({
@@ -78,9 +82,9 @@ export default class App extends Component {
                 />
                 <Route path="/game" element={<Game />} />
                 <Route path="/settings" element={<Menu backgroundToggle={this.state.backgroundFadeDown} />} />
-                <Route path="/register" element={<Menu />} />
               </Route>
 
+              <Route path="/register" element={<Register />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/login" element={<Login backgroundToggle={this.toggleBackgroundFade} />} />
               <Route path="/notLoggedIn" element={<NotLoggedIn />} />

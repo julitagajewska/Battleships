@@ -1,6 +1,5 @@
 export class User {
     constructor(id, username, mail, password, image, lastGames) {
-        super();
         this.id = id;
         this.username = username;
         this.mail = mail;

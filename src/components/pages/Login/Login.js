@@ -1,12 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../utils/auth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import FormInput from '../../reusable/FormInput';
+import axios from '../../../api/axios'
 
 export default function Login() {
 
     const [user, setUser] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     const auth = useAuth(user);
+
+    const usernameRef = useRef();
+    const errorRef = useRef();
+
+    const [username, setUsername] = useState('');
+    const [validUsername, setValidUsername] = useState(false);
+    const [usernameFocus, setUsernameFocus] = useState(false);
+
+    const [password, setPassword] = useState('');
+    const [validPassword, setValidPassword] = useState(false);
+    const [passwordFocus, setPasswordFocus] = useState(false);
+
+    const user_regex = /^[a-zA-Z][a-zA-Z0-9-_]{3,10}/;
+    const password_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+-=]).{6,24}$/;
+    const mail_regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+    useEffect(() => {
+        usernameRef.current.focus();
+    }, [])
+
+    useEffect(() => {
+        let result = user_regex.test(username);
+        setValidUsername(result)
+    }, [username]);
 
     const navigate = useNavigate();
 
@@ -43,10 +69,9 @@ export default function Login() {
         }
     ];
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(values);
-        console.log(user);
+
         auth.login(user);
         navigate("/");
     };
@@ -70,7 +95,7 @@ export default function Login() {
                 ))}
                 <button type="submit">Zaloguj się</button>
             </form>
-            <p>Nie masz konta? <a href="#">Zarejestruj się!</a></p>
+            <p>Nie masz konta? <Link to="/register">Zarejestruj się!</Link></p>
         </div>
     )
 }

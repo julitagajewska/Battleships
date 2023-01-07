@@ -47,7 +47,7 @@ export default function Profile(props) {
                 <div className="delete-button-container">
                     <button className="delete-button">
                         <RiDeleteBin5Fill className="button-icon" size={"30px"} />
-                        USUŃ PROFIL
+                        <p>USUŃ PROFIL</p>
                     </button>
                 </div>
 

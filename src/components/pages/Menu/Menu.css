@@ -36,9 +36,9 @@
     align-items: center;
     background-color: #FFE9CF;
     color: black;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
-    padding: 1rem 3rem 1rem 2rem;
+    padding: 0.75rem 3rem 1rem 2rem;
     border: none;
     border-radius: 2rem;
     cursor: pointer;
@@ -46,6 +46,11 @@
     width: fit-content;
     text-decoration: none;
     transition: all 0.3s ease 0s;
+}
+
+.menu-button p {
+    margin: 0;
+    padding-top: 0.5rem
 }
 
 .menu-button .button-icon {
