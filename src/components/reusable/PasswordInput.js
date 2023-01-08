@@ -11,32 +11,32 @@ export default function PasswordInput(props) {
 
         // Uppercase letter
         if (hasUpperCaseLetter(e.target.value) === false) {
-            errors.push(<p key="username-special-character-error">Hasło musi zawierać wielką literę</p>);
+            errors.push(<p key="password-lower-case-letter-error">Hasło musi zawierać wielką literę</p>);
         }
 
         // Lowercase letter
         if (hasLowerCaseLetter(e.target.value) === false) {
-            errors.push(<p key="username-special-character-error">Hasło musi zawierać małą literę</p>);
+            errors.push(<p key="password-upper-case-letter-error">Hasło musi zawierać małą literę</p>);
         }
 
         // Number
         if (hasNumber(e.target.value) === false) {
-            errors.push(<p key="username-special-character-error">Hasło musi zawierać cyfrę</p>);
+            errors.push(<p key="password-number-error">Hasło musi zawierać cyfrę</p>);
         }
 
         // Special character
         if (hasSpecialCharacter(e.target.value) === false) {
-            errors.push(<p key="username-special-character-error">Hasło musi zawierać jeden ze znaków specjalnych: {"[!@#$%^&*()\\[\]{}+=~`|:;\"'<>,./?]"}</p>);
+            errors.push(<p key="password-special-character-error">Hasło musi zawierać jeden ze znaków specjalnych: {"[!@#$%^&*()\\[\]{}+=~`|:;\"'<>,./?]"}</p>);
         }
 
         // Spaces
         if (hasSpace(e.target.value) === true) {
-            errors.push(<p key="username-space-error">Hasło nie może zaweirać spacji</p>)
+            errors.push(<p key="password-space-error">Hasło nie może zaweirać spacji</p>)
         }
 
         // Length
         if (checkPasswordLength(e.target.value) === false) {
-            errors.push(<p key="username-length-error">Hasło może mieć od 3 do 15 znaków</p>)
+            errors.push(<p key="password-length-error">Hasło może mieć od 3 do 15 znaków</p>)
         }
 
         if (hasUpperCaseLetter(e.target.value) === false ||

@@ -5,6 +5,8 @@ import GameModeChoice from './GameModeChoice';
 import Grid from './Grid';
 import Score from './Score';
 import UserSidebar from './UserSidebar';
+import PlayerTypeChoice from './PlayerTypeChoice';
+import PlayersList from './PlayersList';
 
 class User {
     constructor(username, ships, battleGrid, shipsGrid, score) {
@@ -71,6 +73,7 @@ export default class Game extends Component {
 
         // Choose game mode phase
         this.setGameMode = this.setGameMode.bind(this);
+        this.setGamePhase = this.setGamePhase.bind(this);
 
         // Enter enemy username phase
         this.setUsername = this.setUsername.bind(this);
@@ -112,7 +115,7 @@ export default class Game extends Component {
 
         this.setState((prevState) => ({
             gameMode: mode,
-            gamePhase: 'enter-name-player-B'
+            gamePhase: 'player-type-choice'
         }))
     }
 
@@ -935,6 +938,12 @@ export default class Game extends Component {
         console.log(this.state.users)
     }
 
+    setGamePhase(phase) {
+        this.setState((prevState) => ({
+            gamePhase: phase
+        }))
+    }
+
     render() {
 
         this.randomTurn();
@@ -975,6 +984,21 @@ export default class Game extends Component {
                 <GameModeChoice
                     setGameMode={this.setGameMode}
                     randomShipPlacement={this.randomShipPlacement} />
+            );
+        }
+
+        if (this.state.gamePhase === 'player-type-choice') {
+            return (
+                <PlayerTypeChoice
+                    setGamePhase={this.setGamePhase} />
+            );
+        }
+
+        if (this.state.gamePhase === 'players-list') {
+            return (
+                <PlayersList
+                    setGamePhase={this.setGamePhase}
+                    setUsername={this.setUsername} />
             );
         }
 

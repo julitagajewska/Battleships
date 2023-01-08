@@ -1,4 +1,5 @@
 import React from 'react'
+import './ErrorMessage.css'
 
 export default function ErrorMessage(props) {
     return (
@@ -9,7 +10,7 @@ export default function ErrorMessage(props) {
                 )
                 :
                 (
-                    <span style={{ color: "red", fontWeight: "bold" }}>{props.message}</span>
+                    <span style={{ color: "red" }}>{props.message}</span>
                 )}
         </div>
 

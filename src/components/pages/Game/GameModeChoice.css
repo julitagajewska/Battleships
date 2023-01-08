@@ -1,0 +1,55 @@
+.game-mode-choice-container {
+    height: fit-content;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: space-evenly;
+    background: linear-gradient(to top,
+            rgba(18, 66, 87, 0.3),
+            rgba(18, 66, 87, 0.1));
+    padding: 2rem 2rem;
+    backdrop-filter: blur(3px);
+    border-radius: 0.75rem;
+    box-shadow:
+        rgba(0, 0, 0, 0.16) 0px 3px 6px,
+        rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.game-mode-button {
+    border: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 2rem 0.5rem 2rem;
+    margin: 1rem;
+    cursor: pointer;
+    border-radius: 2rem;
+    transition: all 0.3s ease 0s;
+    box-shadow:
+        rgba(0, 0, 0, 0.16) 0px 3px 6px,
+        rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.pvp {
+    background-color: #B0DFD0;
+}
+
+.pvc {
+    background-color: #B0DFD0;
+}
+
+h3 {
+    padding: 0 1rem 0 1rem;
+}
+
+.game-mode-button:hover {
+    background-color: #005B95;
+    color: white;
+}
+
+.game-mode-button h3 {
+    padding-top: 1.1rem
+}

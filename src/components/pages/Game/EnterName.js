@@ -1,35 +1,92 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import './EnterName.css';
+import { BsCheckLg } from 'react-icons/bs';
+import { useSound } from '../../utils/Sound';
+import UsernameInput from '../../reusable/UsernameInput';
+import { checkIfUserExists } from '../../../api/axios';
+import ErrorMessage from '../../reusable/ErrorMessage.js';
 
-export default class EnterName extends Component {
-    constructor(props) {
-        super(props);
+export default function EnterName(props) {
 
-        this.state = { value: '' }
+    const [username, setUsername] = useState('');
+    const [validUsername, setValidUsername] = useState(false);
+    const [usernameFocus, setUsernameFocus] = useState(false);
+    const [errors, setErrors] = useState([]); // Input errors
+    const [error, setError] = useState([]); // Username taken error
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+    const sound = useSound();
+    const navigate = useNavigate();
+
+    const onUsernameFocus = (value) => {
+        if (value === true) {
+            // sound.playPick();
+        }
+
+        setUsernameFocus(value);
     }
 
-    handleChange = (e) => {
-        this.setState({ value: e.target.value });
-    }
 
-    handleSubmit = (e) => {
-        console.log(this.state.value)
-        this.props.setUsername(this.state.value);
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        let errorInput = '';
+
+        // Sprawdź czy wolne
+        let result = await checkIfUserExists(username);
+        if (result === true) {
+            errorInput = "Istnieje już gracz o podanej nazwie"
+            sound.playBlocked();
+            setError([errorInput]);
+            console.log(error)
+            return;
+        }
+
+        sound.playPick();
+        props.setUsername(username);
+        // navigate("/");
     }
 
-    render() {
-        return (
-            <div className="upper-layer">
-                <form onSubmit={this.handleSubmit}>
-                    <label>Nazwa przeciwnika:</label>
-                    <input type="text" value={this.state.value} onChange={this.handleChange} />
-                    <button type='submit'>Zapisz</button>
-                </form>
-            </div>
-        );
-    }
 
+    return (
+        <div className="upper-layer enter-name-container">
+            <h3>NAZWA PRZECIWNIKA</h3>
+            <form className="enter-name-form" onSubmit={(e) => handleSubmit(e)}>
+                <UsernameInput
+                    className="eter-name-username-input"
+                    placeholder={"Nazwa przeciwnika"}
+                    required={true}
+                    setValue={setUsername}
+                    setFocus={onUsernameFocus}
+                    setValid={setValidUsername}
+                    setErrors={setErrors}
+                    setUsernameTaken={setError} />
+                <button type='submit' className="enter-name-button">
+                    <BsCheckLg
+                        className='button-icon'
+                        size={"20px"} />
+                </button>
+            </form>
+            {error.length === 1 ?
+                <div className="enter-name-input-errors">
+                    <ErrorMessage status={false} message={error[0]} />
+                </div>
+                :
+                <></>
+            }
+            {
+                usernameFocus && !validUsername && errors.length !== 0 ?
+                    <div className={`enter-name-input-errors`}>
+                        <ErrorMessage status={false} message={
+                            <div>
+                                {errors.map((error) => {
+                                    return error
+                                })}
+                            </div>}
+                        />
+                    </div>
+                    :
+                    <></>
+            }
+        </div>
+    )
 }

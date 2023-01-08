@@ -1,0 +1,73 @@
+.players-list-choice-container {
+    height: 30rem;
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: space-evenly;
+    background: linear-gradient(to top,
+            rgba(18, 66, 87, 0.3),
+            rgba(18, 66, 87, 0.1));
+    padding: 2rem 2rem;
+    backdrop-filter: blur(3px);
+    border-radius: 0.75rem;
+    box-shadow:
+        rgba(0, 0, 0, 0.16) 0px 3px 6px,
+        rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.minature-profile-picture {
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+    object-fit: cover;
+    box-shadow:
+        rgba(0, 0, 0, 0.16) 0px 3px 6px,
+        rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.players-table {
+    height: 25rem;
+    overflow-y: auto
+}
+
+.user-entry {
+    display: flex;
+    cursor: pointer;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 1rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    border-radius: 2.5rem;
+    color: white;
+    box-shadow:
+        rgba(0, 0, 0, 0.16) 0px 3px 6px,
+        rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    transition: all 0.3s ease 0s;
+}
+
+.user-entry p {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    font-size: 18px;
+}
+
+.user-entry:nth-child(even) {
+    background-color: var(--gradient-6-translucent);
+}
+
+.user-entry:nth-child(even):hover {
+    background-color: var(--gradient-1-translucent);
+    color: black;
+}
+
+.user-entry:nth-child(odd) {
+    background-color: var(--gradient-7-translucent);
+}
+
+.user-entry:nth-child(odd):hover {
+    background-color: var(--gradient-1-translucent);
+    color: black;
+}

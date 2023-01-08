@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Sidebar.css';
 import { GrCircleQuestion } from 'react-icons/gr'
 import { RiUser5Line } from 'react-icons/ri'
 
 export default function Sidebar(props) {
 
-    const transitionProperties = props.startAnimation ? `out-${props.type}` : `in-${props.type}`;
+    const [startAnimation, setStartAnimation] = useState(false);
+
+    const toggle = () => {
+        setStartAnimation(!startAnimation);
+    }
+
+    const transitionProperties = startAnimation ? `out-${props.type}` : `in-${props.type}`;
 
     return (
         <div>
@@ -16,7 +22,7 @@ export default function Sidebar(props) {
             </div>
             <div
                 className={`info-sidebar-button-${props.type} ${transitionProperties}`}
-                onClick={() => props.toggle()}>
+                onClick={() => toggle()}>
                 {
                     props.type === "left" ?
                         <GrCircleQuestion className='sidebar-button-icon-left' size={"36px"} />

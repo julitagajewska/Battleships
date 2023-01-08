@@ -1,5 +1,6 @@
 import { createContext, useContext } from "react";
 import pick from '../assets/pick2.mp3';
+import blocked from '../assets/stop2.mp3'
 import { Howl, Howler } from 'howler';
 
 const SoundContext = createContext(null);
@@ -7,6 +8,7 @@ const SoundContext = createContext(null);
 export const SoundProvider = ({ children }) => {
 
     let pickSound = pick;
+    let blockedSound = blocked;
 
     const callTheSound = (src) => {
         const sound = new Howl({
@@ -21,7 +23,11 @@ export const SoundProvider = ({ children }) => {
         callTheSound(pickSound)
     }
 
-    return <SoundContext.Provider value={{ playPick, callTheSound }}>{children}</SoundContext.Provider>
+    const playBlocked = () => {
+        callTheSound(blockedSound)
+    }
+
+    return <SoundContext.Provider value={{ playPick, playBlocked, callTheSound }}>{children}</SoundContext.Provider>
 }
 
 export const useSound = () => {

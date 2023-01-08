@@ -5,8 +5,8 @@
 .sidebar-left {
     background-color: var(--sidebar-color);
     background: linear-gradient(to top,
-            rgba(77, 77, 77, 0.4),
-            rgba(77, 77, 77, 0.2));
+            rgba(18, 66, 87, 0.3),
+            rgba(18, 66, 87, 0.1));
     backdrop-filter: blur(8px);
     width: 28%;
     height: 100vh;
@@ -32,8 +32,8 @@
 .sidebar-right {
     background-color: var(--sidebar-color);
     background: linear-gradient(to top,
-            rgba(77, 77, 77, 0.4),
-            rgba(77, 77, 77, 0.2));
+            rgba(18, 66, 87, 0.3),
+            rgba(18, 66, 87, 0.1));
     backdrop-filter: blur(8px);
     width: 28%;
     height: 100vh;
@@ -85,8 +85,8 @@
     height: 4rem;
     background-color: var(--sidebar-color);
     background: linear-gradient(to top,
-            rgba(77, 77, 77, 0.27),
-            rgba(77, 77, 77, 0.25));
+            rgba(18, 66, 87, 0.17),
+            rgba(18, 66, 87, 0.15));
     border-radius: 0 1rem 1rem 0;
     position: fixed;
     left: 28%;
@@ -105,8 +105,8 @@
     height: 4rem;
     background-color: var(--sidebar-color);
     background: linear-gradient(to top,
-            rgba(77, 77, 77, 0.27),
-            rgba(77, 77, 77, 0.25));
+            rgba(18, 66, 87, 0.17),
+            rgba(18, 66, 87, 0.15));
     backdrop-filter: blur(8px);
     border-radius: 1rem 0 0 1rem;
     position: fixed;
