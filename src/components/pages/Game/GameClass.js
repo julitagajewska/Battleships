@@ -76,7 +76,8 @@ export default class Game extends Component {
         this.setGamePhase = this.setGamePhase.bind(this);
 
         // Enter enemy username phase
-        this.setUsername = this.setUsername.bind(this);
+        this.setUserB = this.setUserB.bind(this);
+        this.setUserA = this.setUserA.bind(this);
 
         // Ships placement phase
         this.canDrop = this.canDrop.bind(this);
@@ -120,13 +121,28 @@ export default class Game extends Component {
     }
 
     // Users
-    setUsername(username) {
+    setUserA(user) {
         let newUsers = this.state.users;
 
-        newUsers[1].username = username;
-        newUsers[1].ships = this.generateShips(username);
-        newUsers[1].battleGrid = this.generateTiles(username, "battle_grid");
-        newUsers[1].shipsGrid = this.generateTiles(username, "ships_grid");
+        newUsers[0].username = user.username;
+        newUsers[0].ships = this.generateShips(user.username);
+        newUsers[0].battleGrid = this.generateTiles(user.username, "battle_grid");
+        newUsers[0].shipsGrid = this.generateTiles(user.username, "ships_grid");
+
+        this.setState((prevState) => ({
+            users: newUsers,
+            gamePhase: 'placement-user_A'
+        }))
+
+    }
+
+    setUserB(user) {
+        let newUsers = this.state.users;
+
+        newUsers[1].username = user.username;
+        newUsers[1].ships = this.generateShips(user.username);
+        newUsers[1].battleGrid = this.generateTiles(user.username, "battle_grid");
+        newUsers[1].shipsGrid = this.generateTiles(user.username, "ships_grid");
 
         this.setState((prevState) => ({
             users: newUsers,
@@ -982,6 +998,7 @@ export default class Game extends Component {
         if (this.state.gamePhase === 'game-mode-choice') {
             return (
                 <GameModeChoice
+                    setUser={this.setUserA}
                     setGameMode={this.setGameMode}
                     randomShipPlacement={this.randomShipPlacement} />
             );
@@ -998,14 +1015,14 @@ export default class Game extends Component {
             return (
                 <PlayersList
                     setGamePhase={this.setGamePhase}
-                    setUsername={this.setUsername} />
+                    setUser={this.setUserB} />
             );
         }
 
         if (this.state.gamePhase === 'enter-name-player-B') {
             return (
                 <EnterName
-                    setUsername={this.setUsername} />
+                    setUser={this.setUserB} />
             );
         }
 

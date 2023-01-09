@@ -6,6 +6,7 @@ import { useSound } from '../../utils/Sound';
 import UsernameInput from '../../reusable/UsernameInput';
 import { checkIfUserExists } from '../../../api/axios';
 import ErrorMessage from '../../reusable/ErrorMessage.js';
+import { User } from '../../../Models/User';
 
 export default function EnterName(props) {
 
@@ -41,8 +42,10 @@ export default function EnterName(props) {
             return;
         }
 
+        let nweUser = new User(null, username, null, null, null, null);
+
         sound.playPick();
-        props.setUsername(username);
+        props.setUser(nweUser);
         // navigate("/");
     }
 

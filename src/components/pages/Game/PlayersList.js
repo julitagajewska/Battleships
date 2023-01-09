@@ -39,7 +39,7 @@ export default function PlayersList(props) {
                         return (
                             <div className="user-entry" onClick={() => {
                                 sound.playPick();
-                                props.setUsername(user.username);
+                                props.setUser(user);
                                 props.setGamePhase("placement-user_A");
                             }}>
                                 <img
