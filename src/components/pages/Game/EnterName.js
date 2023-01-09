@@ -38,7 +38,6 @@ export default function EnterName(props) {
             errorInput = "Istnieje już gracz o podanej nazwie"
             sound.playBlocked();
             setError([errorInput]);
-            console.log(error)
             return;
         }
 
@@ -46,7 +45,7 @@ export default function EnterName(props) {
 
         sound.playPick();
         props.setUser(nweUser);
-        // navigate("/");
+        props.setGamePhase('placement-player-A');
     }
 
 

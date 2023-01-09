@@ -15,8 +15,8 @@ export default function GameModeChoice(props) {
             <h3>WYBIERZ PRZECIWNIKA</h3>
             <button className="game-mode-button pvp" onClick={() => {
                 sound.playPick();
-                props.setUser(auth.user)
                 props.setGameMode('pvp');
+                props.setGamePhase('player-type-choice');
             }}>
                 <RiUser5Fill
                     className='game-mode-button-icon'
@@ -28,9 +28,9 @@ export default function GameModeChoice(props) {
             </button>
             <button className="game-mode-button pvc" onClick={() => {
                 sound.playPick();
-                props.randomShipPlacement('computer');
-                props.setUser(auth.user)
+                props.randomShipPlacement(props.player, props.setState);
                 props.setGameMode('pvc')
+                props.setGamePhase();
             }}>
                 <RiUser5Fill
                     className='game-mode-button-icon'

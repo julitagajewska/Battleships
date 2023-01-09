@@ -1,5 +1,5 @@
 import './App.css';
-import Game from './components/pages/Game/GameClass';
+import Game from './components/pages/Game/NewGame';
 import { Component } from 'react';
 import { Route, Routes } from "react-router-dom";
 import Menu from './components/pages/Menu/Menu';
