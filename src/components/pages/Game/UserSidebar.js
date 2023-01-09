@@ -28,18 +28,28 @@ export default function UserSidebar(props) {
         allShipsPlaced === false) {
         return (
             <div className='user-sidebar'>
-                {props.username}
-                <ShipsContainer
-                    ships={props.ships}
-                    username={props.username}
-                    setEdges={props.setEdges}
-                    orientation={props.orientation}
-                    setTilesNotAllowed={props.setTilesNotAllowed}
-                    setTilesNotAllowedEmpty={props.setTilesNotAllowedEmpty}
-                    toggleAdjacentVisibility={props.toggleAdjacentVisibility} />
-                <button onClick={() => props.toggleOrientation()}>Rotate</button>
-                <button onClick={() => props.resetShips(props.username)}>Reset</button>
-                <button onClick={() => props.randomShipPlacement(props.username)}>Random ship placement</button>
+
+                <div>
+                    {props.username}
+                </div>
+
+                <div>
+                    <ShipsContainer
+                        ships={props.ships}
+                        username={props.username}
+                        setEdges={props.setEdges}
+                        orientation={props.orientation}
+                        setTilesNotAllowed={props.setTilesNotAllowed}
+                        setTilesNotAllowedEmpty={props.setTilesNotAllowedEmpty}
+                        toggleAdjacentVisibility={props.toggleAdjacentVisibility} />
+                </div>
+
+                <div>
+                    <button onClick={() => props.toggleOrientation()}>Rotate</button>
+                    <button onClick={() => props.resetShips(props.username)}>Reset</button>
+                    <button onClick={() => props.randomShipPlacement(props.username)}>Random ship placement</button>
+                </div>
+
             </div>
         );
     } else if (props.type === "placement_user_A") {
