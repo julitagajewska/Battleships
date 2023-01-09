@@ -9,6 +9,7 @@ import GameModeChoice from './GameModeChoice';
 import PlayerTypeChoice from './PlayerTypeChoice';
 import PlayersList from './PlayersList';
 import EnterName from './EnterName';
+import UserSidebar from './UserSidebar';
 
 import './GameClass.css';
 import { User } from '../../../Models/User';
@@ -300,6 +301,94 @@ export default function Game(props) {
         setState(player);
     }
 
+    // Ship placement
+    const toggleOrientation = () => {
+        setOrientation(!orientation)
+    }
+
+    const toggleAdjacentVisibility = (visibility) => {
+        setDisplayAdjacent(visibility);
+    }
+
+    const setNotAllowed = (shipLength, draggedShipElementId) => {
+        let rightEdge = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99];
+        let leftEdge = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
+        let topEdge = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+        let bottomEdge = [90, 91, 99, 92, 93, 94, 95, 96, 97, 98, 99];
+
+        let tilesLeft, tilesRight, tilesTop, tilesBottom, notAllowed;
+
+        if (orientation === 'horizontal') {
+            tilesRight = shipLength - draggedShipElementId - 1;
+            tilesLeft = parseInt(draggedShipElementId);
+
+            rightEdge.forEach(edgeElement => {
+                for (let i = 0; i < tilesRight; i++) {
+                    if (!rightEdge.includes(edgeElement - i)) {
+                        rightEdge.push(edgeElement - i);
+                    }
+                }
+            });
+
+            leftEdge.forEach(edgeElement => {
+                for (let i = 0; i < tilesLeft; i++) {
+                    if (!leftEdge.includes(edgeElement + i)) {
+                        leftEdge.push(edgeElement + i);
+                    }
+                }
+            })
+
+            if (tilesRight === 0) { rightEdge = [] }
+            if (tilesLeft === 0) { leftEdge = [] }
+
+            notAllowed = rightEdge.concat(leftEdge);
+
+            setTilesNotAllowed(notAllowed);
+
+        } else {
+            tilesTop = parseInt(draggedShipElementId);
+            tilesBottom = shipLength - draggedShipElementId - 1;
+
+            topEdge.forEach(edgeElement => {
+                for (let i = 0; i < tilesTop; i++) {
+                    if (!topEdge.includes(edgeElement + i * 10)) {
+                        topEdge.push(edgeElement + i * 10);
+                    }
+                }
+            });
+
+            bottomEdge.forEach(edgeElement => {
+                for (let i = 0; i < tilesBottom; i++) {
+                    if (!bottomEdge.includes(edgeElement - i * 10)) {
+                        bottomEdge.push(edgeElement - i * 10);
+                    }
+                }
+            })
+
+            if (tilesTop === 0) { topEdge = [] }
+            if (tilesBottom === 0) { bottomEdge = [] }
+
+            notAllowed = topEdge.concat(bottomEdge);
+
+            setTilesNotAllowed(notAllowed);
+        }
+    }
+
+    const resetShips = (player, setState) => {
+        player.ships = generateShips(player.username);
+        player.shipsGrid = generateTiles(player, "ships_grid");
+
+        setState(player)
+    }
+
+    const setTilesNotAllowedEmpty = () => {
+        setTilesNotAllowed([]);
+    }
+
+    const readyPlayerA = () => {
+        setGamePhase("placement-player-B");
+    }
+
     // Game phases
 
     if (gamePhase === 'game-mode-choice') {
@@ -337,6 +426,29 @@ export default function Game(props) {
                 setGamePhase={setGamePhase} />
         );
     }
+
+    if (gamePhase === 'placement-player-A') {
+        return (
+            <div className='game-container'>
+                <div>
+                    <UserSidebar
+                        player={playerA}
+                        setState={setPlayerA}
+                        type={"placement-player-A"}
+                        ships={playerA.ships}
+                        orientation={orientation}
+                        toggleOrientation={toggleOrientation}
+                        setNotAllowed={setNotAllowed}
+                        resetShips={resetShips}
+                        setTilesNotAllowedEmpty={setTilesNotAllowedEmpty}
+                        toggleAdjacentVisibility={toggleAdjacentVisibility}
+                        readyPlayerA={readyPlayerA}
+                        randomShipPlacement={randomShipPlacement} />
+                </div>
+            </div>
+        );
+    }
+
 
     console.log(playerA);
     console.log(playerB);

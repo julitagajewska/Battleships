@@ -40,7 +40,7 @@ export default function PlayersList(props) {
                             <div className="user-entry" onClick={() => {
                                 sound.playPick();
                                 props.setUser(user);
-                                props.setGamePhase("placement-user_A");
+                                props.setGamePhase("placement-player-A");
                             }}>
                                 <img
                                     className="minature-profile-picture"

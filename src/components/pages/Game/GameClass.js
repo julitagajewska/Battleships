@@ -100,128 +100,131 @@ export default class Game extends Component {
         this.shoot = this.shoot.bind(this);
     }
 
-    // Game mode
-    setGameMode(mode) {
+    // // Game mode
+    // setGameMode(mode) {
 
-        if (mode === 'pvc') {
-            this.setState((prevState) => ({
-                gameMode: mode,
-                gamePhase: 'placement-user_A',
-                adjacent: [],
-                notAllowed: []
-            }))
+    //     if (mode === 'pvc') {
+    //         this.setState((prevState) => ({
+    //             gameMode: mode,
+    //             gamePhase: 'placement-user_A',
+    //             adjacent: [],
+    //             notAllowed: []
+    //         }))
 
-            return
-        }
+    //         return
+    //     }
 
-        this.setState((prevState) => ({
-            gameMode: mode,
-            gamePhase: 'player-type-choice'
-        }))
-    }
+    //     this.setState((prevState) => ({
+    //         gameMode: mode,
+    //         gamePhase: 'player-type-choice'
+    //     }))
+    // }
 
-    // Users
-    setUserA(user) {
-        let newUsers = this.state.users;
+    // // Users
+    // setUserA(user) {
+    //     let newUsers = this.state.users;
 
-        newUsers[0].username = user.username;
-        newUsers[0].ships = this.generateShips(user.username);
-        newUsers[0].battleGrid = this.generateTiles(user.username, "battle_grid");
-        newUsers[0].shipsGrid = this.generateTiles(user.username, "ships_grid");
+    //     newUsers[0].username = user.username;
+    //     newUsers[0].ships = this.generateShips(user.username);
+    //     newUsers[0].battleGrid = this.generateTiles(user.username, "battle_grid");
+    //     newUsers[0].shipsGrid = this.generateTiles(user.username, "ships_grid");
 
-        this.setState((prevState) => ({
-            users: newUsers,
-            gamePhase: 'placement-user_A'
-        }))
+    //     this.setState((prevState) => ({
+    //         users: newUsers,
+    //         gamePhase: 'placement-user_A'
+    //     }))
 
-    }
+    // }
 
-    setUserB(user) {
-        let newUsers = this.state.users;
+    // setUserB(user) {
+    //     let newUsers = this.state.users;
 
-        newUsers[1].username = user.username;
-        newUsers[1].ships = this.generateShips(user.username);
-        newUsers[1].battleGrid = this.generateTiles(user.username, "battle_grid");
-        newUsers[1].shipsGrid = this.generateTiles(user.username, "ships_grid");
+    //     newUsers[1].username = user.username;
+    //     newUsers[1].ships = this.generateShips(user.username);
+    //     newUsers[1].battleGrid = this.generateTiles(user.username, "battle_grid");
+    //     newUsers[1].shipsGrid = this.generateTiles(user.username, "ships_grid");
 
-        this.setState((prevState) => ({
-            users: newUsers,
-            gamePhase: 'placement-user_A'
-        }))
+    //     this.setState((prevState) => ({
+    //         users: newUsers,
+    //         gamePhase: 'placement-user_A'
+    //     }))
 
-    }
+    // }
 
-    generateShips(username) {
-        let newShips = [];
+    // generateShips(username) {
+    //     let newShips = [];
 
-        newShips.push(new Ship(username + '-destroyer', 'destroyer', 2, [false, false], []));
-        newShips.push(new Ship(username + '-submarine', 'submarine', 3, [false, false, false], []));
-        newShips.push(new Ship(username + '-cruiser', 'cruiser', 3, [false, false, false], []));
-        newShips.push(new Ship(username + '-battleship', 'battleship', 4, [false, false, false, false], []));
-        newShips.push(new Ship(username + '-carrier', 'carrier', 5, [false, false, false, false, false], []));
+    //     newShips.push(new Ship(username + '-destroyer', 'destroyer', 2, [false, false], []));
+    //     newShips.push(new Ship(username + '-submarine', 'submarine', 3, [false, false, false], []));
+    //     newShips.push(new Ship(username + '-cruiser', 'cruiser', 3, [false, false, false], []));
+    //     newShips.push(new Ship(username + '-battleship', 'battleship', 4, [false, false, false, false], []));
+    //     newShips.push(new Ship(username + '-carrier', 'carrier', 5, [false, false, false, false, false], []));
 
-        return newShips
-    }
+    //     return newShips
+    // }
 
-    generateTiles(username, gridType) {
-        let grid = [];
 
-        for (let i = 0; i < gridWidth * gridWidth; i++) {
-            grid.push(new Tile(`${username}-${gridType}-${i}`, i, '', null, '', null));
-        }
+    // generateTiles(username, gridType) {
+    //     let grid = [];
 
-        return grid;
-    }
+    //     for (let i = 0; i < gridWidth * gridWidth; i++) {
+    //         grid.push(new Tile(`${username}-${gridType}-${i}`, i, '', null, '', null));
+    //     }
 
-    setBattleGrid(tilesArray, username) {
-        let newUsers = this.state.users.filter((user) => {
-            if (user.username === username) {
-                user.battleGrid = tilesArray
-            }
-            return user;
-        })
+    //     return grid;
+    // }
 
-        this.setState((prevState) => ({
-            users: newUsers
-        }));
-    }
+    // setBattleGrid(tilesArray, username) {
+    //     let newUsers = this.state.users.filter((user) => {
+    //         if (user.username === username) {
+    //             user.battleGrid = tilesArray
+    //         }
+    //         return user;
+    //     })
 
-    setShipsGrid(tilesArray, username) {
-        let newUsers = this.state.users.filter((user) => {
-            if (user.username === username) {
-                user.shipsGrid = tilesArray
-            }
-            return user;
-        })
+    //     this.setState((prevState) => ({
+    //         users: newUsers
+    //     }));
+    // }
 
-        this.setState((prevState) => ({
-            users: newUsers
-        }));
-    }
+    // setShipsGrid(tilesArray, username) {
+    //     let newUsers = this.state.users.filter((user) => {
+    //         if (user.username === username) {
+    //             user.shipsGrid = tilesArray
+    //         }
+    //         return user;
+    //     })
+
+    //     this.setState((prevState) => ({
+    //         users: newUsers
+    //     }));
+    // }
+
+    // -------------------------------- //
 
     // Ship placement
-    setCoordinates(shipOwner, shipType, coordinates) {
-        let newUsers = this.state.users;
+    // setCoordinates(shipOwner, shipType, coordinates) {
+    //     let newUsers = this.state.users;
 
-        newUsers.filter((user) => {
-            if (user.username === shipOwner) {
-                user.ships.filter((ship) => {
-                    if (ship.shipType === shipType) {
-                        ship.coordinates = coordinates;
-                    }
-                    return null;
-                })
+    //     newUsers.filter((user) => {
+    //         if (user.username === shipOwner) {
+    //             user.ships.filter((ship) => {
+    //                 if (ship.shipType === shipType) {
+    //                     ship.coordinates = coordinates;
+    //                 }
+    //                 return null;
+    //             })
 
-                return null;
-            }
+    //             return null;
+    //         }
 
-            return null;
-        })
+    //         return null;
+    //     })
 
-        this.setState((prevState) => ({
-            users: newUsers
-        }))
-    }
+    //     this.setState((prevState) => ({
+    //         users: newUsers
+    //     }))
+    // }
 
     toggleOrientation() {
         if (this.state.orientation === 'horizontal') {
@@ -300,189 +303,189 @@ export default class Game extends Component {
 
     }
 
-    getTilesNotAllowed(shipLength, draggedShipElementId, orientation) {
-        let rightEdge = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99];
-        let leftEdge = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
-        let topEdge = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-        let bottomEdge = [90, 91, 99, 92, 93, 94, 95, 96, 97, 98, 99];
+    // getTilesNotAllowed(shipLength, draggedShipElementId, orientation) {
+    //     let rightEdge = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99];
+    //     let leftEdge = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
+    //     let topEdge = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    //     let bottomEdge = [90, 91, 99, 92, 93, 94, 95, 96, 97, 98, 99];
 
-        let tilesLeft, tilesRight, tilesTop, tilesBottom, notAllowed;
+    //     let tilesLeft, tilesRight, tilesTop, tilesBottom, notAllowed;
 
-        if (orientation === 'horizontal') {
-            tilesRight = shipLength - draggedShipElementId - 1;
-            tilesLeft = parseInt(draggedShipElementId);
+    //     if (orientation === 'horizontal') {
+    //         tilesRight = shipLength - draggedShipElementId - 1;
+    //         tilesLeft = parseInt(draggedShipElementId);
 
-            rightEdge.forEach(edgeElement => {
-                for (let i = 0; i < tilesRight; i++) {
-                    if (!rightEdge.includes(edgeElement - i)) {
-                        rightEdge.push(edgeElement - i);
-                    }
-                }
-            });
+    //         rightEdge.forEach(edgeElement => {
+    //             for (let i = 0; i < tilesRight; i++) {
+    //                 if (!rightEdge.includes(edgeElement - i)) {
+    //                     rightEdge.push(edgeElement - i);
+    //                 }
+    //             }
+    //         });
 
-            leftEdge.forEach(edgeElement => {
-                for (let i = 0; i < tilesLeft; i++) {
-                    if (!leftEdge.includes(edgeElement + i)) {
-                        leftEdge.push(edgeElement + i);
-                    }
-                }
-            })
+    //         leftEdge.forEach(edgeElement => {
+    //             for (let i = 0; i < tilesLeft; i++) {
+    //                 if (!leftEdge.includes(edgeElement + i)) {
+    //                     leftEdge.push(edgeElement + i);
+    //                 }
+    //             }
+    //         })
 
-            if (tilesRight === 0) { rightEdge = [] }
-            if (tilesLeft === 0) { leftEdge = [] }
+    //         if (tilesRight === 0) { rightEdge = [] }
+    //         if (tilesLeft === 0) { leftEdge = [] }
 
-            notAllowed = rightEdge.concat(leftEdge);
+    //         notAllowed = rightEdge.concat(leftEdge);
 
-            return notAllowed;
+    //         return notAllowed;
 
-        } else {
-            tilesTop = parseInt(draggedShipElementId);
-            tilesBottom = shipLength - draggedShipElementId - 1;
+    //     } else {
+    //         tilesTop = parseInt(draggedShipElementId);
+    //         tilesBottom = shipLength - draggedShipElementId - 1;
 
-            topEdge.forEach(edgeElement => {
-                for (let i = 0; i < tilesTop; i++) {
-                    if (!topEdge.includes(edgeElement + i * 10)) {
-                        topEdge.push(edgeElement + i * 10);
-                    }
-                }
-            });
+    //         topEdge.forEach(edgeElement => {
+    //             for (let i = 0; i < tilesTop; i++) {
+    //                 if (!topEdge.includes(edgeElement + i * 10)) {
+    //                     topEdge.push(edgeElement + i * 10);
+    //                 }
+    //             }
+    //         });
 
-            bottomEdge.forEach(edgeElement => {
-                for (let i = 0; i < tilesBottom; i++) {
-                    if (!bottomEdge.includes(edgeElement - i * 10)) {
-                        bottomEdge.push(edgeElement - i * 10);
-                    }
-                }
-            })
-
-
-            if (tilesTop === 0) { topEdge = [] }
-            if (tilesBottom === 0) { bottomEdge = [] }
-
-            notAllowed = topEdge.concat(bottomEdge);
-
-            return notAllowed;
-        }
-    }
-
-    getAdjacentTiles(shipsGrid) {
-        let tiles = shipsGrid;
-
-        let rightEdge = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99];
-        let leftEdge = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
-
-        let adjacent = [];
-
-        tiles.forEach((tile) => {
-            if (tile.shipType === '') { return; }
-
-            if (rightEdge.includes(tile.id)) {
-                adjacent.push(tile.id, tile.id - 1, tile.id - 10, tile.id + 10, tile.id - 11, tile.id + 9);
-                return;
-            }
-
-            if (leftEdge.includes(tile.id)) {
-                adjacent.push(tile.id, tile.id + 1, tile.id + 11, tile.id - 9, tile.id - 10, tile.id + 10);
-                return;
-            }
-
-            adjacent.push(tile.id, tile.id - 1, tile.id + 1, tile.id + 11, tile.id - 9, tile.id - 10, tile.id + 10, tile.id - 11, tile.id + 9);
-
-        });
-
-        return adjacent;
-    }
-
-    canPlaceRandomShip(tileId, firstElementId, lastElementId, orientation, adjacent, notAllowed) {
-        if (notAllowed.includes(tileId)) {
-            return false;
-        }
-
-        if (orientation === 'horizontal') {
-            for (let i = firstElementId; i <= lastElementId; i++) {
-                if (adjacent.includes(i)) { return false }
-            }
-        } else {
-            for (let i = firstElementId; i <= lastElementId; i = i + 10) {
-                if (adjacent.includes(i)) { return false }
-            }
-        }
-
-        return true;
-    }
-
-    setTilesNotAllowed(shipLength, draggedShipElementId, orientation) {
-
-        let rightEdge = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99];
-        let leftEdge = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
-        let topEdge = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-        let bottomEdge = [90, 91, 99, 92, 93, 94, 95, 96, 97, 98, 99];
-
-        let tilesLeft, tilesRight, tilesTop, tilesBottom, notAllowed;
-
-        if (orientation === 'horizontal') {
-            tilesRight = shipLength - draggedShipElementId - 1;
-            tilesLeft = parseInt(draggedShipElementId);
-
-            rightEdge.forEach(edgeElement => {
-                for (let i = 0; i < tilesRight; i++) {
-                    if (!rightEdge.includes(edgeElement - i)) {
-                        rightEdge.push(edgeElement - i);
-                    }
-                }
-            });
-
-            leftEdge.forEach(edgeElement => {
-                for (let i = 0; i < tilesLeft; i++) {
-                    if (!leftEdge.includes(edgeElement + i)) {
-                        leftEdge.push(edgeElement + i);
-                    }
-                }
-            })
-
-            if (tilesRight === 0) { rightEdge = [] }
-            if (tilesLeft === 0) { leftEdge = [] }
-
-            notAllowed = rightEdge.concat(leftEdge);
+    //         bottomEdge.forEach(edgeElement => {
+    //             for (let i = 0; i < tilesBottom; i++) {
+    //                 if (!bottomEdge.includes(edgeElement - i * 10)) {
+    //                     bottomEdge.push(edgeElement - i * 10);
+    //                 }
+    //             }
+    //         })
 
 
-            this.setState(prevState => ({
-                tilesNotAllowed: notAllowed
-            }))
+    //         if (tilesTop === 0) { topEdge = [] }
+    //         if (tilesBottom === 0) { bottomEdge = [] }
 
-        } else {
-            tilesTop = parseInt(draggedShipElementId);
-            tilesBottom = shipLength - draggedShipElementId - 1;
+    //         notAllowed = topEdge.concat(bottomEdge);
 
-            topEdge.forEach(edgeElement => {
-                for (let i = 0; i < tilesTop; i++) {
-                    if (!topEdge.includes(edgeElement + i * 10)) {
-                        topEdge.push(edgeElement + i * 10);
-                    }
-                }
-            });
+    //         return notAllowed;
+    //     }
+    // }
 
-            bottomEdge.forEach(edgeElement => {
-                for (let i = 0; i < tilesBottom; i++) {
-                    if (!bottomEdge.includes(edgeElement - i * 10)) {
-                        bottomEdge.push(edgeElement - i * 10);
-                    }
-                }
-            })
+    // getAdjacentTiles(shipsGrid) {
+    //     let tiles = shipsGrid;
+
+    //     let rightEdge = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99];
+    //     let leftEdge = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
+
+    //     let adjacent = [];
+
+    //     tiles.forEach((tile) => {
+    //         if (tile.shipType === '') { return; }
+
+    //         if (rightEdge.includes(tile.id)) {
+    //             adjacent.push(tile.id, tile.id - 1, tile.id - 10, tile.id + 10, tile.id - 11, tile.id + 9);
+    //             return;
+    //         }
+
+    //         if (leftEdge.includes(tile.id)) {
+    //             adjacent.push(tile.id, tile.id + 1, tile.id + 11, tile.id - 9, tile.id - 10, tile.id + 10);
+    //             return;
+    //         }
+
+    //         adjacent.push(tile.id, tile.id - 1, tile.id + 1, tile.id + 11, tile.id - 9, tile.id - 10, tile.id + 10, tile.id - 11, tile.id + 9);
+
+    //     });
+
+    //     return adjacent;
+    // }
+
+    // canPlaceRandomShip(tileId, firstElementId, lastElementId, orientation, adjacent, notAllowed) {
+    //     if (notAllowed.includes(tileId)) {
+    //         return false;
+    //     }
+
+    //     if (orientation === 'horizontal') {
+    //         for (let i = firstElementId; i <= lastElementId; i++) {
+    //             if (adjacent.includes(i)) { return false }
+    //         }
+    //     } else {
+    //         for (let i = firstElementId; i <= lastElementId; i = i + 10) {
+    //             if (adjacent.includes(i)) { return false }
+    //         }
+    //     }
+
+    //     return true;
+    // }
+
+    // setTilesNotAllowed(shipLength, draggedShipElementId, orientation) {
+
+    //     let rightEdge = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99];
+    //     let leftEdge = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
+    //     let topEdge = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    //     let bottomEdge = [90, 91, 99, 92, 93, 94, 95, 96, 97, 98, 99];
+
+    //     let tilesLeft, tilesRight, tilesTop, tilesBottom, notAllowed;
+
+    //     if (orientation === 'horizontal') {
+    //         tilesRight = shipLength - draggedShipElementId - 1;
+    //         tilesLeft = parseInt(draggedShipElementId);
+
+    //         rightEdge.forEach(edgeElement => {
+    //             for (let i = 0; i < tilesRight; i++) {
+    //                 if (!rightEdge.includes(edgeElement - i)) {
+    //                     rightEdge.push(edgeElement - i);
+    //                 }
+    //             }
+    //         });
+
+    //         leftEdge.forEach(edgeElement => {
+    //             for (let i = 0; i < tilesLeft; i++) {
+    //                 if (!leftEdge.includes(edgeElement + i)) {
+    //                     leftEdge.push(edgeElement + i);
+    //                 }
+    //             }
+    //         })
+
+    //         if (tilesRight === 0) { rightEdge = [] }
+    //         if (tilesLeft === 0) { leftEdge = [] }
+
+    //         notAllowed = rightEdge.concat(leftEdge);
 
 
-            if (tilesTop === 0) { topEdge = [] }
-            if (tilesBottom === 0) { bottomEdge = [] }
+    //         this.setState(prevState => ({
+    //             tilesNotAllowed: notAllowed
+    //         }))
 
-            notAllowed = topEdge.concat(bottomEdge);
+    //     } else {
+    //         tilesTop = parseInt(draggedShipElementId);
+    //         tilesBottom = shipLength - draggedShipElementId - 1;
 
-            this.setState(prevState => ({
-                tilesNotAllowed: notAllowed
-            }))
+    //         topEdge.forEach(edgeElement => {
+    //             for (let i = 0; i < tilesTop; i++) {
+    //                 if (!topEdge.includes(edgeElement + i * 10)) {
+    //                     topEdge.push(edgeElement + i * 10);
+    //                 }
+    //             }
+    //         });
 
-        }
+    //         bottomEdge.forEach(edgeElement => {
+    //             for (let i = 0; i < tilesBottom; i++) {
+    //                 if (!bottomEdge.includes(edgeElement - i * 10)) {
+    //                     bottomEdge.push(edgeElement - i * 10);
+    //                 }
+    //             }
+    //         })
 
-    }
+
+    //         if (tilesTop === 0) { topEdge = [] }
+    //         if (tilesBottom === 0) { bottomEdge = [] }
+
+    //         notAllowed = topEdge.concat(bottomEdge);
+
+    //         this.setState(prevState => ({
+    //             tilesNotAllowed: notAllowed
+    //         }))
+
+    //     }
+
+    // }
 
     canDrop(tileId, firstElementId, lastElementId, orientation) {
 
@@ -503,23 +506,23 @@ export default class Game extends Component {
         return true;
     }
 
-    resetShips(username) {
-        let users = this.state.users.filter(user => {
-            if (user.username === username) {
-                user.ships = this.generateShips(user.username);
-                user.shipsGrid = this.generateTiles(usernameA, "ships_grid");
-            }
-            return user;
-        })
+    // resetShips(username) {
+    //     let users = this.state.users.filter(user => {
+    //         if (user.username === username) {
+    //             user.ships = this.generateShips(user.username);
+    //             user.shipsGrid = this.generateTiles(usernameA, "ships_grid");
+    //         }
+    //         return user;
+    //     })
 
-        this.setState((prevState) => ({
-            users: users,
-            tilesNotAllowed: [],
-            displayAdjacent: false,
-            adjacent: []
-        }));
+    //     this.setState((prevState) => ({
+    //         users: users,
+    //         tilesNotAllowed: [],
+    //         displayAdjacent: false,
+    //         adjacent: []
+    //     }));
 
-    }
+    // }
 
     readyPlayerA() {
 
@@ -867,73 +870,73 @@ export default class Game extends Component {
         return isSunk;
     }
 
-    randomShipPlacement(username) {
-        let newUsers = this.state.users;
-        let adjacent = [];
-        let notAllowed = [];
+    // randomShipPlacement(username) {
+    //     let newUsers = this.state.users;
+    //     let adjacent = [];
+    //     let notAllowed = [];
 
-        newUsers.filter((user) => {
-            let shipsGrid = user.shipsGrid;
-            if (user.username === username) {
-                user.ships.forEach((ship) => {
+    //     newUsers.filter((user) => {
+    //         let shipsGrid = user.shipsGrid;
+    //         if (user.username === username) {
+    //             user.ships.forEach((ship) => {
 
-                    while (1) {
-                        let orientationNumber = Math.floor(Math.random() * 2);
-                        let orientation = ''
-                        let tileNumber = Math.floor(Math.random() * 100);
-                        let lastTile;
-                        let coordinates = [];
+    //                 while (1) {
+    //                     let orientationNumber = Math.floor(Math.random() * 2);
+    //                     let orientation = ''
+    //                     let randomTile = Math.floor(Math.random() * 100);
+    //                     let lastTile;
+    //                     let coordinates = [];
 
 
-                        // eslint-disable-next-line default-case
-                        switch (orientationNumber) {
-                            case 0:
-                                orientation = 'horizontal'
-                                lastTile = tileNumber + ship.shipLength;
-                                for (let i = tileNumber; i < lastTile; i++) {
-                                    coordinates.push(i);
-                                }
-                                break;
-                            case 1:
-                                orientation = 'vertical'
-                                lastTile = tileNumber + ship.shipLength * 10;
-                                for (let i = tileNumber; i < lastTile; i = i + 10) {
-                                    coordinates.push(i);
-                                }
-                                break;
-                        }
+    //                     // eslint-disable-next-line default-case
+    //                     switch (orientationNumber) {
+    //                         case 0:
+    //                             orientation = 'horizontal'
+    //                             lastTile = randomTile + ship.shipLength;
+    //                             for (let i = randomTile; i < lastTile; i++) {
+    //                                 coordinates.push(i);
+    //                             }
+    //                             break;
+    //                         case 1:
+    //                             orientation = 'vertical'
+    //                             lastTile = randomTile + ship.shipLength * 10;
+    //                             for (let i = randomTile; i < lastTile; i = i + 10) {
+    //                                 coordinates.push(i);
+    //                             }
+    //                             break;
+    //                     }
 
-                        notAllowed = this.getTilesNotAllowed(ship.shipLength, 0, orientation);
-                        adjacent = this.getAdjacentTiles(shipsGrid);
+    //                     notAllowed = this.getTilesNotAllowed(ship.shipLength, 0, orientation);
+    //                     adjacent = this.getAdjacentTiles(shipsGrid);
 
-                        if (this.canPlaceRandomShip(tileNumber, tileNumber, lastTile, orientation, adjacent, notAllowed) === true) {
-                            this.setCoordinates(username, ship.shipType, coordinates);
+    //                     if (this.canPlaceRandomShip(randomTile, randomTile, lastTile, orientation, adjacent, notAllowed) === true) {
+    //                         this.setCoordinates(username, ship.shipType, coordinates);
 
-                            let counter = 0;
-                            coordinates.forEach((coordinate) => {
-                                shipsGrid[coordinate].shipType = ship.shipType;
-                                shipsGrid[coordinate].shipElementId = counter;
-                                counter++;
-                            })
-                            break;
-                        }
-                    }
-                })
+    //                         let counter = 0;
+    //                         coordinates.forEach((coordinate) => {
+    //                             shipsGrid[coordinate].shipType = ship.shipType;
+    //                             shipsGrid[coordinate].shipElementId = counter;
+    //                             counter++;
+    //                         })
+    //                         break;
+    //                     }
+    //                 }
+    //             })
 
-                user.shipsGrid = shipsGrid
+    //             user.shipsGrid = shipsGrid
 
-            }
-            return user;
-        })
+    //         }
+    //         return user;
+    //     })
 
-        this.setState((prevState) => ({
-            users: newUsers,
-            adjacent: adjacent,
-            tilesNotAllowed: notAllowed
-        }))
+    //     this.setState((prevState) => ({
+    //         users: newUsers,
+    //         adjacent: adjacent,
+    //         tilesNotAllowed: notAllowed
+    //     }))
 
-        console.log(this.state.users)
-    }
+    //     console.log(this.state.users)
+    // }
 
     setScore(username, points) {
 
@@ -954,11 +957,11 @@ export default class Game extends Component {
         console.log(this.state.users)
     }
 
-    setGamePhase(phase) {
-        this.setState((prevState) => ({
-            gamePhase: phase
-        }))
-    }
+    // setGamePhase(phase) {
+    //     this.setState((prevState) => ({
+    //         gamePhase: phase
+    //     }))
+    // }
 
     render() {
 
@@ -995,36 +998,36 @@ export default class Game extends Component {
 
         }
 
-        if (this.state.gamePhase === 'game-mode-choice') {
-            return (
-                <GameModeChoice
-                    setUser={this.setUserA}
-                    setGameMode={this.setGameMode}
-                    randomShipPlacement={this.randomShipPlacement} />
-            );
-        }
+        // if (this.state.gamePhase === 'game-mode-choice') {
+        //     return (
+        //         <GameModeChoice
+        //             setUser={this.setUserA}
+        //             setGameMode={this.setGameMode}
+        //             randomShipPlacement={this.randomShipPlacement} />
+        //     );
+        // }
 
-        if (this.state.gamePhase === 'player-type-choice') {
-            return (
-                <PlayerTypeChoice
-                    setGamePhase={this.setGamePhase} />
-            );
-        }
+        // if (this.state.gamePhase === 'player-type-choice') {
+        //     return (
+        //         <PlayerTypeChoice
+        //             setGamePhase={this.setGamePhase} />
+        //     );
+        // }
 
-        if (this.state.gamePhase === 'players-list') {
-            return (
-                <PlayersList
-                    setGamePhase={this.setGamePhase}
-                    setUser={this.setUserB} />
-            );
-        }
+        // if (this.state.gamePhase === 'players-list') {
+        //     return (
+        //         <PlayersList
+        //             setGamePhase={this.setGamePhase}
+        //             setUser={this.setUserB} />
+        //     );
+        // }
 
-        if (this.state.gamePhase === 'enter-name-player-B') {
-            return (
-                <EnterName
-                    setUser={this.setUserB} />
-            );
-        }
+        // if (this.state.gamePhase === 'enter-name-player-B') {
+        //     return (
+        //         <EnterName
+        //             setUser={this.setUserB} />
+        //     );
+        // }
 
         if (this.state.gamePhase === 'placement-user_A') {
             return (

@@ -5,6 +5,8 @@ import './UserSidebar.css';
 export default function UserSidebar(props) {
     let allShipsPlaced = true;
 
+    console.log(props.ships)
+
     if (props.ships !== undefined) {
         props.ships.forEach(ship => {
             if (ship.coordinates.length === 0) {
@@ -16,60 +18,60 @@ export default function UserSidebar(props) {
     if (props.shotFired) {
         return (
             <div className='user-sidebar'>
-                <h2>{props.username}</h2>
+                <h2>{props.player.username}</h2>
                 <h3>Oddano strzał!</h3>
                 <button onClick={props.switchPlayer}>Gotowe!</button>
             </div>
         );
     }
 
-    if ((props.type === "placement_user_A" ||
-        props.type === "placement_user_B") &&
+    if ((props.type === "placement-player-A" ||
+        props.type === "placement-player-B") &&
         allShipsPlaced === false) {
         return (
             <div className='user-sidebar'>
 
                 <div>
-                    {props.username}
+                    {props.player.user.username}
                 </div>
 
-                <div>
+                {/* <div>
                     <ShipsContainer
                         ships={props.ships}
-                        username={props.username}
+                        username={props.player.username}
                         setEdges={props.setEdges}
                         orientation={props.orientation}
                         setTilesNotAllowed={props.setTilesNotAllowed}
                         setTilesNotAllowedEmpty={props.setTilesNotAllowedEmpty}
                         toggleAdjacentVisibility={props.toggleAdjacentVisibility} />
-                </div>
+                </div> */}
 
                 <div>
                     <button onClick={() => props.toggleOrientation()}>Rotate</button>
-                    <button onClick={() => props.resetShips(props.username)}>Reset</button>
-                    <button onClick={() => props.randomShipPlacement(props.username)}>Random ship placement</button>
+                    <button onClick={() => props.resetShips(props.player, props.setState)}>Reset</button>
+                    <button onClick={() => props.randomShipPlacement(props.player, props.setState)}>Random ship placement</button>
                 </div>
 
             </div>
         );
-    } else if (props.type === "placement_user_A") {
+    } else if (props.type === "placement-player-A") {
         return (
             <div className='user-sidebar'>
-                {props.username}
+                {props.player.username}
                 <div>
                     <h3>Rozmieszczono wszystkie statki!</h3>
-                    <button onClick={() => props.resetShips(props.username)}>Reset</button>
+                    <button onClick={() => props.resetShips(props.player.username)}>Reset</button>
                     <button onClick={() => props.readyPlayerA()}>Gotowe!</button>
                 </div>
             </div>
         );
-    } else if (props.type === "placement_user_B") {
+    } else if (props.type === "placement-player-B") {
         return (
             <div className='user-sidebar'>
-                {props.username}
+                {props.player.username}
                 <div>
                     <h3>Rozmieszczono wszystkie statki!</h3>
-                    <button onClick={() => props.resetShips(props.username)}>Reset</button>
+                    <button onClick={() => props.resetShips(props.player.username)}>Reset</button>
                     <button onClick={() => props.readyPlayerB()}>Gotowe!</button>
                 </div>
             </div>
@@ -79,7 +81,7 @@ export default function UserSidebar(props) {
     if (props.type === 'my-turn') {
         return (
             <div className='user-sidebar'>
-                <h2>{props.username}</h2>
+                <h2>{props.player.username}</h2>
                 <button onClick={props.switchPlayer}>Gotowe!</button>
             </div>
         );
@@ -88,7 +90,7 @@ export default function UserSidebar(props) {
     if (props.type === 'not-my-turn') {
         return (
             <div className='user-sidebar'>
-                <h2>{props.username}</h2>
+                <h2>{props.player.username}</h2>
                 <h3>Czekam na swoją rundę C:</h3>
             </div>
         );
