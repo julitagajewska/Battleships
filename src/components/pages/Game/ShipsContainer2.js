@@ -20,8 +20,8 @@ export default function ShipsContainer(props) {
         e.dataTransfer.setData("dragged-element-id", draggedElementId);
         e.dataTransfer.setData("ship-owner", shipOwner);
 
-        props.setTilesNotAllowed(shipLength, draggedElementId, props.orientation);
-        props.toggleAdjacentVisibility(true);
+        props.setTilesNotAllowed(shipLength, draggedElementId);
+        // props.toggleAdjacentVisibility(true);
 
     }
 

@@ -4,8 +4,8 @@ export default function Score(props) {
     return (
         <div>
             <h3>Wynik</h3>
-            <h5>{props.user_A.username}: {props.user_A.score}</h5>
-            <h5>{props.user_B.username}: {props.user_B.score}</h5>
+            <h5>{props.playerA.user.username}: {props.playerA.score}</h5>
+            <h5>{props.playerB.user.username}: {props.playerB.score}</h5>
         </div>
     )
 }

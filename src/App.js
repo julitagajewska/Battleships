@@ -1,5 +1,5 @@
 import './App.css';
-import Game from './components/pages/Game/NewGame';
+import BattleshipGame from './components/pages/Game/NewGame';
 import { Component } from 'react';
 import { Route, Routes } from "react-router-dom";
 import Menu from './components/pages/Menu/Menu';
@@ -86,7 +86,7 @@ export default class App extends Component {
                       startAnimationLeft={this.state.startInfoAnimation}
                       startAnimationRight={this.state.startProfileAnimation} />}
                   />
-                  <Route path="/game" element={<Game />} />
+                  <Route path="/game" element={<BattleshipGame />} />
                   <Route path="/settings" element={<Menu backgroundToggle={this.state.backgroundFadeDown} />} />
                 </Route>
 

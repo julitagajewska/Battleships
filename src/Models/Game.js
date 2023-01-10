@@ -1,14 +1,17 @@
 export class Game {
-    constructor(id, usernameA, usernameB, score, shipsGridA, shipsGridB, battleGridA, battleGridB) {
-        super();
+    constructor(id, userA, userB, score) {
 
         this.id = id;
-        this.usernameA = usernameA;
-        this.usernameB = usernameB;
+
+        this.userA = userA;
+        this.userB = userB;
+
         this.score = score;
-        this.shipsGridA = shipsGridA;
-        this.shipsGridB = shipsGridB;
-        this.battleGridA = battleGridA;
-        this.battleGridB = battleGridB;
+
+        // this.shipsGridA = shipsGridA;
+        // this.shipsGridB = shipsGridB;
+
+        // this.battleGridA = battleGridA;
+        // this.battleGridB = battleGridB;
     }
 }

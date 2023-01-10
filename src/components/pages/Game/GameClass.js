@@ -187,18 +187,18 @@ export default class Game extends Component {
     //     }));
     // }
 
-    // setShipsGrid(tilesArray, username) {
-    //     let newUsers = this.state.users.filter((user) => {
-    //         if (user.username === username) {
-    //             user.shipsGrid = tilesArray
-    //         }
-    //         return user;
-    //     })
+    setShipsGrid(tilesArray, username) {
+        let newUsers = this.state.users.filter((user) => {
+            if (user.username === username) {
+                user.shipsGrid = tilesArray
+            }
+            return user;
+        })
 
-    //     this.setState((prevState) => ({
-    //         users: newUsers
-    //     }));
-    // }
+        this.setState((prevState) => ({
+            users: newUsers
+        }));
+    }
 
     // -------------------------------- //
 
@@ -226,82 +226,82 @@ export default class Game extends Component {
     //     }))
     // }
 
-    toggleOrientation() {
-        if (this.state.orientation === 'horizontal') {
-            this.setState(prevState => ({
-                orientation: 'vertical'
-            }))
-        } else {
-            this.setState(prevState => ({
-                orientation: 'horizontal'
-            }))
-        }
+    // toggleOrientation() {
+    //     if (this.state.orientation === 'horizontal') {
+    //         this.setState(prevState => ({
+    //             orientation: 'vertical'
+    //         }))
+    //     } else {
+    //         this.setState(prevState => ({
+    //             orientation: 'horizontal'
+    //         }))
+    //     }
 
-    }
+    // }
 
-    removeShip(username, shipType) {
+    // removeShip(username, shipType) {
 
-        let newUsers = this.state.users.filter((user) => {
-            if (user.username === username) {
-                user.ships = user.ships.filter((ship) => {
-                    return ship.shipType !== shipType;
-                })
-            }
-            return user;
-        })
+    //     let newUsers = this.state.users.filter((user) => {
+    //         if (user.username === username) {
+    //             user.ships = user.ships.filter((ship) => {
+    //                 return ship.shipType !== shipType;
+    //             })
+    //         }
+    //         return user;
+    //     })
 
-        this.setState((prevState) => ({
-            users: newUsers
-        }));
+    //     this.setState((prevState) => ({
+    //         users: newUsers
+    //     }));
 
-    }
+    // }
 
-    setTilesNotAllowedEmpty() {
-        this.setState(prevState => ({
-            tilesNotAllowed: []
-        }))
-    }
+    // setTilesNotAllowedEmpty() {
+    //     this.setState(prevState => ({
+    //         tilesNotAllowed: []
+    //     }))
+    // }
 
-    setAdjacentTiles(shipOwner) {
+    // setAdjacentTiles(shipOwner) {
 
-        let tiles = this.state.users.filter(user => {
-            return user.username === shipOwner
-        })[0].shipsGrid
+    //     let tiles = this.state.users.filter(user => {
+    //         return user.username === shipOwner
+    //     })[0].shipsGrid
 
-        let rightEdge = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99];
-        let leftEdge = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
+    //     let rightEdge = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99];
+    //     let leftEdge = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
 
-        let adjacent = [];
+    //     let adjacent = [];
 
-        tiles.forEach((tile) => {
-            if (tile.shipType === '') { return; }
+    //     tiles.forEach((tile) => {
+    //         if (tile.shipType === '') { return; }
 
-            if (rightEdge.includes(tile.id)) {
-                adjacent.push(tile.id, tile.id - 1, tile.id - 10, tile.id + 10, tile.id - 11, tile.id + 9);
-                return;
-            }
+    //         if (rightEdge.includes(tile.id)) {
+    //             adjacent.push(tile.id, tile.id - 1, tile.id - 10, tile.id + 10, tile.id - 11, tile.id + 9);
+    //             return;
+    //         }
 
-            if (leftEdge.includes(tile.id)) {
-                adjacent.push(tile.id, tile.id + 1, tile.id + 11, tile.id - 9, tile.id - 10, tile.id + 10);
-                return;
-            }
+    //         if (leftEdge.includes(tile.id)) {
+    //             adjacent.push(tile.id, tile.id + 1, tile.id + 11, tile.id - 9, tile.id - 10, tile.id + 10);
+    //             return;
+    //         }
 
-            adjacent.push(tile.id, tile.id - 1, tile.id + 1, tile.id + 11, tile.id - 9, tile.id - 10, tile.id + 10, tile.id - 11, tile.id + 9);
+    //         adjacent.push(tile.id, tile.id - 1, tile.id + 1, tile.id + 11, tile.id - 9, tile.id - 10, tile.id + 10, tile.id - 11, tile.id + 9);
 
-        });
+    //     });
 
-        this.setState((prevState) => ({
-            adjacent: adjacent
-        }))
-    }
+    //     this.setState((prevState) => ({
+    //         adjacent: adjacent
+    //     }))
+    // }
 
-    toggleAdjacentVisibility(visibility) {
+    // toggleAdjacentVisibility(visibility) {
 
-        this.setState((prevState) => ({
-            displayAdjacent: visibility
-        }))
+    //     this.setState((prevState) => ({
+    //         displayAdjacent: visibility
+    //     }))
 
-    }
+    // }
 
     // getTilesNotAllowed(shipLength, draggedShipElementId, orientation) {
     //     let rightEdge = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99];
@@ -524,71 +524,71 @@ export default class Game extends Component {
 
     // }
 
-    readyPlayerA() {
+    // readyPlayerA() {
 
-        if (this.state.gameMode === 'pvc') {
+    //     if (this.state.gameMode === 'pvc') {
 
-            this.setState((prevState) => ({
-                gamePhase: `turn-0`,
-                shotFired: false,
-                adjacent: []
-            }));
-            return;
-        }
+    //         this.setState((prevState) => ({
+    //             gamePhase: `turn-0`,
+    //             shotFired: false,
+    //             adjacent: []
+    //         }));
+    //         return;
+    //     }
 
-        this.setState((prevState) => ({
-            gamePhase: 'placement-user_B',
-            tilesNotAllowed: [],
-            displayAdjacent: false,
-            adjacent: []
-        }));
-    }
+    //     this.setState((prevState) => ({
+    //         gamePhase: 'placement-user_B',
+    //         tilesNotAllowed: [],
+    //         displayAdjacent: false,
+    //         adjacent: []
+    //     }));
+    // }
 
-    readyPlayerB() {
-        this.setState((prevState) => ({
-            gamePhase: `turn-${this.randomTurn()}`,
-            tilesNotAllowed: [],
-            displayAdjacent: false,
-            adjacent: []
-        }));
-        console.log(this.state.users)
-    }
+    // readyPlayerB() {
+    //     this.setState((prevState) => ({
+    //         gamePhase: `turn-${this.randomTurn()}`,
+    //         tilesNotAllowed: [],
+    //         displayAdjacent: false,
+    //         adjacent: []
+    //     }));
+    //     console.log(this.state.users)
+    // }
 
-    randomTurn() {
-        let choice = Math.floor(Math.random() * 2);
-        return choice;
-    }
+    // randomTurn() {
+    //     let choice = Math.floor(Math.random() * 2);
+    //     return choice;
+    // }
 
-    switchPlayer() {
+    // switchPlayer() {
 
-        if (this.state.shotFired === false) {
-            return;
-        }
+    //     if (this.state.shotFired === false) {
+    //         return;
+    //     }
 
-        if (this.state.gameMode === 'pvc') {
+    //     if (this.state.gameMode === 'pvc') {
 
-            this.computerShot();
+    //         this.computerShot();
 
-            this.setState((prevState) => ({
-                gamePhase: `turn-0`,
-                shotFired: false
-            }));
-            return;
-        }
+    //         this.setState((prevState) => ({
+    //             gamePhase: `turn-0`,
+    //             shotFired: false
+    //         }));
+    //         return;
+    //     }
 
-        if (this.state.gamePhase === 'turn-0') {
-            this.setState((prevState) => ({
-                gamePhase: `turn-1`,
-                shotFired: false
-            }));
+    //     if (this.state.gamePhase === 'turn-0') {
+    //         this.setState((prevState) => ({
+    //             gamePhase: `turn-1`,
+    //             shotFired: false
+    //         }));
 
-        } else {
-            this.setState((prevState) => ({
-                gamePhase: `turn-0`,
-                shotFired: false
-            }));
-        }
-    }
+    //     } else {
+    //         this.setState((prevState) => ({
+    //             gamePhase: `turn-0`,
+    //             shotFired: false
+    //         }));
+    //     }
+    // }
 
     computerShot() {
         console.log(this.state.adjacent)
@@ -682,136 +682,136 @@ export default class Game extends Component {
 
     }
 
-    shoot(e) {
+    // shoot(e) {
 
-        if (e.target.classList[1] !== 'null') {
-            return;
-        }
+    //     if (e.target.classList[1] !== 'null') {
+    //         return;
+    //     }
 
-        if (this.state.shotFired === true) {
-            this.setState((prevState) => ({
-                shotFired: true
-            }));
-            return;
-        }
+    //     if (this.state.shotFired === true) {
+    //         this.setState((prevState) => ({
+    //             shotFired: true
+    //         }));
+    //         return;
+    //     }
 
-        let battleGrid, enemyShipsGrid;
-        let clickedTile = e.target;
-        let newUsersArray = this.state.users;
-        clickedTile.classList.add("clicked");
-        let username = '';
-        let enemyUsername = '';
+    //     let battleGrid, enemyShipsGrid;
+    //     let clickedTile = e.target;
+    //     let newUsersArray = this.state.users;
+    //     clickedTile.classList.add("clicked");
+    //     let username = '';
+    //     let enemyUsername = '';
 
-        if (this.state.gamePhase === 'turn-0') {
-            username = this.state.users[0].username;
-            battleGrid = this.state.users[0].battleGrid;
-            enemyShipsGrid = this.state.users[1].shipsGrid;
-            enemyUsername = this.state.users[1].username;
-        } else {
-            username = this.state.users[1].username;
-            battleGrid = this.state.users[1].battleGrid;
-            enemyShipsGrid = this.state.users[0].shipsGrid;
-            enemyUsername = this.state.users[0].username;
-        }
+    //     if (this.state.gamePhase === 'turn-0') {
+    //         username = this.state.users[0].username;
+    //         battleGrid = this.state.users[0].battleGrid;
+    //         enemyShipsGrid = this.state.users[1].shipsGrid;
+    //         enemyUsername = this.state.users[1].username;
+    //     } else {
+    //         username = this.state.users[1].username;
+    //         battleGrid = this.state.users[1].battleGrid;
+    //         enemyShipsGrid = this.state.users[0].shipsGrid;
+    //         enemyUsername = this.state.users[0].username;
+    //     }
 
-        if (enemyShipsGrid[clickedTile.id].shipType === '') { // miss
+    //     if (enemyShipsGrid[clickedTile.id].shipType === '') { // miss
 
-            battleGrid[clickedTile.id].state = 'miss'
+    //         battleGrid[clickedTile.id].state = 'miss'
 
-            if (this.state.gamePhase === 'turn-0') {
-                newUsersArray[0].battleGrid = battleGrid;
-            } else {
-                newUsersArray[1].battleGrid = battleGrid;
-            }
+    //         if (this.state.gamePhase === 'turn-0') {
+    //             newUsersArray[0].battleGrid = battleGrid;
+    //         } else {
+    //             newUsersArray[1].battleGrid = battleGrid;
+    //         }
 
-            this.setState((prevState) => ({
-                users: newUsersArray,
-                shotFired: true
-            }));
+    //         this.setState((prevState) => ({
+    //             users: newUsersArray,
+    //             shotFired: true
+    //         }));
 
-            return;
-        }
+    //         return;
+    //     }
 
-        if (enemyShipsGrid[clickedTile.id].shipType !== '') { // hit
+    //     if (enemyShipsGrid[clickedTile.id].shipType !== '') { // hit
 
-            battleGrid[clickedTile.id].state = 'hit'
+    //         battleGrid[clickedTile.id].state = 'hit'
 
-            if (this.state.gamePhase === 'turn-0') {
+    //         if (this.state.gamePhase === 'turn-0') {
 
-                newUsersArray[0].battleGrid = battleGrid;
+    //             newUsersArray[0].battleGrid = battleGrid;
 
-                newUsersArray[1].ships.filter((ship) => {
-                    if (ship.shipType === enemyShipsGrid[clickedTile.id].shipType) {
-                        ship.hits[enemyShipsGrid[clickedTile.id].shipElementId] = true;
-                    }
-                    return null;
-                });
+    //             newUsersArray[1].ships.filter((ship) => {
+    //                 if (ship.shipType === enemyShipsGrid[clickedTile.id].shipType) {
+    //                     ship.hits[enemyShipsGrid[clickedTile.id].shipElementId] = true;
+    //                 }
+    //                 return null;
+    //             });
 
-            } else {
+    //         } else {
 
-                newUsersArray[1].battleGrid = battleGrid;
+    //             newUsersArray[1].battleGrid = battleGrid;
 
-                newUsersArray[0].ships.filter((ship) => {
-                    if (ship.shipType === enemyShipsGrid[clickedTile.id].shipType) {
-                        ship.hits[enemyShipsGrid[clickedTile.id].shipElementId] = true;
-                    }
-                    return null;
-                });
+    //             newUsersArray[0].ships.filter((ship) => {
+    //                 if (ship.shipType === enemyShipsGrid[clickedTile.id].shipType) {
+    //                     ship.hits[enemyShipsGrid[clickedTile.id].shipElementId] = true;
+    //                 }
+    //                 return null;
+    //             });
 
-            }
+    //         }
 
-            this.setState((prevState) => ({
-                users: newUsersArray,
-                shotFired: true
-            }));
+    //         this.setState((prevState) => ({
+    //             users: newUsersArray,
+    //             shotFired: true
+    //         }));
 
-            if (this.checkIfSunk(enemyShipsGrid[clickedTile.id].shipType, enemyUsername) === true) { // sink
+    //         if (this.checkIfSunk(enemyShipsGrid[clickedTile.id].shipType, enemyUsername) === true) { // sink
 
-                let coordinates;
+    //             let coordinates;
 
-                if (this.state.gamePhase === 'turn-0') {
+    //             if (this.state.gamePhase === 'turn-0') {
 
-                    this.state.users[1].ships.forEach((ship) => {
-                        if (ship.shipType === this.state.users[1].shipsGrid[clickedTile.id].shipType) {
-                            coordinates = ship.coordinates;
+    //                 this.state.users[1].ships.forEach((ship) => {
+    //                     if (ship.shipType === this.state.users[1].shipsGrid[clickedTile.id].shipType) {
+    //                         coordinates = ship.coordinates;
 
-                            this.setScore(username, ship.shipLength)
-                        }
-                    })
+    //                         this.setScore(username, ship.shipLength)
+    //                     }
+    //                 })
 
-                    newUsersArray[0].battleGrid.forEach((tile) => {
-                        if (coordinates.includes(tile.id)) {
-                            tile.state = 'sink'
-                        }
-                    })
+    //                 newUsersArray[0].battleGrid.forEach((tile) => {
+    //                     if (coordinates.includes(tile.id)) {
+    //                         tile.state = 'sink'
+    //                     }
+    //                 })
 
-                } else {
-                    this.state.users[0].ships.forEach((ship) => {
-                        if (ship.shipType === this.state.users[0].shipsGrid[clickedTile.id].shipType) {
-                            coordinates = ship.coordinates;
+    //             } else {
+    //                 this.state.users[0].ships.forEach((ship) => {
+    //                     if (ship.shipType === this.state.users[0].shipsGrid[clickedTile.id].shipType) {
+    //                         coordinates = ship.coordinates;
 
-                            this.setScore(username, ship.shipLength)
-                        }
-                    })
+    //                         this.setScore(username, ship.shipLength)
+    //                     }
+    //                 })
 
-                    newUsersArray[1].battleGrid.forEach((tile) => {
-                        if (coordinates.includes(tile.id)) {
-                            tile.state = 'sink'
-                        }
-                    })
+    //                 newUsersArray[1].battleGrid.forEach((tile) => {
+    //                     if (coordinates.includes(tile.id)) {
+    //                         tile.state = 'sink'
+    //                     }
+    //                 })
 
-                }
-            }
+    //             }
+    //         }
 
-            this.setState((prevState) => ({
-                users: newUsersArray,
-                shotFired: true
-            }));
+    //         this.setState((prevState) => ({
+    //             users: newUsersArray,
+    //             shotFired: true
+    //         }));
 
-            return;
-        }
+    //         return;
+    //     }
 
-    }
+    // }
 
     setShipCoordinates(coordinates, username, shipType) {
 
@@ -835,40 +835,40 @@ export default class Game extends Component {
         }))
     }
 
-    checkIfSunk(shipType, username) {
+    // checkIfSunk(shipType, username) {
 
-        console.log(username)
+    //     console.log(username)
 
-        let shipsArray;
-        let isSunk = true;
+    //     let shipsArray;
+    //     let isSunk = true;
 
 
-        this.state.users.filter((user) => {
-            if (user.username === username) {
-                console.log(this.state.users)
-                shipsArray = user.ships;
-            }
-            return user;
-        })
+    //     this.state.users.filter((user) => {
+    //         if (user.username === username) {
+    //             console.log(this.state.users)
+    //             shipsArray = user.ships;
+    //         }
+    //         return user;
+    //     })
 
-        shipsArray.filter((ship) => {
-            if (ship.shipType !== shipType) {
-                return null;
-            }
+    //     shipsArray.filter((ship) => {
+    //         if (ship.shipType !== shipType) {
+    //             return null;
+    //         }
 
-            ship.hits.filter((hit) => {
-                if (hit === false) {
-                    isSunk = false;
-                }
+    //         ship.hits.filter((hit) => {
+    //             if (hit === false) {
+    //                 isSunk = false;
+    //             }
 
-                return null;
-            })
+    //             return null;
+    //         })
 
-            return null;
-        })
+    //         return null;
+    //     })
 
-        return isSunk;
-    }
+    //     return isSunk;
+    // }
 
     // randomShipPlacement(username) {
     //     let newUsers = this.state.users;
@@ -1033,7 +1033,7 @@ export default class Game extends Component {
             return (
                 <div className='game-container'>
 
-                    <div>
+                    {/* <div>
                         <UserSidebar
                             type={"placement_user_A"}
                             username={this.state.users[0].username}
@@ -1046,7 +1046,7 @@ export default class Game extends Component {
                             toggleAdjacentVisibility={this.toggleAdjacentVisibility}
                             readyPlayerA={this.readyPlayerA}
                             randomShipPlacement={this.randomShipPlacement} />
-                    </div>
+                    </div> */}
 
                     <Grid
                         type={"placement"}

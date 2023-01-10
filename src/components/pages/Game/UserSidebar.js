@@ -1,11 +1,13 @@
 import React from 'react';
 import ShipsContainer from './ShipsContainer2'
 import './UserSidebar.css';
+import { useSound } from '../../utils/Sound';
 
 export default function UserSidebar(props) {
-    let allShipsPlaced = true;
 
-    console.log(props.ships)
+    let sound = useSound();
+
+    let allShipsPlaced = true;
 
     if (props.ships !== undefined) {
         props.ships.forEach(ship => {
@@ -20,7 +22,7 @@ export default function UserSidebar(props) {
             <div className='user-sidebar'>
                 <h2>{props.player.username}</h2>
                 <h3>Oddano strzał!</h3>
-                <button onClick={props.switchPlayer}>Gotowe!</button>
+                <button onClick={() => { sound.playPick(); props.switchPlayer(); }}>Gotowe!</button>
             </div>
         );
     }
@@ -35,21 +37,20 @@ export default function UserSidebar(props) {
                     {props.player.user.username}
                 </div>
 
-                {/* <div>
+                <div>
                     <ShipsContainer
                         ships={props.ships}
-                        username={props.player.username}
-                        setEdges={props.setEdges}
+                        username={props.player.user.username}
                         orientation={props.orientation}
-                        setTilesNotAllowed={props.setTilesNotAllowed}
+                        setTilesNotAllowed={props.setNotAllowed}
                         setTilesNotAllowedEmpty={props.setTilesNotAllowedEmpty}
                         toggleAdjacentVisibility={props.toggleAdjacentVisibility} />
-                </div> */}
+                </div>
 
                 <div>
-                    <button onClick={() => props.toggleOrientation()}>Rotate</button>
-                    <button onClick={() => props.resetShips(props.player, props.setState)}>Reset</button>
-                    <button onClick={() => props.randomShipPlacement(props.player, props.setState)}>Random ship placement</button>
+                    <button onClick={() => { sound.playPick(); props.toggleOrientation(); }}>Rotate</button>
+                    <button onClick={() => { sound.playPick(); props.resetShips(props.player, props.setState); }}>Reset</button>
+                    <button disabled={!props.allowRandom} onClick={() => { sound.playPick(); props.randomShipPlacement(props.player, props.setState); }}>Random ship placement</button>
                 </div>
 
             </div>
@@ -57,11 +58,11 @@ export default function UserSidebar(props) {
     } else if (props.type === "placement-player-A") {
         return (
             <div className='user-sidebar'>
-                {props.player.username}
+                {props.player.user.username}
                 <div>
                     <h3>Rozmieszczono wszystkie statki!</h3>
-                    <button onClick={() => props.resetShips(props.player.username)}>Reset</button>
-                    <button onClick={() => props.readyPlayerA()}>Gotowe!</button>
+                    <button onClick={() => { sound.playPick(); props.resetShips(props.player, props.setState); }}>Reset</button>
+                    <button onClick={() => { sound.playPick(); props.playerReady(); }}>Gotowe!</button>
                 </div>
             </div>
         );
@@ -71,8 +72,8 @@ export default function UserSidebar(props) {
                 {props.player.username}
                 <div>
                     <h3>Rozmieszczono wszystkie statki!</h3>
-                    <button onClick={() => props.resetShips(props.player.username)}>Reset</button>
-                    <button onClick={() => props.readyPlayerB()}>Gotowe!</button>
+                    <button onClick={() => { sound.playPick(); props.resetShips(props.player.username); }}> Reset </button>
+                    <button onClick={() => { sound.playPick(); props.playerReady(); }}> Gotowe! </button>
                 </div>
             </div>
         );
@@ -81,8 +82,8 @@ export default function UserSidebar(props) {
     if (props.type === 'my-turn') {
         return (
             <div className='user-sidebar'>
-                <h2>{props.player.username}</h2>
-                <button onClick={props.switchPlayer}>Gotowe!</button>
+                <h2>{props.player.user.username}</h2>
+                <button onClick={() => { sound.playPick(); props.playerReady(); }} disabled={!props.shotFired}>Gotowe!</button>
             </div>
         );
     }
@@ -90,12 +91,19 @@ export default function UserSidebar(props) {
     if (props.type === 'not-my-turn') {
         return (
             <div className='user-sidebar'>
-                <h2>{props.player.username}</h2>
+                <h2>{props.player.user.username}</h2>
                 <h3>Czekam na swoją rundę C:</h3>
             </div>
         );
     }
 
-
+    if (props.type === 'computer-turn') {
+        return (
+            <div className='user-sidebar'>
+                <h2>{props.player.user.username}</h2>
+                <h3>Strzelam! {">:C"}</h3>
+            </div>
+        );
+    }
 
 }

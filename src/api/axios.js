@@ -10,6 +10,9 @@ axios.defaults.baseURL = 'http://localhost:7777/';
 
 const defaultImage = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png";
 
+
+// ------- Users requests -------- //
+
 export const getUsers = async () => {
     let users = [];
     let response = await axios.get('users');
@@ -120,4 +123,74 @@ export const checkPassword = async (username, password) => {
     console.log(result);
 
     return result;
+}
+
+// -------- Games requests -------- //
+
+export const getAllGames = async () => {
+    let games = [];
+
+    try {
+        let response = await axios.get('games');
+        games = response.data;
+    } catch (error) {
+
+    }
+
+    return games;
+}
+
+export const getUserGames = async (user) => {
+    let games = await getAllGames();
+
+    games.filter((game) => {
+        if (game.userA.username === user.username || game.userB.username === user.username) {
+            return game
+        }
+    })
+
+    return games;
+}
+
+export const getNewGameId = async () => {
+    let games = [];
+    let response = await axios.get('games');
+
+    games = response.data;
+    if (games.length === 0) {
+        return 0;
+    }
+
+    let ids = [];
+
+    games.forEach(game => {
+        ids.push(parseInt(game.id))
+    });
+
+    ids = ids.sort(function (a, b) { return a - b; });
+
+    return ids[ids.length - 1] + 1;
+
+}
+
+export const saveGame = async (game) => {
+    try {
+        await axios.post('games', game);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getLastThreeGames = async (user) => {
+    let games = [];
+    let response = await axios.get('games');
+    games = response.data;
+
+    games.filter((game) => {
+        if (game.userA.username === user.username || game.userB.username === user.username) {
+            return game
+        }
+    })
+
+    return games.slice(games.length - 1);
 }

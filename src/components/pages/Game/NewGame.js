@@ -3,22 +3,29 @@ import React, { useState, useEffect } from 'react';
 import { Ship } from '../../../Models/Ship';
 import { Tile } from '../../../Models/Tile';
 import { Player } from '../../../Models/Player';
-import { useAuth } from '../../utils/auth';
+import { User } from '../../../Models/User';
 
+import { useAuth } from '../../utils/auth';
+import { useSound } from '../../utils/Sound';
+
+import WaitingForUserOVerlay from './WaitingForUserOVerlay';
 import GameModeChoice from './GameModeChoice';
 import PlayerTypeChoice from './PlayerTypeChoice';
 import PlayersList from './PlayersList';
 import EnterName from './EnterName';
 import UserSidebar from './UserSidebar';
+import Grid from './Grid';
+import Score from './Score';
 
 import './GameClass.css';
-import { User } from '../../../Models/User';
+import GameOver from './GameOver';
 
-export default function Game(props) {
+export default function BattleshipGame(props) {
 
     // Constant varaibles
     const gridWidth = 10;
     const auth = useAuth();
+    const sound = useSound();
 
 
     // Game state
@@ -40,8 +47,10 @@ export default function Game(props) {
     const [allowRandom, setAllowRandom] = useState(true);
 
     // Gameplay
-    const [shotfired, setShotFired] = useState(false);
+    const [shotFired, setShotFired] = useState(false);
     const [cursorDisabled, setCursorDisabled] = useState(false);
+
+    const [toggleOverlay, setToggleOverlay] = useState(true);
 
 
 
@@ -75,6 +84,7 @@ export default function Game(props) {
         );
 
         setComputer(computerPlayer);
+
     }, [])
 
     // Assign user to playerB
@@ -89,10 +99,6 @@ export default function Game(props) {
 
         setPlayerB(player);
     }
-
-
-
-
 
     const generateShips = (username) => {
         let newShips = [];
@@ -236,12 +242,14 @@ export default function Game(props) {
         return true;
     }
 
-    const setCoordinates = (player, shipType, coordinates) => {
+    const setCoordinates = (player, setState, shipType, coordinates) => {
         player.ships.filter((ship) => {
             if (ship.shipType === shipType) {
                 ship.coordinates = coordinates;
             }
         })
+
+        setState(player);
     }
 
     const randomShipPlacement = (player, setState) => {
@@ -282,8 +290,10 @@ export default function Game(props) {
                 notAllowed = getTilesNotAllowed(ship.shipLength, 0, orientation);
                 adjacent = getAdjacentTiles(shipsGrid);
 
+                console.log("Ble");
+
                 if (canPlaceRandomShip(randomTile, randomTile, lastTile, orientation, adjacent, notAllowed) === true) {
-                    setCoordinates(player, ship.shipType, coordinates);
+                    setCoordinates(player, setState, ship.shipType, coordinates);
 
                     let counter = 0;
                     coordinates.forEach((coordinate) => {
@@ -299,11 +309,17 @@ export default function Game(props) {
         })
 
         setState(player);
+        setAdjacent([]);
+        setTilesNotAllowed([]);
     }
 
     // Ship placement
     const toggleOrientation = () => {
-        setOrientation(!orientation)
+        if (orientation === 'horizontal') {
+            setOrientation('vertical')
+        } else {
+            setOrientation('horizontal')
+        }
     }
 
     const toggleAdjacentVisibility = (visibility) => {
@@ -375,10 +391,14 @@ export default function Game(props) {
     }
 
     const resetShips = (player, setState) => {
-        player.ships = generateShips(player.username);
-        player.shipsGrid = generateTiles(player, "ships_grid");
+        console.log(player);
+        player.ships = generateShips(player.user.username);
+        player.shipsGrid = generateTiles(player.user.username, "ships_grid");
 
-        setState(player)
+        setAdjacent([]);
+        setTilesNotAllowed([]);
+        setState(player);
+        setAllowRandom(true);
     }
 
     const setTilesNotAllowedEmpty = () => {
@@ -386,14 +406,286 @@ export default function Game(props) {
     }
 
     const readyPlayerA = () => {
-        setGamePhase("placement-player-B");
+        if (gameMode === 'pvp' && gamePhase === 'placement-player-A') {
+            setTilesNotAllowed([]);
+            setAdjacent([]);
+            setAllowRandom(true);
+            setGamePhase("placement-player-B");
+        }
+
+        if (gameMode === 'pvp' && gamePhase === 'turn-0') {
+            setGamePhase("waiting-for-player-B");
+        }
+
+        if (gameMode === 'pvp' && gamePhase === 'waiting-for-player-A') {
+            setShotFired(false);
+            setGamePhase('turn-0');
+        }
+
+        if (gameMode === 'pvc' && gamePhase === 'placement-player-A') {
+            setGamePhase('turn-0');
+        }
+
+        if (gameMode === 'pvc' && gamePhase === 'turn-0') {
+            setShotFired(false);
+            setGamePhase('turn-1');
+            computerShot();
+        }
+    }
+
+    const readyPlayerB = () => {
+        if (gamePhase === 'placement-player-B') {
+            setGamePhase(`turn-${randomTurn()}`);
+        }
+
+        if (gamePhase === 'waiting-for-player-B') {
+            setShotFired(false);
+            setGamePhase('turn-1');
+        }
+
+        if (gamePhase === 'turn-1') {
+            setGamePhase('waiting-for-player-A');
+        }
+    }
+
+    const randomTurn = () => {
+        let choice = Math.floor(Math.random() * 2);
+        return choice;
+    }
+
+    const setAdjacentTiles = (player) => {
+        let tiles = player.shipsGrid;
+
+        let rightEdge = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99];
+        let leftEdge = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
+
+        let adjacent = [];
+
+        tiles.forEach((tile) => {
+            if (tile.shipType === '') { return; }
+
+            if (rightEdge.includes(tile.id)) {
+                adjacent.push(tile.id, tile.id - 1, tile.id - 10, tile.id + 10, tile.id - 11, tile.id + 9);
+                return;
+            }
+
+            if (leftEdge.includes(tile.id)) {
+                adjacent.push(tile.id, tile.id + 1, tile.id + 11, tile.id - 9, tile.id - 10, tile.id + 10);
+                return;
+            }
+
+            adjacent.push(tile.id, tile.id - 1, tile.id + 1, tile.id + 11, tile.id - 9, tile.id - 10, tile.id + 10, tile.id - 11, tile.id + 9);
+
+        });
+
+        setAdjacent(adjacent);
+    }
+
+    const setShipsGrid = (player, setState, shipsGrid) => {
+        player.shipsGrid = shipsGrid;
+        setState(player);
+    }
+
+    const removeShip = (player, setState, shipType) => {
+        player.ships.filter((ship) => {
+            return ship.shipType !== shipType;
+        })
+
+        setState(player);
+    }
+
+    const canDrop = (tileId, firstElementId, lastElementId, orientation) => {
+        if (tilesNotAllowed.includes(tileId)) {
+            return false;
+        }
+
+        if (orientation === 'horizontal') {
+            for (let i = firstElementId; i <= lastElementId; i++) {
+                if (adjacent.includes(i)) { return false }
+            }
+        } else {
+            for (let i = firstElementId; i <= lastElementId; i = i + 10) {
+                if (adjacent.includes(i)) { return false }
+            }
+        }
+
+        return true;
+    }
+
+    // Game loop
+
+    const shoot = (e, player, enemy, setPlayer, setEnemy) => {
+
+        if (shotFired === true) {
+            sound.playBlocked();
+            return;
+        }
+
+        if (e.target.classList[1] !== 'null') {
+            sound.playBlocked();
+            return;
+        }
+
+        sound.playPick();
+
+        let clickedTile = e.target;
+
+        // Miss
+        if (enemy.shipsGrid[clickedTile.id].shipType === '') {
+
+            player.battleGrid[clickedTile.id].state = 'miss';
+            setPlayer(player);
+            setShotFired(true);
+            return;
+
+        }
+
+        // Hit
+        if (enemy.shipsGrid[clickedTile.id].shipType !== '') {
+
+            player.battleGrid[clickedTile.id].state = 'hit';
+            setShotFired(true);
+
+            enemy.ships.filter((ship) => {
+                if (ship.shipType === enemy.shipsGrid[clickedTile.id].shipType) {
+                    ship.hits[enemy.shipsGrid[clickedTile.id].shipElementId] = true;
+                }
+            })
+
+            setPlayer(player);
+            setEnemy(enemy);
+
+            // Sink
+            if (checkIfSunk(enemy, enemy.shipsGrid[clickedTile.id].shipType) === true) {
+
+                let coordinates;
+
+                enemy.ships.forEach((ship) => {
+                    if (ship.shipType === enemy.shipsGrid[clickedTile.id].shipType) {
+                        coordinates = ship.coordinates;
+                        player.score = player.score + ship.shipLength;
+                        if (player.score === 17) {
+                            setGamePhase('game-over');
+                        }
+                    }
+                })
+
+                player.battleGrid.forEach((tile) => {
+                    if (coordinates.includes(tile.id)) {
+                        tile.state = 'sink'
+                    }
+                })
+            }
+
+            setPlayer(player);
+            setEnemy(enemy);
+
+            return;
+
+        }
+    }
+
+    const checkIfSunk = (player, shipType) => {
+        let isSunk = true;
+
+        player.ships.filter((ship) => {
+            if (ship.shipType === shipType) {
+                ship.hits.filter((hit) => {
+                    if (hit === false) {
+                        isSunk = false;
+                    }
+                })
+            }
+        })
+
+        return isSunk;
+    }
+
+    const delay = (time) => {
+        return new Promise(resolve => setTimeout(resolve, time));
+    }
+
+    const computerShot = async () => {
+
+        let clickedTileId;
+
+        while (1) {
+            clickedTileId = Math.floor(Math.random() * 100);
+
+            if (computer.battleGrid[clickedTileId].state === null && adjacent.includes(clickedTileId) === false) {
+                break;
+            }
+        }
+
+        console.log(`Computer shoots: [${clickedTileId}] State: ${playerA.shipsGrid[clickedTileId].state}`);
+
+        await delay(1000);
+        sound.playPick();
+
+        // Miss
+        if (playerA.shipsGrid[clickedTileId].shipType === '') { // miss
+
+            computer.battleGrid[clickedTileId].state = 'miss'
+
+            setShotFired(false);
+            setComputer(computer);
+            setPlayerA(playerA);
+            setGamePhase('turn-0');
+
+            return;
+        }
+
+        // Hit
+        if (playerA.shipsGrid[clickedTileId].shipType !== '') { // miss
+
+            computer.battleGrid[clickedTileId].state = 'hit'
+
+            playerA.ships.filter((ship) => {
+                if (ship.shipType === playerA.shipsGrid[clickedTileId].shipType) {
+                    ship.hits[playerA.shipsGrid[clickedTileId].shipElementId] = true;
+                }
+            })
+
+            setShotFired(false);
+            setComputer(computer);
+            setPlayerA(playerA);
+            setGamePhase('turn-0');
+
+
+            // Sink
+            if (checkIfSunk(playerA, playerA.shipsGrid[clickedTileId].shipType) === true) {
+
+                let coordinates;
+
+                playerA.ships.forEach((ship) => {
+                    if (ship.shipType === playerA.shipsGrid[clickedTileId].shipType) {
+                        coordinates = ship.coordinates;
+                        computer.score = computer.score + ship.shipLength;
+                        if (computer.score === 17) {
+                            setGamePhase('game-over');
+                        }
+                    }
+                })
+
+                computer.battleGrid.forEach((tile) => {
+                    if (coordinates.includes(tile.id)) {
+                        tile.state = 'sink'
+                    }
+                })
+            }
+
+            setShotFired(false);
+            setComputer(computer);
+            setPlayerA(playerA);
+            setGamePhase('turn-0');
+            return;
+        }
+
     }
 
     // Game phases
 
     if (gamePhase === 'game-mode-choice') {
-        console.log(playerA);
-        console.log(computer);
         return (
             <GameModeChoice
                 setGameMode={setGameMode}
@@ -442,16 +734,267 @@ export default function Game(props) {
                         resetShips={resetShips}
                         setTilesNotAllowedEmpty={setTilesNotAllowedEmpty}
                         toggleAdjacentVisibility={toggleAdjacentVisibility}
-                        readyPlayerA={readyPlayerA}
-                        randomShipPlacement={randomShipPlacement} />
+                        playerReady={readyPlayerA}
+                        randomShipPlacement={randomShipPlacement}
+                        allowRandom={allowRandom}
+                        setAllowRandom={setAllowRandom} />
+                </div>
+                <Grid
+                    type={"placement"}
+                    player={playerA}
+                    setState={setPlayerA}
+                    tiles={playerA.shipsGrid}
+                    tilesNotAllowed={tilesNotAllowed}
+                    adjacentTiles={adjacent}
+                    canDrop={canDrop}
+                    orientation={orientation}
+                    removeShip={removeShip}
+                    setShipsGrid={setShipsGrid}
+                    setAdjacentTiles={setAdjacentTiles}
+                    setTilesNotAllowedEmpty={setTilesNotAllowedEmpty}
+                    toggleAdjacentVisibility={toggleAdjacentVisibility}
+                    setCoordinates={setCoordinates}
+                    adjecentVisibility={displayAdjacent}
+                    setAllowRandom={setAllowRandom} />
+
+            </div>
+        );
+    }
+
+    if (gamePhase === 'placement-player-B') {
+        return (
+            <div className='game-container'>
+                <Grid
+                    type={"placement"}
+                    player={playerB}
+                    setState={setPlayerB}
+                    tiles={playerB.shipsGrid}
+                    tilesNotAllowed={tilesNotAllowed}
+                    adjacentTiles={adjacent}
+                    canDrop={canDrop}
+                    orientation={orientation}
+                    removeShip={removeShip}
+                    setShipsGrid={setShipsGrid}
+                    setAdjacentTiles={setAdjacentTiles}
+                    setTilesNotAllowedEmpty={setTilesNotAllowedEmpty}
+                    toggleAdjacentVisibility={toggleAdjacentVisibility}
+                    setCoordinates={setCoordinates}
+                    adjecentVisibility={displayAdjacent}
+                    allowRandom={allowRandom}
+                    setAllowRandom={setAllowRandom} />
+                <div>
+                    <UserSidebar
+                        player={playerB}
+                        setState={setPlayerB}
+                        type={"placement-player-B"}
+                        ships={playerB.ships}
+                        orientation={orientation}
+                        toggleOrientation={toggleOrientation}
+                        setNotAllowed={setNotAllowed}
+                        resetShips={resetShips}
+                        setTilesNotAllowedEmpty={setTilesNotAllowedEmpty}
+                        toggleAdjacentVisibility={toggleAdjacentVisibility}
+                        playerReady={readyPlayerB}
+                        randomShipPlacement={randomShipPlacement}
+                        allowRandom={allowRandom}
+                        setAllowRandom={setAllowRandom} />
                 </div>
             </div>
         );
     }
 
+    if (gamePhase === 'turn-0' && gameMode === 'pvp') {
+        return (
+            <div className='container'>
+                <Score
+                    playerA={playerA}
+                    playerB={playerB} />
 
-    console.log(playerA);
-    console.log(playerB);
+                <div className='game-container'>
+                    <div>
+                        <UserSidebar
+                            type="my-turn"
+                            player={playerA}
+                            switchPlayer={readyPlayerA}
+                            shotFired={shotFired} />
+                        <Grid
+                            type="ships-overview"
+                            shipTiles={playerA.shipsGrid}
+                            battleTiles={playerB.battleGrid} />
+                    </div>
+
+                    <Grid
+                        username={playerA.user.username}
+                        player={playerA}
+                        setPlayer={setPlayerA}
+                        enemy={playerB}
+                        setEnemy={setPlayerB}
+                        type={"battle"}
+                        tiles={playerA.battleGrid}
+                        shoot={shoot}
+                        shotFired={shotFired} />
+
+                    <div>
+                        <UserSidebar
+                            type="not-my-turn"
+                            player={playerB} />
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    if (gamePhase === 'turn-0' && gameMode === 'pvc') {
+        return (
+            <div className='container'>
+                <Score
+                    playerA={playerA}
+                    playerB={computer} />
+
+                <div className='game-container'>
+                    <div>
+                        <UserSidebar
+                            type="my-turn"
+                            player={playerA}
+                            switchPlayer={readyPlayerA}
+                            shotFired={shotFired} />
+                        <Grid
+                            type="ships-overview"
+                            shipTiles={playerA.shipsGrid}
+                            battleTiles={computer.battleGrid} />
+                    </div>
+
+                    <Grid
+                        username={playerA.user.username}
+                        player={playerA}
+                        setPlayer={setPlayerA}
+                        enemy={computer}
+                        setEnemy={setComputer}
+                        type={"battle"}
+                        tiles={playerA.battleGrid}
+                        shoot={shoot}
+                        shotFired={shotFired} />
+
+                    <div>
+                        <UserSidebar
+                            type="not-my-turn"
+                            player={computer} />
+                    </div>
+                </div>
+            </div>
+        )
+
+    }
+
+    if (gamePhase === 'turn-1' && gameMode === 'pvc') {
+        return (
+            <div className='container'>
+                <Score
+                    playerA={playerA}
+                    playerB={computer} />
+
+                <div className='game-container'>
+                    <div>
+                        <UserSidebar
+                            type="my-turn"
+                            player={playerA}
+                            switchPlayer={readyPlayerA}
+                            shotFired={shotFired} />
+                        <Grid
+                            type="ships-overview"
+                            shipTiles={playerA.shipsGrid}
+                            battleTiles={computer.battleGrid} />
+                    </div>
+
+                    <Grid
+                        username={playerA.user.username}
+                        player={playerA}
+                        setPlayer={setPlayerA}
+                        enemy={computer}
+                        setEnemy={setComputer}
+                        type={"battle"}
+                        tiles={playerA.battleGrid}
+                        shoot={shoot}
+                        shotFired={shotFired} />
+
+                    <div>
+                        <UserSidebar
+                            type="computer-turn"
+                            player={computer}
+                            computerShot={computerShot} />
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    if (gamePhase === 'turn-1' && gameMode === 'pvp') {
+        return (
+            <div className='container'>
+                <Score
+                    playerA={playerA}
+                    playerB={playerB} />
+
+                <div className='game-container'>
+
+                    <div>
+                        <UserSidebar
+                            type="not-my-turn"
+                            player={playerA} />
+                    </div>
+
+                    <Grid
+                        username={playerB.user.username}
+                        player={playerB}
+                        setPlayer={setPlayerB}
+                        enemy={playerA}
+                        setEnemy={setPlayerA}
+                        type={"battle"}
+                        tiles={playerB.battleGrid}
+                        shoot={shoot}
+                        shotFired={shotFired} />
+
+                    <div>
+                        <UserSidebar
+                            type="my-turn"
+                            player={playerB}
+                            switchPlayer={readyPlayerB}
+                            shotFired={shotFired} />
+                        <Grid
+                            type="ships-overview"
+                            shipTiles={playerB.shipsGrid}
+                            battleTiles={playerA.battleGrid} />
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    if (gamePhase === 'waiting-for-player-B') {
+        return (
+            <WaitingForUserOVerlay
+                overlayVisible={toggleOverlay}
+                username={playerB.user.username}
+                ready={readyPlayerB} />
+        )
+
+    }
+
+    if (gamePhase === 'waiting-for-player-A') {
+        return (
+            <WaitingForUserOVerlay
+                overlayVisible={toggleOverlay}
+                username={playerA.user.username}
+                ready={readyPlayerA} />
+        )
+    }
+
+    if (gamePhase === 'game-over') {
+        return (
+            <GameOver playerA={playerA} playerB={playerB} />
+        );
+    }
+
 
     return (
         <div className="upper-layer">

@@ -1,7 +1,11 @@
 import React from 'react';
-import './Grid.css'
+import './Grid.css';
+import { ImCross } from 'react-icons/im';
+import { useSound } from '../../utils/Sound';
 
 export default function Grid(props) {
+
+    let sound = useSound();
 
     const dragEnter = (e) => {
         let mouseOverTile = e.target;
@@ -31,6 +35,7 @@ export default function Grid(props) {
             lastElementId = firstElementId + shipLength - 1;
 
             if (props.canDrop(parseInt(droppedOnTile.id), firstElementId, lastElementId, props.orientation) === false) {
+                sound.playBlocked();
                 e.preventDefault();
                 return;
             }
@@ -42,7 +47,8 @@ export default function Grid(props) {
                 newArray[i].user = shipOwner;
 
                 coordinates.push(i);
-                props.setShipsGrid(newArray, shipOwner);
+                props.setShipsGrid(props.player, props.setState, newArray);
+                // props.setShipsGrid(props.player, props.setState, newArray);
                 shipElementCounter++;
             }
 
@@ -53,6 +59,7 @@ export default function Grid(props) {
             lastElementId = firstElementId + (shipLength * 10) - 10;
 
             if (props.canDrop(parseInt(droppedOnTile.id), firstElementId, lastElementId, props.orientation) === false) {
+                sound.playBlocked();
                 e.preventDefault();
                 return;
             }
@@ -62,14 +69,16 @@ export default function Grid(props) {
                 newArray[i].shipType = shipType;
 
                 coordinates.push(i);
-                props.setShipsGrid(newArray, shipOwner);
+                props.setShipsGrid(props.player, props.setState, newArray);
             }
 
             droppedOnTile.classList.add(shipType);
         }
 
-        props.setCoordinates(shipOwner, shipType, coordinates);
-        props.setAdjacentTiles(shipOwner, droppedOnTile);
+        sound.playPick();
+        props.setAllowRandom(false);
+        props.setCoordinates(props.player, props.setState, shipType, coordinates);
+        props.setAdjacentTiles(props.player);
         props.setTilesNotAllowedEmpty([]);
         props.toggleAdjacentVisibility(false);
     }
@@ -112,7 +121,7 @@ export default function Grid(props) {
                         if (props.battleTiles[tile.id].state === 'miss') {
                             return (
                                 <div key={`${tile.key}-overview-${tile.id}`} className={`overview-grid-tile overview-miss`}>
-                                    X
+                                    <ImCross size="14" />
                                 </div>
                             );
                         }
@@ -120,7 +129,7 @@ export default function Grid(props) {
                         if (props.battleTiles[tile.id].state === 'hit') {
                             return (
                                 <div key={`${tile.key}-overview-${tile.id}`} className={`overview-grid-tile overview-hit ${tile.shipType}`}>
-                                    X
+                                    <ImCross size="14" />
                                 </div>
                             );
                         }
@@ -128,7 +137,7 @@ export default function Grid(props) {
                         if (props.battleTiles[tile.id].state === 'sink') {
                             return (
                                 <div key={`${tile.key}-overview-${tile.id}`} className={`overview-grid-tile overview-sink`}>
-                                    X
+                                    <ImCross size="14" />
                                 </div>
                             );
                         }
@@ -147,8 +156,6 @@ export default function Grid(props) {
     if (props.type === 'battle') {
         return (
             <div className={`battle-grid`}>
-                {/* {console.log(props.tiles)} */}
-                {/* {console.log(`Battlegrid: ${props.username}`)} */}
                 {props.tiles.map((tile) => {
                     return (
                         <div
@@ -157,7 +164,7 @@ export default function Grid(props) {
                              ${tile.state !== null ? "blocked" : ""}`}
                             key={`battle-grid-${tile.id}`}
                             id={tile.id}
-                            onClick={(e) => props.shoot(e)}
+                            onClick={(e) => props.shoot(e, props.player, props.enemy, props.setPlayer, props.setEnemy)}
                         >
                         </div>
                     )

@@ -1,0 +1,50 @@
+.logout-container {
+    height: fit-content;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: space-evenly;
+    background: linear-gradient(to top,
+            rgba(18, 66, 87, 0.3),
+            rgba(18, 66, 87, 0.1));
+    padding: 2rem 2rem;
+    backdrop-filter: blur(3px);
+    border-radius: 0.75rem;
+    box-shadow:
+        rgba(0, 0, 0, 0.16) 0px 3px 6px,
+        rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.button-medium {
+    border: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--gradient-2);
+    padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+    margin: 1rem;
+    cursor: pointer;
+    border-radius: 2rem;
+    transition: all 0.3s ease 0s;
+    box-shadow:
+        rgba(0, 0, 0, 0.16) 0px 3px 6px,
+        rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.button-medium:hover {
+    background-color: #005B95;
+    color: white;
+}
+
+.button-medium .button-icon {
+    margin-right: 1rem;
+}
+
+.button-medium p {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0.5rem 0rem;
+}

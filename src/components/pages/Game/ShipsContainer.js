@@ -29,7 +29,7 @@ export default function ShipsContainer(props) {
         e.dataTransfer.setData("dragged-element-id", draggedElementId);
         e.dataTransfer.setData("ship-owner", shipOwner);
 
-        props.setEdges(parseInt(draggedElementId), shipOrientation, parseInt(shipLength));
+        // props.setEdges(parseInt(draggedElementId), shipOrientation, parseInt(shipLength));
     }
 
     const dragEnd = (e) => {
@@ -87,7 +87,7 @@ export default function ShipsContainer(props) {
                 shipContainers.push(shipContainer);
 
                 return (
-                    shipContainer 
+                    shipContainer
                 );
             })}
         </div>
