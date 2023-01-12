@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Sidebar.css';
 import { GrCircleQuestion } from 'react-icons/gr';
 import { RiUser5Line } from 'react-icons/ri';
-import { useSound } from '../utils/Sound';
+import { useSound } from '../../utils/Sound';
 
 export default function Sidebar(props) {
 

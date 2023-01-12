@@ -1,5 +1,6 @@
-import React from 'react'
-import { checkUsernameLength, hasSpecialCharacter, hasSpace } from '../utils/Validators';
+import React from 'react';
+import { checkUsernameLength, hasSpecialCharacter, hasSpace } from '../../utils/Validators';
+import './UsernameInput.css';
 
 export default function UsernameInput(props) {
 
@@ -44,7 +45,7 @@ export default function UsernameInput(props) {
 
 
     return (
-        <div>
+        <div className="input-container">
             <input
                 type="text"
                 id="username"

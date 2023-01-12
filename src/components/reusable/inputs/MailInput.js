@@ -1,5 +1,6 @@
 import React from 'react'
-import { isEmail } from '../utils/Validators';
+import { isEmail } from '../../utils/Validators';
+import './MailInput.css';
 
 export default function MailInput(props) {
 
@@ -21,7 +22,7 @@ export default function MailInput(props) {
     }
 
     return (
-        <div>
+        <div className="input-container">
             <input
                 type="mail"
                 id="mail"

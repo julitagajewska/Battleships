@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ProfilePicture from './ProfilePicture'
 import './Profile.css';
-import EditableText from '../../reusable/EditableText';
+import EditableText from '../../reusable/inputs/EditableText';
 import LastGameOverview from './LastGameOverview';
 import { TbSword } from 'react-icons/tb';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
@@ -10,7 +10,7 @@ import { GrUser } from 'react-icons/gr';
 import { useAuth } from '../../utils/auth';
 import axios, { editUser, deleteUser } from '../../../api/axios';
 import { useNavigate, Link } from 'react-router-dom';
-import ErrorMessage from '../../reusable/ErrorMessage';
+import ErrorMessage from '../../reusable//messages/ErrorMessage';
 import { isValidURL } from '../../utils/Validators'
 
 let panda = "https://i.pinimg.com/564x/6c/86/41/6c864199a6b727ba2ecb863c121991bc.jpg"

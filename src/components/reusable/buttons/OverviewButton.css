@@ -1,11 +1,11 @@
-/* .button-overview {
+.overview-button {
     display: inline;
     background: transparent;
     border: none;
     margin: 0.5rem 0.25rem 0.5rem 0.5rem;
 }
 
-.button-content {
+.overview-button-wrapper {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -21,6 +21,17 @@
     text-decoration: none;
 }
 
-.button-content h3 {
-    padding: 0.1rem 0.75rem;
-} */
+.overview-button-content {
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+    padding-right: 0.5rem;
+}
+
+.overview-button-icon-left {
+    padding-right: 0.25rem;
+}
+
+.overview-button-icon-right {}

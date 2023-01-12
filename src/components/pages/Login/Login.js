@@ -2,16 +2,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../utils/auth';
 import { useNavigate, Link } from 'react-router-dom';
-import FormInput from '../../reusable/FormInput';
+import FormInput from '../../reusable/inputs/FormInput';
 import axios, { checkIfUserExists, checkPassword, getUser } from '../../../api/axios';
-import ErrorMessage from '../../reusable/ErrorMessage';
+import ErrorMessage from '../../reusable/messages/ErrorMessage';
 import { checkUsernameLength } from '../../utils/Validators';
-import UsernameInput from '../../reusable/UsernameInput';
-import PasswordInput from '../../reusable/PasswordInput';
 import { BiLogInCircle } from 'react-icons/bi';
 import { useSound } from '../../utils/Sound';
-import './Login.css';
 
+import UsernameInput from '../../reusable/inputs/UsernameInput';
+import PasswordInput from '../../reusable/inputs/PasswordInput';
+import CenteredContainer from '../../reusable/containers/CenteredContainer';
+import MediumButton from '../../reusable/buttons/MediumButton';
+
+import './Login.css';
+import StyledLink from '../../reusable/links/StyledLink';
 
 export default function Login() {
 
@@ -51,6 +55,7 @@ export default function Login() {
         if (value === true) {
             // sound.playPick();
         }
+        setErrorMsg('');
         setUsernameFocus(value);
     }
 
@@ -58,6 +63,7 @@ export default function Login() {
         if (value === true) {
             // sound.playPick();
         }
+        setErrorMsg('');
         setPasswordFocus(value);
     }
 
@@ -104,63 +110,55 @@ export default function Login() {
     };
 
     return (
-        <div className="upper-layer login-container">
-            <h3>ZALOGUJ SIĘ</h3>
-            {errorMsg !== '' ? <p>{errorMsg}</p> : <></>}
-            <form className="login-container-form">
+        <CenteredContainer>
 
-                <UsernameInput
-                    reference={usernameRef}
-                    setValue={setUsername}
-                    setFocus={onUsernameFocus}
-                    setValid={setValidUsername}
-                    placeholder='Nazwa użytkownika'
-                    setErrors={setUsernameErrorMessage}
-                    required={true}
-                />
+            <div className='upper section'>
+                <h3>ZALOGUJ SIĘ</h3>
+            </div>
 
-                {/* {
-                    usernameFocus && !validUsername ?
-                        <ErrorMessage status={false} message={
-                            <div>
-                                {usernameErrorMessage.map((error) => {
-                                    return error
-                                })}
-                            </div>}
-                        />
-                        : <></>
-                } */}
+            <div className='middle section'>
 
-                <PasswordInput
-                    setValue={setPassword}
-                    setFocus={onPasswordFocus}
-                    setValid={setValidPassword}
-                    placeholder='Hasło'
-                    setErrors={setPasswordErrorMessage}
-                    required={true}
-                />
+                {errorMsg !== '' && usernameFocus === false && passwordFocus === false ? <ErrorMessage status={false} message={errorMsg} /> : <></>}
 
-                {/* {
-                    passwordFocus && !validPassword ?
-                        <ErrorMessage status={false} message={
-                            <div>
-                                {passwordErrorMessage.map((error) => {
-                                    return error
-                                })}
-                            </div>
-                        } />
-                        :
-                        <></>
-                } */}
-                <button
-                    className="login-button"
-                    onClick={handleSubmit}
-                >
-                    <BiLogInCircle className='button-icon' size={"24px"} />
-                    <p>ZALOGUJ SIĘ</p>
-                </button>
-            </form>
-            <p>Nie masz konta? <Link className="login-link" to="/register">Zarejestruj się!</Link></p>
-        </div>
+                <form className="login-container-form" style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                }}>
+
+                    <UsernameInput
+                        reference={usernameRef}
+                        setValue={setUsername}
+                        setFocus={onUsernameFocus}
+                        setValid={setValidUsername}
+                        placeholder='Nazwa użytkownika'
+                        setErrors={setUsernameErrorMessage}
+                        required={true}
+                    />
+
+                    <PasswordInput
+                        setValue={setPassword}
+                        setFocus={onPasswordFocus}
+                        setValid={setValidPassword}
+                        placeholder='Hasło'
+                        setErrors={setPasswordErrorMessage}
+                        required={true}
+                    />
+
+                    <MediumButton
+                        IconLeft={BiLogInCircle}
+                        IconRight={null}
+                        color={"var(--gradient-1)"}
+                        content="zaloguj się"
+                        onClick={handleSubmit}
+                        disabled={false} />
+                </form>
+            </div>
+
+            <div className='lower section'>
+                <p>Nie masz konta? <StyledLink to="/register" content="Zarejestruj się!" /></p>
+            </div>
+        </CenteredContainer>
     )
 }

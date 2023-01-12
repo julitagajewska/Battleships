@@ -4,12 +4,12 @@ import { AiTwotoneEdit } from 'react-icons/ai';
 import { RxEyeOpen } from 'react-icons/rx';
 import { RxEyeClosed } from 'react-icons/rx';
 import { BsCheckLg } from 'react-icons/bs';
-import { useAuth } from '../utils/auth';
-import axios, { editUser, checkUsername } from '../../api/axios';
+import { useAuth } from '../../utils/auth';
+import axios, { editUser, checkUsername } from '../../../api/axios';
 import UsernameInput from './UsernameInput';
 import MailInput from './MailInput';
 import PasswordInput from './PasswordInput';
-import ErrorMessage from './ErrorMessage';
+import ErrorMessage from '../messages/ErrorMessage';
 
 export default function EditableText(props) {
 

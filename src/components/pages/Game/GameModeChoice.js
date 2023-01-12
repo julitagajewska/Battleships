@@ -4,8 +4,11 @@ import { RiUser5Fill } from 'react-icons/ri';
 import { RiComputerFill } from 'react-icons/ri';
 import { useSound } from '../../utils/Sound';
 import { useAuth } from '../../utils/auth';
-import Sidebar from '../../reusable/Sidebar.js';
-import ButtonOverview from '../../reusable/ButtonOverview';
+
+import Sidebar from '../../reusable/ui/Sidebar.js';
+import OverviewButton from '../../reusable/buttons/OverviewButton';
+import CenteredContainer from '../../reusable/containers/CenteredContainer';
+import MediumButton from '../../reusable/buttons/MediumButton';
 
 export default function GameModeChoice(props) {
 
@@ -21,35 +24,54 @@ export default function GameModeChoice(props) {
                         rozegrać grę w statki. <br />
                         <br />
 
-                        <ButtonOverview color={"var(--gradient-3)"}>
-                            <RiUser5Fill
-                                className='button-overview-icon'
-                                size={"14px"} />
-                            <h3>VS</h3>
-                            <RiUser5Fill
-                                className='button-overview-icon'
-                                size={"14px"} />
-                        </ButtonOverview>
-
+                        <OverviewButton
+                            IconLeft={RiUser5Fill}
+                            IconRight={RiUser5Fill}
+                            color={"var(--gradient-3)"}
+                            content="vs" />
                         Gra przeciwko graczowi <br />
-
-                        <ButtonOverview color={"var(--gradient-2)"}>
-                            <RiUser5Fill
-                                className='button-overview-icon'
-                                size={"14px"} />
-                            <h3>VS</h3>
-                            <RiComputerFill
-                                className='button-overview-icon'
-                                size={"14px"} />
-                        </ButtonOverview>
-
+                        <OverviewButton
+                            IconLeft={RiUser5Fill}
+                            IconRight={RiComputerFill}
+                            color={"var(--gradient-3)"}
+                            content="vs" />
                         Gra przeciwko komputerowi
                     </p>
                 </div>
             </Sidebar>
             <div className="upper-layer game-mode-choice-container">
+                <CenteredContainer>
 
-                <h3>WYBIERZ PRZECIWNIKA</h3>
+                    <div className='upper section'>
+                        <h3>WYBIERZ PRZECIWNIKA</h3>
+                    </div>
+
+                    <div className='middle section'>
+                        <MediumButton
+                            IconLeft={RiUser5Fill}
+                            IconRight={RiUser5Fill}
+                            content="vs"
+                            color={"var(--gradient-3)"}
+                            onClick={() => {
+                                sound.playPick();
+                                props.setGameMode('pvp');
+                                props.setGamePhase('player-type-choice');
+                            }} />
+
+                        <MediumButton
+                            IconLeft={RiUser5Fill}
+                            IconRight={RiComputerFill}
+                            content="vs"
+                            color={"var(--gradient-3)"}
+                            onClick={() => {
+                                sound.playPick();
+                                props.setGameMode('pvp');
+                                props.setGamePhase('player-type-choice');
+                            }} />
+                    </div>
+                </CenteredContainer>
+
+
                 <button className="game-mode-button pvp" onClick={() => {
                     sound.playPick();
                     props.setGameMode('pvp');

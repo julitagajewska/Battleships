@@ -1,5 +1,6 @@
 import React from 'react';
-import { hasUpperCaseLetter, hasLowerCaseLetter, hasNumber, hasSpecialCharacter, hasSpace, checkPasswordLength } from '../utils/Validators';
+import { hasUpperCaseLetter, hasLowerCaseLetter, hasNumber, hasSpecialCharacter, hasSpace, checkPasswordLength } from '../../utils/Validators';
+import './PasswordInput.css';
 
 export default function PasswordInput(props) {
 
@@ -54,7 +55,7 @@ export default function PasswordInput(props) {
     }
 
     return (
-        <div>
+        <div className="input-container">
             <input
                 type="password"
                 id="password"

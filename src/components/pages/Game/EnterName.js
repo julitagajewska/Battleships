@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import './EnterName.css';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { BsCheckLg } from 'react-icons/bs';
 import { useSound } from '../../utils/Sound';
-import UsernameInput from '../../reusable/UsernameInput';
 import { checkIfUserExists } from '../../../api/axios';
-import ErrorMessage from '../../reusable/ErrorMessage.js';
 import { User } from '../../../Models/User';
+
+import UsernameInput from '../../reusable/inputs/UsernameInput';
+import ErrorMessage from '../../reusable/messages/ErrorMessage.js';
+
+import './EnterName.css';
 
 export default function EnterName(props) {
 
@@ -17,7 +19,6 @@ export default function EnterName(props) {
     const [error, setError] = useState([]); // Username taken error
 
     const sound = useSound();
-    const navigate = useNavigate();
 
     const onUsernameFocus = (value) => {
         if (value === true) {

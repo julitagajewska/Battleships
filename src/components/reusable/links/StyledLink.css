@@ -1,0 +1,10 @@
+.styled-link {
+    text-decoration: none;
+    color: var(--gradient-1);
+    font-weight: 500;
+    transition: all 0.3s ease 0s;
+}
+
+.styled-link:hover {
+    color: var(--gradient-0);
+}

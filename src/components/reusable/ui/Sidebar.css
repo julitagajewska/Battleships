@@ -55,12 +55,6 @@
     transition-duration: 1s;
 }
 
-.in-right-button {
-    margin-right: 0;
-    transition-property: margin-right;
-    transition-duration: 1s;
-}
-
 .out-left {
     margin-left: 0;
     transition-property: margin-left;
@@ -71,12 +65,6 @@
 .out-right {
     margin-right: 0;
     transition-property: margin-right, right;
-    transition-duration: 1s;
-}
-
-.out-right-button {
-    margin-right: 0;
-    transition-property: margin-right;
     transition-duration: 1s;
 }
 
@@ -134,4 +122,9 @@
 
 .sidebar-button-icon-right {
     margin-left: 0.25rem;
+}
+
+.info {
+    text-align: center;
+    line-height: 1.8;
 }

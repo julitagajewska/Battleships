@@ -3,7 +3,10 @@ import './NotFound.css';
 import { useNavigate } from 'react-router-dom';
 import { TiArrowBack } from 'react-icons/ti';
 import { useSound } from '../../utils/Sound';
-import ReusableSidebar from '../../reusable/Sidebar.js';
+import Sidebar from '../../reusable/ui/Sidebar.js';
+import CenteredContainer from '../../reusable/containers/CenteredContainer';
+import MediumButton from '../../reusable/buttons/MediumButton';
+import OverviewButton from '../../reusable/buttons/OverviewButton';
 
 export default function NotFound(props) {
 
@@ -19,29 +22,36 @@ export default function NotFound(props) {
     return (
         <div className="upper-layer">
 
-            <ReusableSidebar type={"left"} startAnimation={props.startAnimationLeft} toggle={props.toggleLeft}
+            <Sidebar type={"left"}
                 children={
-                    <div className="page-not-found-info">
+                    <div className="info">
                         <h3>Błąd 404: nie znaleziono strony</h3>
                         <p> Podany adres nie został odanleziony. Po naciśnięciu klawisza
-                            <button className="button-overview">
-                                <div className="button-content">
-                                    <TiArrowBack className='button-overview-icon' size={"14px"} />
-                                    <p>POWRÓT</p>
-                                </div>
-                            </button>
-                            zostaniesz przekierowany do strony głównej.</p>
+                            <OverviewButton
+                                IconLeft={TiArrowBack}
+                                IconRight={null}
+                                content="powrót"
+                                color="var(--gradient-1)" />
+                            zostaniesz przekierowana/y do strony głównej.</p>
                     </div>
                 }>
-            </ReusableSidebar>
+            </Sidebar>
 
-            <div className="not-found-container">
-                <h3>Nie znaleziono strony o podanym adresie</h3>
-                <button onClick={() => onClickBackButton()}>
-                    <TiArrowBack className='button-icon' size={"30px"} />
-                    <p>POWRÓT</p>
-                </button>
-            </div>
+            <CenteredContainer>
+                <div className='middle section centered'>
+                    <h3>Nie znaleziono strony o podanym adresie</h3>
+                    <MediumButton
+                        IconLeft={TiArrowBack}
+                        IconRight={null}
+                        disabled={false}
+                        content="powrót"
+                        color="var(--gradient-1)"
+                        onClick={() => onClickBackButton()}
+                    />
+                </div>
+
+            </CenteredContainer>
+
         </div>
     )
 }

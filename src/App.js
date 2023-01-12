@@ -4,8 +4,6 @@ import { Component } from 'react';
 import { Route, Routes } from "react-router-dom";
 import Menu from './components/pages/Menu/Menu';
 import Profile from './components/pages/Profile/Profile';
-import ReusableSidebar from './components/reusable/Sidebar';
-import Info from './components/pages/Info/Info'
 import NotFound from './components/pages/NotFound/NotFound';
 import Login from './components/pages/Login/Login'
 import Background from './components/Background/Background';
@@ -14,8 +12,6 @@ import NotLoggedIn from './components/pages/Login/NotLoggedIn';
 import PrivateRoutes from './components/utils/PrivateRoutes';
 import Logout from './components/pages/Logout/Logout';
 import Register from './components/pages/Register/Register';
-import api from './api/axios';
-import { getNewId } from './api/axios'
 import ConfirmProfileDelete from './components/pages/Profile/ConfirmProfileDelete';
 import ProfileDeleted from './components/pages/Profile/ProfileDeleted';
 import { SoundProvider } from './components/utils/Sound';
@@ -65,15 +61,8 @@ export default class App extends Component {
         <AuthProvider>
           <div>
             <div className="container">
-              <Background backgroundToggle={this.state.backgroundFadeDown} />
 
-              {/* <ReusableSidebar type={"left"} startAnimation={this.state.startInfoAnimation} toggle={this.toggleInfoVisibility}
-                children={
-                  <>
-                    <button onClick={() => this.toggleBackgroundFade()}>hehe</button>
-                    <Info />
-                  </>}>
-              </ReusableSidebar> */}
+              <Background backgroundToggle={this.state.backgroundFadeDown} />
 
               <Routes>
                 <Route element={<PrivateRoutes />}>
@@ -106,6 +95,7 @@ export default class App extends Component {
                     toggleLeft={this.toggleInfoVisibility}
                     startAnimationLeft={this.state.startInfoAnimation} />} />
               </Routes>
+
             </div>
           </div>
         </AuthProvider>

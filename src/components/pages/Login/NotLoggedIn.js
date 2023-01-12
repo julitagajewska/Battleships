@@ -1,9 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSound } from '../../utils/Sound';
-import ReusableSidebar from '../../reusable/Sidebar';
 import { BiLogInCircle } from 'react-icons/bi';
 import './NotLoggedIn.css';
+import CenteredContainer from '../../reusable/containers/CenteredContainer';
+import MediumButton from '../../reusable/buttons/MediumButton';
 
 export default function NotLoggedIn(props) {
 
@@ -17,25 +18,25 @@ export default function NotLoggedIn(props) {
 
     return (
         <div className="upper-layer">
-            {/* 
-            <ReusableSidebar type={"left"} startAnimation={props.startAnimationLeft} toggle={props.toggleLeft}
-                children={
-                    <div className="not-logged-in-info">
+            <CenteredContainer>
+                <div className='upper section'>
+                    <h3>Nie jesteś zalogowany!</h3>
+                </div>
 
-                    </div>
-                }>
-            </ReusableSidebar> */}
+                <div className='middle section'>
+                    <p>Dostęp do strony jest możliwy jedynie dla zalogowanych użytkowników.</p>
+                </div>
 
-            <div className="not-logged-in-container">
-                <h3>Nie jesteś zalogowany!</h3>
-                <p>Dostęp do strony jest możliwy jedynie dla zalogowanych użytkowników.</p>
-                <button
-                    className="not-logged-in-button"
-                    onClick={() => onClickLogInButton()}>
-                    <BiLogInCircle className='button-icon' size={"26px"} />
-                    <p>ZALOGUJ SIĘ</p>
-                </button>
-            </div>
+                <div className='lower section centered'>
+                    <MediumButton
+                        IconLeft={BiLogInCircle}
+                        IconRight={null}
+                        color={"var(--gradient-1)"}
+                        content="zaloguj się"
+                        onClick={onClickLogInButton}
+                        disabled={false} />
+                </div>
+            </CenteredContainer>
         </div>
     )
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Sidebar from '../../reusable/Sidebar';
+import Sidebar from '../../reusable/ui/Sidebar';
 import './PlayersList.css';
 import { getUsers } from '../../../api/axios';
 import { useSound } from '../../utils/Sound';
