@@ -82,6 +82,7 @@ export default function UserSidebar(props) {
         );
     }
 
+    console.log(props.allowRandom)
     if (props.type === "placement-player-A" && allShipsPlaced === false) {
         return (
             <>
@@ -165,7 +166,7 @@ export default function UserSidebar(props) {
                                 sound.playPick();
                                 props.randomShipPlacement(props.player, props.setState);
                             }}
-                            disabled={false} />
+                            disabled={!props.allowRandom} />
                     </div>
                 </div>
             </>
@@ -378,7 +379,7 @@ export default function UserSidebar(props) {
 
     if (props.type === 'my-turn-A') {
         return (
-            <div className='user-sidebar-right turn'>
+            <div className='user-sidebar-left turn'>
                 <div className="user-sidebar-header-left">
                     <ProfilePictureMedium src={props.player.user.image} />
                     <div className="user-sidebar-header-username-left">
@@ -427,7 +428,7 @@ export default function UserSidebar(props) {
 
     if (props.type === 'not-my-turn-A') {
         return (
-            <div className='user-sidebar-right waiting'>
+            <div className='user-sidebar-left waiting'>
                 <div className="user-sidebar-header-left">
                     <ProfilePictureMedium src={props.player.user.image} />
                     <div className="user-sidebar-header-username-left">

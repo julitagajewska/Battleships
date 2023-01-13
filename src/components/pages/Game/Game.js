@@ -71,7 +71,7 @@ export default function Game(props) {
             "Komputer",
             null,
             null,
-            'https://raw.githubusercontent.com/julitagajewska/Battleships/scraped-version/src/components/assets/computer.png?token=GHSAT0AAAAAAB4QLGQOACCW7O34NRMTZVBYY6BWQ2Q',
+            'https://raw.githubusercontent.com/julitagajewska/Battleships/scraped-version/src/components/assets/computer2.png?token=GHSAT0AAAAAAB4QLGQPVVEMF25EOQH3B57YY6BWZ3A',
             null
         );
 
