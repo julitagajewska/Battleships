@@ -2,6 +2,7 @@ import React from 'react';
 import './Grid.css';
 import { ImCross } from 'react-icons/im';
 import { useSound } from '../../utils/Sound';
+import { RxThickArrowLeft } from 'react-icons/rx';
 
 export default function Grid(props) {
 
@@ -45,6 +46,7 @@ export default function Grid(props) {
                 newArray[i].shipType = shipType;
                 newArray[i].shipElementId = shipElementCounter;
                 newArray[i].user = shipOwner;
+                newArray[i].orientation = props.orientation;
 
                 coordinates.push(i);
                 props.setShipsGrid(props.player, props.setState, newArray);
@@ -52,7 +54,7 @@ export default function Grid(props) {
                 shipElementCounter++;
             }
 
-            droppedOnTile.classList.add(shipType);
+            // droppedOnTile.classList.add(shipType, 'horizontal');
 
         } else {
             firstElementId = parseInt(droppedOnTile.id) - (draggedElementId * 10)
@@ -64,15 +66,18 @@ export default function Grid(props) {
                 return;
             }
 
+            shipElementCounter = 0;
             for (let i = firstElementId; i <= lastElementId; i = i + 10) {
                 let newArray = props.tiles;
                 newArray[i].shipType = shipType;
+                newArray[i].shipElementId = shipElementCounter;
+                newArray[i].orientation = props.orientation;
 
+                shipElementCounter++;
                 coordinates.push(i);
                 props.setShipsGrid(props.player, props.setState, newArray);
             }
 
-            droppedOnTile.classList.add(shipType);
         }
 
         sound.playPick();
@@ -81,6 +86,7 @@ export default function Grid(props) {
         props.setAdjacentTiles(props.player);
         props.setTilesNotAllowedEmpty([]);
         props.toggleAdjacentVisibility(false);
+        e.target.classList.remove('grabbing');
     }
 
 
@@ -95,15 +101,28 @@ export default function Grid(props) {
                         visibilityClass = "taken"
                     }
 
+                    let shipLength;
+
+                    if (tile.shipType === "destroyer") { shipLength = 2 }
+                    if (tile.shipType === "submarine") { shipLength = 3 }
+                    if (tile.shipType === "cruiser") { shipLength = 3 }
+                    if (tile.shipType === "battleship") { shipLength = 4 }
+                    if (tile.shipType === "carrier") { shipLength = 5 }
+
                     return (
-                        <div
-                            className={`tile ${tile.shipType} ${visibilityClass}`}
-                            key={tile.id}
-                            id={tile.id}
-                            onDragOver={(e) => e.preventDefault()}
-                            onDragLeave={(e) => e.preventDefault()}
-                            onDragEnter={dragEnter}
-                            onDrop={dragDrop}>
+                        <div className={`ship`}>
+                            <div
+                                className={`tile ${tile.shipType} ${visibilityClass} ${tile.orientation}
+                                ${tile.shipElementId === 0 ? `first-${tile.orientation}` : ''}
+                                ${tile.shipElementId === shipLength - 1 ? `last-${tile.orientation}` : ''}
+                                ${tile.shipElementId !== 0 && tile.shipElementId !== shipLength - 1 ? 'inside' : ''}`}
+                                key={tile.id}
+                                id={tile.id}
+                                onDragOver={(e) => e.preventDefault()}
+                                onDragLeave={(e) => e.preventDefault()}
+                                onDragEnter={dragEnter}
+                                onDrop={dragDrop}>
+                            </div>
                         </div>
                     )
                 })}

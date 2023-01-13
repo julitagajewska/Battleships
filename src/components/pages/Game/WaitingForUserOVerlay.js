@@ -1,6 +1,10 @@
 import React from 'react';
-import './WaitingForUserOverlay.css';
+
 import { useSound } from '../../utils/Sound';
+import { BsCheckLg } from 'react-icons/bs';
+
+import Overlay from '../../reusable/ui/Overlay';
+import LargeButton from '../../reusable/buttons/LargeButton';
 
 export default function WaitingForUserOVerlay(props) {
 
@@ -8,17 +12,16 @@ export default function WaitingForUserOVerlay(props) {
 
     if (props.overlayVisible === true) {
         return (
-            <div className="waiting-for-player overlay">
-                <h3> OCZEKIWANIE NA GRACZA </h3>
-                <h2> {props.username} </h2>
-                <button onClick={() => {
-                    sound.playPick();
-                    props.ready();
-                }}>
-                    Gotowy!
-                </button>
-
-            </div>
+            <Overlay>
+                <h3 align="center"> OCZEKIWANIE NA GRACZA {props.username} </h3>
+                <LargeButton
+                    IconLeft={BsCheckLg}
+                    IconRight={null}
+                    content="gotowy"
+                    color="var(--gradient-1)"
+                    disabled={false}
+                    onClick={() => { sound.playPick(); props.ready(); }} />
+            </Overlay>
         )
     }
 

@@ -1,55 +1,140 @@
-.game {
+/* -------- Containers -------- */
+.game-container {
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    z-index: 4;
+}
+
+/* -------- Ships -------- */
+
+.destroyer .first,
+.destroyer .inside,
+.destroyer .last {
+    background-color: var(--gradient-1);
+}
+
+
+.submarine .first,
+.submarine .inside,
+.submarine .last {
+    background-color: var(--gradient-2);
+}
+
+.cruiser .first,
+.cruiser .inside,
+.cruiser .last {
+    background-color: var(--gradient-3);
+}
+
+.battleship .first,
+.battleship .inside,
+.battleship .last {
+    background-color: var(--gradient-6);
+}
+
+.carrier .first,
+.carrier .inside,
+.carrier .last {
+    background-color: var(--gradient-7);
+}
+
+.ships-container-horizontal .first {
+    border-radius: 20px 0 0 20px;
+}
+
+.ships-container-horizontal .last {
+    border-radius: 0 20px 20px 0;
+}
+
+.ships-container-vertical .first {
+    border-radius: 20px 20px 0 0;
+}
+
+.ships-container-vertical .last {
+    border-radius: 0 0 20px 20px;
+}
+
+
+/* -------- Shots -------- */
+
+/* -------- User's sidebar -------- */
+
+.user-sidebar {
+    background-color: cornflowerblue;
+    width: fit-content;
+    height: fit-content;
+    padding: 30px;
+    background: linear-gradient(to top,
+            rgba(18, 66, 87, 0.3),
+            rgba(18, 66, 87, 0.1));
+    /* padding: 3rem 5rem; */
+    backdrop-filter: blur(3px);
+    border-radius: 0.75rem;
+    margin-left: 5rem;
+    margin-right: 5rem;
+    box-shadow:
+        rgba(0, 0, 0, 0.16) 0px 3px 6px,
+        rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.user-sidebar-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.user-sidebar-header-username {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: flex-start;
+    margin-top: 0.75rem;
+    margin-left: 1rem;
+}
+
+.user-sidebar-header-username h3,
+.user-sidebar-header-username p {
+    padding: 0;
+    margin: 0;
+}
+
+.user-sidebar-button-group {
+    display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 30px 0px 30px 0px;
-    background-color: lightgrey;
+    margin-top: 1rem;
 }
 
-.grid .clicked {
-    background-color: cornflowerblue !important;
-}
-
-.grid {
-    height: 500px;
-    width: 500px;
-    padding: 30px;
+.user-sidebar-ships-container {
     display: flex;
-    flex-wrap: wrap;
-    background-color: grey;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
 }
 
-.grid .tile {
-    width: 50px;
-    height: 50px;
-    background-color: steelblue;
-    cursor: pointer;
+.user-sidebar-middle-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
 }
 
-.grid .tile:hover {
-    background-color: lightsteelblue;
+.user-sidebar-middle-section h3 {
+    margin-left: 0.5rem;
+    margin-top: 2rem;
 }
 
-.destroyer {
-    background-color: orange !important;
-}
 
-.submarine {
-    background-color: darkgreen !important;
-}
+/* -------- User's sidebar - waiting -------- */
 
-.cruiser {
-    background-color: firebrick !important;
-}
+/* -------- Computer's sidebar - active -------- */
 
-.battleship {
-    background-color: deepskyblue !important;
-}
+/* -------- Computer's sidebar - waiting -------- */
 
-.carrier {
-    background-color: indianred !important;
-}
+/* -------- Battle grid -------- */
 
-.disabled {
-    cursor: none;
-}
+/* -------- Overview grid -------- */

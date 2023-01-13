@@ -3,7 +3,7 @@
 
 .centered-container {
         height: fit-content;
-        min-height: 12rem;
+        min-height: 5rem;
         width: 25rem;
         display: flex;
         flex-direction: column;
@@ -45,6 +45,20 @@
 .centered {
         display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
+}
+
+.centered-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+}
+
+.centered-row {
+        display: flex;
+        flex-direction: row;
         align-items: center;
         justify-content: center;
 }

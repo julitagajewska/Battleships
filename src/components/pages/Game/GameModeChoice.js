@@ -1,14 +1,13 @@
 import React from 'react'
-import './GameModeChoice.css';
+
 import { RiUser5Fill } from 'react-icons/ri';
 import { RiComputerFill } from 'react-icons/ri';
 import { useSound } from '../../utils/Sound';
-import { useAuth } from '../../utils/auth';
 
 import Sidebar from '../../reusable/ui/Sidebar.js';
 import OverviewButton from '../../reusable/buttons/OverviewButton';
 import CenteredContainer from '../../reusable/containers/CenteredContainer';
-import MediumButton from '../../reusable/buttons/MediumButton';
+import LargeButton from '../../reusable/buttons/LargeButton';
 
 export default function GameModeChoice(props) {
 
@@ -19,7 +18,7 @@ export default function GameModeChoice(props) {
             <Sidebar type="left">
                 <div className="info">
                     <h3>Wybór przeciwnika</h3>
-                    <p>
+                    <p align="justify">
                         Na tej stronie możesz wybrać, przeciwko komu chciał(a)byś
                         rozegrać grę w statki. <br />
                         <br />
@@ -27,8 +26,9 @@ export default function GameModeChoice(props) {
                         <OverviewButton
                             IconLeft={RiUser5Fill}
                             IconRight={RiUser5Fill}
-                            color={"var(--gradient-3)"}
+                            color={"var(--gradient-2)"}
                             content="vs" />
+
                         Gra przeciwko graczowi <br />
                         <OverviewButton
                             IconLeft={RiUser5Fill}
@@ -46,61 +46,33 @@ export default function GameModeChoice(props) {
                         <h3>WYBIERZ PRZECIWNIKA</h3>
                     </div>
 
-                    <div className='middle section'>
-                        <MediumButton
+                    <div className='middle section centered-column'>
+                        <LargeButton
                             IconLeft={RiUser5Fill}
                             IconRight={RiUser5Fill}
                             content="vs"
-                            color={"var(--gradient-3)"}
+                            color={"var(--gradient-2)"}
                             onClick={() => {
                                 sound.playPick();
                                 props.setGameMode('pvp');
                                 props.setGamePhase('player-type-choice');
                             }} />
 
-                        <MediumButton
+                        <LargeButton
                             IconLeft={RiUser5Fill}
                             IconRight={RiComputerFill}
                             content="vs"
                             color={"var(--gradient-3)"}
                             onClick={() => {
                                 sound.playPick();
-                                props.setGameMode('pvp');
-                                props.setGamePhase('player-type-choice');
+                                props.randomShipPlacement(props.player, props.setState);
+                                props.setGameMode('pvc');
+                                props.setGamePhase('placement-player-A');
+                                props.game.userB = props.player;
+                                props.setGame(props.game);
                             }} />
                     </div>
                 </CenteredContainer>
-
-
-                <button className="game-mode-button pvp" onClick={() => {
-                    sound.playPick();
-                    props.setGameMode('pvp');
-                    props.setGamePhase('player-type-choice');
-                }}>
-                    <RiUser5Fill
-                        className='game-mode-button-icon'
-                        size={"26px"} />
-                    <h3>VS</h3>
-                    <RiUser5Fill
-                        className='game-mode-button-icon'
-                        size={"26px"} />
-                </button>
-                <button className="game-mode-button pvc" onClick={() => {
-                    sound.playPick();
-                    props.randomShipPlacement(props.player, props.setState);
-                    props.setGameMode('pvc');
-                    props.setGamePhase('placement-player-A');
-                    props.game.userB = props.player;
-                    props.setGame(props.game);
-                }}>
-                    <RiUser5Fill
-                        className='game-mode-button-icon'
-                        size={"26px"} />
-                    <h3>VS</h3>
-                    <RiComputerFill
-                        className='game-mode-button-icon'
-                        size={"26px"} />
-                </button>
             </div>
         </div>
 

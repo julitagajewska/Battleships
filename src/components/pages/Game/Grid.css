@@ -1,18 +1,46 @@
 .placement-grid {
-    height: 520px;
-    min-width: 520px;
-    max-width: 520px;
+    height: 420px;
+    min-width: 420px;
+    max-width: 420px;
     padding: 30px;
     display: flex;
     flex-wrap: wrap;
-    background-color: lightblue;
+    background: linear-gradient(to top,
+            rgba(18, 66, 87, 0.3),
+            rgba(18, 66, 87, 0.1));
+    backdrop-filter: blur(3px);
+    border-radius: 0.75rem;
+    box-shadow:
+        rgba(0, 0, 0, 0.16) 0px 3px 6px,
+        rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.destroyer .tile:nth-of-type(2) {
+    border-radius: 15px 0 0 0;
+}
+
+.tile:nth-of-type(10) {
+    border-radius: 0 15px 0 0;
+}
+
+.tile:nth-of-type(91) {
+    border-radius: 0 0 0 15px;
+}
+
+.tile:nth-of-type(100) {
+    border-radius: 0 0 15px 0;
+}
+
+.ship {
+    height: 40px;
+    width: 40px;
+    margin: 1px;
+    background: rgba(30, 105, 138, 0.35);
 }
 
 .placement-grid .tile {
-    width: 50px;
-    height: 50px;
-    background-color: steelblue;
-    border: 1px solid lightblue;
+    width: 40px;
+    height: 40px;
 }
 
 .battle-grid {
@@ -107,4 +135,45 @@
 .blocked {
     cursor: not-allowed !important;
     pointer-events: all !important;
+}
+
+.placement-grid .first-horizontal {
+    border-radius: 20px 0 0 20px;
+}
+
+.placement-grid .first-vertical {
+    border-radius: 20px 20px 0 0;
+}
+
+.placement-grid .last-horizontal {
+    border-radius: 0 20px 20px 0;
+}
+
+.placement-grid .last-vertical {
+    border-radius: 0 0 20px 20px;
+}
+
+.placement-grid .destroyer,
+.overview-grid .destroyer {
+    background-color: var(--gradient-1);
+}
+
+.placement-grid .submarine,
+.overview-grid .submarine {
+    background-color: var(--gradient-2);
+}
+
+.placement-grid .cruiser,
+.overview-grid .cruiser {
+    background-color: var(--gradient-3);
+}
+
+.placement-grid .battleship,
+.overview-grid .battleship {
+    background-color: var(--gradient-6);
+}
+
+.placement-grid .carrier,
+.overview-grid .carrier {
+    background-color: var(--gradient-7);
 }

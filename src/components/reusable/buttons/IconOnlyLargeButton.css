@@ -1,0 +1,30 @@
+.icon-only-large-button {
+    border: none;
+    height: 4rem;
+    width: 4rem;
+    display: flex;
+    /* margin: 0 0 1rem 1rem !important; */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    cursor: pointer;
+    border-radius: 2rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    transition: all 0.3s ease 0s;
+}
+
+#uneven {
+    margin-left: 0.35rem !important;
+}
+
+.icon-only-large-button:hover {
+    background-color: #005B95 !important;
+    color: white;
+}
+
+.icon-only-large-button:disabled {
+    background-color: rgba(18, 66, 87, 0.3) !important;
+    color: rgba(18, 66, 87, 0.7);
+    cursor: auto;
+}

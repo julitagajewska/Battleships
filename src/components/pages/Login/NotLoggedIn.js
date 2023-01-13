@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSound } from '../../utils/Sound';
 import { BiLogInCircle } from 'react-icons/bi';
-import './NotLoggedIn.css';
+
 import CenteredContainer from '../../reusable/containers/CenteredContainer';
 import MediumButton from '../../reusable/buttons/MediumButton';
 

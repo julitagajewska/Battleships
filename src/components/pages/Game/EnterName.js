@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { BsCheckLg } from 'react-icons/bs';
 import { useSound } from '../../utils/Sound';
 import { checkIfUserExists } from '../../../api/axios';
@@ -7,8 +6,8 @@ import { User } from '../../../Models/User';
 
 import UsernameInput from '../../reusable/inputs/UsernameInput';
 import ErrorMessage from '../../reusable/messages/ErrorMessage.js';
-
-import './EnterName.css';
+import IconOnlyButton from '../../reusable/buttons/IconOnlyButton.js';
+import CenteredContainer from '../../reusable/containers/CenteredContainer';
 
 export default function EnterName(props) {
 
@@ -21,10 +20,6 @@ export default function EnterName(props) {
     const sound = useSound();
 
     const onUsernameFocus = (value) => {
-        if (value === true) {
-            // sound.playPick();
-        }
-
         setUsernameFocus(value);
     }
 
@@ -49,47 +44,56 @@ export default function EnterName(props) {
         props.setGamePhase('placement-player-A');
     }
 
+    console.log(validUsername);
 
     return (
         <div className="upper-layer enter-name-container">
-            <h3>NAZWA PRZECIWNIKA</h3>
-            <form className="enter-name-form" onSubmit={(e) => handleSubmit(e)}>
-                <UsernameInput
-                    className="eter-name-username-input"
-                    placeholder={"Nazwa przeciwnika"}
-                    required={true}
-                    setValue={setUsername}
-                    setFocus={onUsernameFocus}
-                    setValid={setValidUsername}
-                    setErrors={setErrors}
-                    setUsernameTaken={setError} />
-                <button type='submit' className="enter-name-button">
-                    <BsCheckLg
-                        className='button-icon'
-                        size={"20px"} />
-                </button>
-            </form>
-            {error.length === 1 ?
-                <div className="enter-name-input-errors">
-                    <ErrorMessage status={false} message={error[0]} />
+            <CenteredContainer>
+                <div className="upper section">
+                    <h3>NAZWA PRZECIWNIKA</h3>
                 </div>
-                :
-                <></>
-            }
-            {
-                usernameFocus && !validUsername && errors.length !== 0 ?
-                    <div className={`enter-name-input-errors`}>
-                        <ErrorMessage status={false} message={
-                            <div>
-                                {errors.map((error) => {
-                                    return error
-                                })}
-                            </div>}
-                        />
-                    </div>
-                    :
-                    <></>
-            }
+
+                <div className="middle section centered-row">
+                    <UsernameInput
+                        className="eter-name-username-input"
+                        placeholder={"Nazwa przeciwnika"}
+                        required={true}
+                        setValue={setUsername}
+                        setFocus={onUsernameFocus}
+                        setValid={setValidUsername}
+                        setErrors={setErrors}
+                        setUsernameTaken={setError} />
+                    <IconOnlyButton
+                        Icon={BsCheckLg}
+                        color="var(--gradient-1)"
+                        onClick={(e) => handleSubmit(e)}
+                        disabled={!validUsername} />
+                </div>
+
+                <div className="lowe section">
+                    {error.length === 1 ?
+                        <div className="enter-name-input-errors">
+                            <ErrorMessage status={false} message={error[0]} />
+                        </div>
+                        :
+                        <></>
+                    }
+                    {
+                        usernameFocus && !validUsername && errors.length !== 0 ?
+                            <div className={`enter-name-input-errors`}>
+                                <ErrorMessage status={false} message={
+                                    <div>
+                                        {errors.map((error) => {
+                                            return error
+                                        })}
+                                    </div>}
+                                />
+                            </div>
+                            :
+                            <></>
+                    }
+                </div>
+            </CenteredContainer>
         </div>
     )
 }

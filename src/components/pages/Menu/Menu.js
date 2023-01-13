@@ -81,8 +81,8 @@ export default function Menu(props) {
                 </button>
 
             </div>
-            <Sidebar type={"right"} startAnimation={props.startAnimationRight} toggle={props.toggleRight}
-                children={<Profile sound={callTheSound} />}>
+            <Sidebar type={"right"} startAnimation={props.startAnimationRight} toggle={props.toggleRight}>
+                <Profile sound={callTheSound} />
             </Sidebar>
         </div>
 

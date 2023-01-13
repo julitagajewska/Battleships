@@ -1,17 +1,10 @@
-/* -------- Icon only ------- */
-
-/* -------- :arge ------- */
-
-/* -------- Medium ------- */
-
-.medium-button {
+.large-button {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     margin: 0;
-    background-color: white;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 2rem;
     cursor: pointer;
@@ -21,28 +14,31 @@
     transition: all 0.3s ease 0s;
 }
 
-.medium-button:hover {
+.large-button:not(:last-child) {
+    margin-bottom: 2rem;
+}
+
+.large-button:hover {
     background-color: var(--gradient-7) !important;
     color: white;
 }
 
-.medium-button-content {
+.large-button:disabled {
+    background-color: rgba(18, 66, 87, 0.3) !important;
+    color: rgba(18, 66, 87, 0.7);
+    cursor: auto;
+}
+
+.large-button-content {
     margin: 0;
     padding: 0;
     text-transform: uppercase;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
     padding-right: 0.75rem;
+    padding-top: 0.3rem;
 }
 
-.medium-button-icon-left {
+.large-button-icon-left {
     padding-right: 0.75rem;
 }
-
-/* -------- Overview ------- */
-
-.button-overview {}
-
-.button-content {}
-
-.button-overview-icon {}

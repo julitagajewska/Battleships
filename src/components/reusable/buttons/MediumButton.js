@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSound } from '../../utils/Sound';
+
 import './MediumButton.css';
 
 export default function MediumButton({ content, IconLeft, IconRight, color, onClick, disabled }) {

@@ -3,10 +3,13 @@ import { Game } from '../../../Models/Game';
 import { getNewGameId, saveGame } from '../../../api/axios';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 
-export default function GameOver(props) {
+import CenteredContainer from '../../reusable/containers/CenteredContainer';
+import MediumButton from '../../reusable/buttons/MediumButton';
 
-    const { playerA, playerB, ...rest } = props;
+export default function GameOver({ playerA, playerB }) {
+
     const navigate = useNavigate();
 
     let winner;
@@ -46,10 +49,25 @@ export default function GameOver(props) {
     }
 
     return (
-        <div className="upper-layer">
-            <h3> Koniec gry! </h3>
-            <h4> Wygrywa {winner.user.username} </h4>
-            <button onClick={() => save()}>Powrót do menu głównego</button>
-        </div>
+        <CenteredContainer>
+            <div className="upper section">
+                <h3> Koniec gry! </h3>
+            </div>
+
+            <div className="upper section">
+                <h4> Wygrywa {winner.user.username} </h4>
+            </div>
+
+            <div className="upper section">
+                <MediumButton
+                    IconLeft={IoMdArrowRoundBack}
+                    IconRight={null}
+                    onClick={() => save()}
+                    content="powrót do menu głównego"
+                    color="var(--gradient-1)"
+                    disabled={false}
+                />
+            </div>
+        </CenteredContainer>
     )
 }

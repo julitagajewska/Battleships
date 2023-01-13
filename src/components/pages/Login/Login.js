@@ -14,7 +14,6 @@ import PasswordInput from '../../reusable/inputs/PasswordInput';
 import CenteredContainer from '../../reusable/containers/CenteredContainer';
 import MediumButton from '../../reusable/buttons/MediumButton';
 
-import './Login.css';
 import StyledLink from '../../reusable/links/StyledLink';
 
 export default function Login() {

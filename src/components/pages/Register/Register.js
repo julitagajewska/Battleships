@@ -10,8 +10,6 @@ import api, { checkUsername, registerUser } from '../../../api/axios';
 import { HiCheckCircle } from 'react-icons/hi';
 import { BiLogInCircle } from 'react-icons/bi';
 
-import './Register.css';
-
 import UsernameInput from '../../reusable/inputs/UsernameInput';
 import PasswordInput from '../../reusable/inputs/PasswordInput';
 import CenteredContainer from '../../reusable/containers/CenteredContainer';
