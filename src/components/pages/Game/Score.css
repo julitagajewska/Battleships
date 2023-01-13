@@ -1,11 +1,11 @@
 .score-component-container {
     position: relative;
     left: 0;
-    left: 1rem;
+    /* left: 1rem; */
     top: 3rem;
     width: 7rem;
     /* min-height: 7rem; */
-    margin-bottom: 4rem;
+    margin-bottom: 5rem;
     height: fit-content;
     background: linear-gradient(to top,
             rgba(18, 66, 87, 0.3),

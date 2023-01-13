@@ -1,4 +1,5 @@
 .user-sidebar-left {
+    position: fixed;
     width: 19.5rem;
     min-width: 19.5rem;
     max-width: 19.5rem;
@@ -15,6 +16,7 @@
 }
 
 .user-sidebar-right {
+    position: fixed;
     width: 19.5rem;
     min-width: 19.5rem;
     max-width: 19.5rem;
@@ -30,13 +32,13 @@
         rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
-.waiting {
-    margin-bottom: 21rem;
+/* .waiting {
+    margin-bottom: 20rem;
 }
 
 .turn {
     margin-bottom: 18rem;
-}
+} */
 
 .user-sidebar-header-left {
     display: flex;
