@@ -461,7 +461,7 @@ export default function UserSidebar(props) {
                         <h3>{props.player.user.username}</h3>
                         <p>{`Strzelam! >:C`}</p>
                     </div>
-                    <ProfilePictureMedium src={'../../components/assets/computer.png'} />
+                    <ProfilePictureMedium src={props.player.user.image} />
                 </div>
             </div>
         );
