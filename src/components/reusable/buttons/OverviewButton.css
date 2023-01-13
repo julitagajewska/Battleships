@@ -35,3 +35,8 @@
 }
 
 .overview-button-icon-right {}
+
+#font-light p {
+    font-size: 13px;
+    font-weight: 600 !important;
+}

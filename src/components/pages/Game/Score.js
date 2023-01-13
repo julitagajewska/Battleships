@@ -1,11 +1,10 @@
-import React from 'react'
+import React from 'react';
+import './Score.css';
 
 export default function Score(props) {
     return (
-        <div>
-            <h3>Wynik</h3>
-            <h5>{props.playerA.user.username}: {props.playerA.score}</h5>
-            <h5>{props.playerB.user.username}: {props.playerB.score}</h5>
+        <div className="score-component-container">
+            <p>{props.playerA.score} : {props.playerB.score}</p>
         </div>
     )
 }

@@ -68,7 +68,7 @@ export default function Game(props) {
 
         let computerUser = new User(
             null,
-            "Computer",
+            "Komputer",
             null,
             null,
             null,
@@ -647,7 +647,7 @@ export default function Game(props) {
                 }
             })
 
-            setShotFired(false);
+            // setShotFired(false);
             setComputer(computer);
             setPlayerA(playerA);
             setGamePhase('turn-0');
@@ -675,7 +675,7 @@ export default function Game(props) {
                 })
             }
 
-            setShotFired(false);
+            // setShotFired(false);
             setComputer(computer);
             setPlayerA(playerA);
             setGamePhase('turn-0');
@@ -723,7 +723,7 @@ export default function Game(props) {
     if (gamePhase === 'placement-player-A') {
         return (
             <div className='game-container'>
-                <div>
+                <div className="panel-left">
                     <UserSidebar
                         player={playerA}
                         setState={setPlayerA}
@@ -757,32 +757,34 @@ export default function Game(props) {
                     setCoordinates={setCoordinates}
                     adjecentVisibility={displayAdjacent}
                     setAllowRandom={setAllowRandom} />
-
             </div>
+
         );
     }
 
     if (gamePhase === 'placement-player-B') {
         return (
             <div className='game-container'>
-                <Grid
-                    type={"placement"}
-                    player={playerB}
-                    setState={setPlayerB}
-                    tiles={playerB.shipsGrid}
-                    tilesNotAllowed={tilesNotAllowed}
-                    adjacentTiles={adjacent}
-                    canDrop={canDrop}
-                    orientation={orientation}
-                    removeShip={removeShip}
-                    setShipsGrid={setShipsGrid}
-                    setAdjacentTiles={setAdjacentTiles}
-                    setTilesNotAllowedEmpty={setTilesNotAllowedEmpty}
-                    toggleAdjacentVisibility={toggleAdjacentVisibility}
-                    setCoordinates={setCoordinates}
-                    adjecentVisibility={displayAdjacent}
-                    allowRandom={allowRandom}
-                    setAllowRandom={setAllowRandom} />
+                <div className="panel-left">
+                    <Grid
+                        type={"placement"}
+                        player={playerB}
+                        setState={setPlayerB}
+                        tiles={playerB.shipsGrid}
+                        tilesNotAllowed={tilesNotAllowed}
+                        adjacentTiles={adjacent}
+                        canDrop={canDrop}
+                        orientation={orientation}
+                        removeShip={removeShip}
+                        setShipsGrid={setShipsGrid}
+                        setAdjacentTiles={setAdjacentTiles}
+                        setTilesNotAllowedEmpty={setTilesNotAllowedEmpty}
+                        toggleAdjacentVisibility={toggleAdjacentVisibility}
+                        setCoordinates={setCoordinates}
+                        adjecentVisibility={displayAdjacent}
+                        allowRandom={allowRandom}
+                        setAllowRandom={setAllowRandom} />
+                </div>
                 <div>
                     <UserSidebar
                         player={playerB}
@@ -807,19 +809,22 @@ export default function Game(props) {
     if (gamePhase === 'turn-0' && gameMode === 'pvp') {
         return (
             <div className='container'>
-                <Score
-                    playerA={playerA}
-                    playerB={playerB} />
+                <div className='score-container'>
+                    <Score
+                        playerA={playerA}
+                        playerB={playerB} />
+                </div>
+
 
                 <div className='game-container'>
-                    <div>
+                    <div className="panel-left">
                         <UserSidebar
-                            type="my-turn"
+                            type="my-turn-A"
                             player={playerA}
                             switchPlayer={readyPlayerA}
                             shotFired={shotFired} />
                         <Grid
-                            type="ships-overview"
+                            type="ships-overview-right"
                             shipTiles={playerA.shipsGrid}
                             battleTiles={playerB.battleGrid} />
                     </div>
@@ -835,94 +840,10 @@ export default function Game(props) {
                         shoot={shoot}
                         shotFired={shotFired} />
 
-                    <div>
+                    <div className="panel-right">
                         <UserSidebar
-                            type="not-my-turn"
+                            type="not-my-turn-B"
                             player={playerB} />
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    if (gamePhase === 'turn-0' && gameMode === 'pvc') {
-        return (
-            <div className='container'>
-                <Score
-                    playerA={playerA}
-                    playerB={computer} />
-
-                <div className='game-container'>
-                    <div>
-                        <UserSidebar
-                            type="my-turn"
-                            player={playerA}
-                            switchPlayer={readyPlayerA}
-                            shotFired={shotFired} />
-                        <Grid
-                            type="ships-overview"
-                            shipTiles={playerA.shipsGrid}
-                            battleTiles={computer.battleGrid} />
-                    </div>
-
-                    <Grid
-                        username={playerA.user.username}
-                        player={playerA}
-                        setPlayer={setPlayerA}
-                        enemy={computer}
-                        setEnemy={setComputer}
-                        type={"battle"}
-                        tiles={playerA.battleGrid}
-                        shoot={shoot}
-                        shotFired={shotFired} />
-
-                    <div>
-                        <UserSidebar
-                            type="not-my-turn"
-                            player={computer} />
-                    </div>
-                </div>
-            </div>
-        )
-
-    }
-
-    if (gamePhase === 'turn-1' && gameMode === 'pvc') {
-        return (
-            <div className='container'>
-                <Score
-                    playerA={playerA}
-                    playerB={computer} />
-
-                <div className='game-container'>
-                    <div>
-                        <UserSidebar
-                            type="my-turn"
-                            player={playerA}
-                            switchPlayer={readyPlayerA}
-                            shotFired={shotFired} />
-                        <Grid
-                            type="ships-overview"
-                            shipTiles={playerA.shipsGrid}
-                            battleTiles={computer.battleGrid} />
-                    </div>
-
-                    <Grid
-                        username={playerA.user.username}
-                        player={playerA}
-                        setPlayer={setPlayerA}
-                        enemy={computer}
-                        setEnemy={setComputer}
-                        type={"battle"}
-                        tiles={playerA.battleGrid}
-                        shoot={shoot}
-                        shotFired={shotFired} />
-
-                    <div>
-                        <UserSidebar
-                            type="computer-turn"
-                            player={computer}
-                            computerShot={computerShot} />
                     </div>
                 </div>
             </div>
@@ -932,15 +853,17 @@ export default function Game(props) {
     if (gamePhase === 'turn-1' && gameMode === 'pvp') {
         return (
             <div className='container'>
-                <Score
-                    playerA={playerA}
-                    playerB={playerB} />
+                <div className='score-container'>
+                    <Score
+                        playerA={playerA}
+                        playerB={playerB} />
+                </div>
 
                 <div className='game-container'>
 
                     <div>
                         <UserSidebar
-                            type="not-my-turn"
+                            type="not-my-turn-A"
                             player={playerA} />
                     </div>
 
@@ -955,16 +878,104 @@ export default function Game(props) {
                         shoot={shoot}
                         shotFired={shotFired} />
 
-                    <div>
+                    <div className="panel-right">
                         <UserSidebar
-                            type="my-turn"
+                            type="my-turn-B"
                             player={playerB}
                             switchPlayer={readyPlayerB}
                             shotFired={shotFired} />
                         <Grid
-                            type="ships-overview"
+                            type="ships-overview-left"
                             shipTiles={playerB.shipsGrid}
                             battleTiles={playerA.battleGrid} />
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    if (gamePhase === 'turn-0' && gameMode === 'pvc') {
+        return (
+            <div className='container'>
+                <div className='score-container'>
+                    <Score
+                        playerA={playerA}
+                        playerB={computer} />
+                </div>
+
+                <div className='game-container'>
+                    <div className="panel-left">
+                        <UserSidebar
+                            type="my-turn-A"
+                            player={playerA}
+                            switchPlayer={readyPlayerA}
+                            shotFired={shotFired} />
+                        <Grid
+                            type="ships-overview-right"
+                            shipTiles={playerA.shipsGrid}
+                            battleTiles={computer.battleGrid} />
+                    </div>
+
+                    <Grid
+                        username={playerA.user.username}
+                        player={playerA}
+                        setPlayer={setPlayerA}
+                        enemy={computer}
+                        setEnemy={setComputer}
+                        type={"battle"}
+                        tiles={playerA.battleGrid}
+                        shoot={shoot}
+                        shotFired={shotFired} />
+
+                    <div className="panel-right">
+                        <UserSidebar
+                            type="not-my-turn-B"
+                            player={computer} />
+                    </div>
+                </div>
+            </div>
+        )
+
+    }
+
+    if (gamePhase === 'turn-1' && gameMode === 'pvc') {
+        return (
+            <div className='container'>
+                <div className='score-container'>
+                    <Score
+                        playerA={playerA}
+                        playerB={computer} />
+                </div>
+
+                <div className='game-container'>
+                    <div className="panel-left">
+                        <UserSidebar
+                            type="not-my-turn-A"
+                            player={playerA}
+                            switchPlayer={readyPlayerA}
+                            shotFired={shotFired} />
+                        <Grid
+                            type="ships-overview-right"
+                            shipTiles={playerA.shipsGrid}
+                            battleTiles={computer.battleGrid} />
+                    </div>
+
+                    <Grid
+                        username={playerA.user.username}
+                        player={playerA}
+                        setPlayer={setPlayerA}
+                        enemy={computer}
+                        setEnemy={setComputer}
+                        type={"battle"}
+                        tiles={playerA.battleGrid}
+                        shoot={shoot}
+                        shotFired={true} />
+
+                    <div className="panel-right">
+                        <UserSidebar
+                            type="computer-turn"
+                            player={computer}
+                            computerShot={computerShot} />
                     </div>
                 </div>
             </div>

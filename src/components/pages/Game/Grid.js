@@ -50,11 +50,8 @@ export default function Grid(props) {
 
                 coordinates.push(i);
                 props.setShipsGrid(props.player, props.setState, newArray);
-                // props.setShipsGrid(props.player, props.setState, newArray);
                 shipElementCounter++;
             }
-
-            // droppedOnTile.classList.add(shipType, 'horizontal');
 
         } else {
             firstElementId = parseInt(droppedOnTile.id) - (draggedElementId * 10)
@@ -89,7 +86,6 @@ export default function Grid(props) {
         e.target.classList.remove('grabbing');
     }
 
-
     if (props.type === 'placement') {
         return (
             <div className={`${props.type}-grid`}>
@@ -110,7 +106,7 @@ export default function Grid(props) {
                     if (tile.shipType === "carrier") { shipLength = 5 }
 
                     return (
-                        <div className={`ship`}>
+                        <div className={`tile-back`}>
                             <div
                                 className={`tile ${tile.shipType} ${visibilityClass} ${tile.orientation}
                                 ${tile.shipElementId === 0 ? `first-${tile.orientation}` : ''}
@@ -130,40 +126,188 @@ export default function Grid(props) {
         )
     }
 
-    if (props.type === 'ships-overview') {
+    if (props.type === 'ships-overview-left') {
         return (
             <div className='ships-overview-container'>
-                SHIPS OVERVIEW
+                <h3>Podgląd statków</h3>
                 <div className="overview-grid">
                     {props.shipTiles.map((tile) => {
 
+                        let shipLength;
+
+                        if (tile.shipType === "destroyer") { shipLength = 2 }
+                        if (tile.shipType === "submarine") { shipLength = 3 }
+                        if (tile.shipType === "cruiser") { shipLength = 3 }
+                        if (tile.shipType === "battleship") { shipLength = 4 }
+                        if (tile.shipType === "carrier") { shipLength = 5 }
+
                         if (props.battleTiles[tile.id].state === 'miss') {
                             return (
-                                <div key={`${tile.key}-overview-${tile.id}`} className={`overview-grid-tile overview-miss`}>
-                                    <ImCross size="14" />
+                                <div className="overview-grid-tile-back">
+                                    <div key={`${tile.key}-overview-${tile.id}`} className={`
+                                        overview-grid-tile
+                                        ${tile.shipType}
+                                        ${tile.orientation}
+                                        ${tile.shipElementId === 0 ? `first-${tile.orientation}` : ''}
+                                        ${tile.shipElementId === shipLength - 1 ? `last-${tile.orientation}` : ''}
+                                        ${tile.shipElementId !== 0 && tile.shipElementId !== shipLength - 1 ? 'inside' : ''}`}>
+
+                                        <div key={`${tile.key}-overview-${tile.id}`} className={`overview-grid-tile overview-miss`}>
+                                            <ImCross size="12" />
+                                        </div>
+
+                                    </div>
                                 </div>
                             );
                         }
 
                         if (props.battleTiles[tile.id].state === 'hit') {
                             return (
-                                <div key={`${tile.key}-overview-${tile.id}`} className={`overview-grid-tile overview-hit ${tile.shipType}`}>
-                                    <ImCross size="14" />
+                                <div className="overview-grid-tile-back">
+                                    <div key={`${tile.key}-overview-${tile.id}`} className={`
+                                        overview-grid-tile transparent
+                                        ${tile.shipType}
+                                        ${tile.orientation}
+                                        ${tile.shipElementId === 0 ? `first-${tile.orientation}` : ''}
+                                        ${tile.shipElementId === shipLength - 1 ? `last-${tile.orientation}` : ''}
+                                        ${tile.shipElementId !== 0 && tile.shipElementId !== shipLength - 1 ? 'inside' : ''}`}>
+
+                                        <div key={`${tile.key}-overview-${tile.id}`} className={`overview-grid-tile overview-hit`}>
+                                            <ImCross size="12" />
+                                        </div>
+
+                                    </div>
                                 </div>
                             );
                         }
 
                         if (props.battleTiles[tile.id].state === 'sink') {
                             return (
-                                <div key={`${tile.key}-overview-${tile.id}`} className={`overview-grid-tile overview-sink`}>
-                                    <ImCross size="14" />
+                                <div className="overview-grid-tile-back">
+                                    <div key={`${tile.key}-overview-${tile.id}`} className={`
+                                        overview-grid-tile black
+                                        ${tile.shipType}
+                                        ${tile.orientation}
+                                        ${tile.shipElementId === 0 ? `first-${tile.orientation}` : ''}
+                                        ${tile.shipElementId === shipLength - 1 ? `last-${tile.orientation}` : ''}
+                                        ${tile.shipElementId !== 0 && tile.shipElementId !== shipLength - 1 ? 'inside' : ''}`}>
+
+                                        <div key={`${tile.key}-overview-${tile.id}`} className={`overview-grid-tile overview-sink`}>
+                                            <ImCross size="12" />
+                                        </div>
+
+                                    </div>
                                 </div>
                             );
                         }
 
-                        return (
-                            <div key={`${tile.key}-overview-${tile.id}`} className={`overview-grid-tile ${tile.shipType}`}>
+                        console.log(tile);
 
+                        return (
+                            <div className="overview-grid-tile-back">
+                                <div key={`${tile.key}-overview-${tile.id}`} className={`
+                                overview-grid-tile
+                                ${tile.shipType}
+                                ${tile.orientation}
+                                ${tile.shipElementId === 0 ? `first-${tile.orientation}` : ''}
+                                ${tile.shipElementId === shipLength - 1 ? `last-${tile.orientation}` : ''}
+                                ${tile.shipElementId !== 0 && tile.shipElementId !== shipLength - 1 ? 'inside' : ''}`}>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+        );
+    }
+
+    if (props.type === 'ships-overview-right') {
+        return (
+            <div className='ships-overview-container'>
+                <h3>Podgląd statków</h3>
+                <div className="overview-grid">
+                    {props.shipTiles.map((tile) => {
+
+                        let shipLength;
+
+                        if (tile.shipType === "destroyer") { shipLength = 2 }
+                        if (tile.shipType === "submarine") { shipLength = 3 }
+                        if (tile.shipType === "cruiser") { shipLength = 3 }
+                        if (tile.shipType === "battleship") { shipLength = 4 }
+                        if (tile.shipType === "carrier") { shipLength = 5 }
+
+                        if (props.battleTiles[tile.id].state === 'miss') {
+                            return (
+                                <div className="overview-grid-tile-back">
+                                    <div key={`${tile.key}-overview-${tile.id}`} className={`
+                                        overview-grid-tile
+                                        ${tile.shipType}
+                                        ${tile.orientation}
+                                        ${tile.shipElementId === 0 ? `first-${tile.orientation}` : ''}
+                                        ${tile.shipElementId === shipLength - 1 ? `last-${tile.orientation}` : ''}
+                                        ${tile.shipElementId !== 0 && tile.shipElementId !== shipLength - 1 ? 'inside' : ''}`}>
+
+                                        <div key={`${tile.key}-overview-${tile.id}`} className={`overview-grid-tile overview-miss`}>
+                                            <ImCross size="12" />
+                                        </div>
+
+                                    </div>
+                                </div>
+                            );
+                        }
+
+                        if (props.battleTiles[tile.id].state === 'hit') {
+                            return (
+                                <div className="overview-grid-tile-back">
+                                    <div key={`${tile.key}-overview-${tile.id}`} className={`
+                                        overview-grid-tile transparent
+                                        ${tile.shipType}
+                                        ${tile.orientation}
+                                        ${tile.shipElementId === 0 ? `first-${tile.orientation}` : ''}
+                                        ${tile.shipElementId === shipLength - 1 ? `last-${tile.orientation}` : ''}
+                                        ${tile.shipElementId !== 0 && tile.shipElementId !== shipLength - 1 ? 'inside' : ''}`}>
+
+                                        <div key={`${tile.key}-overview-${tile.id}`} className={`overview-grid-tile overview-hit`}>
+                                            <ImCross size="12" />
+                                        </div>
+
+                                    </div>
+                                </div>
+                            );
+                        }
+
+                        if (props.battleTiles[tile.id].state === 'sink') {
+                            return (
+                                <div className="overview-grid-tile-back">
+                                    <div key={`${tile.key}-overview-${tile.id}`} className={`
+                                        overview-grid-tile black
+                                        ${tile.shipType}
+                                        ${tile.orientation}
+                                        ${tile.shipElementId === 0 ? `first-${tile.orientation}` : ''}
+                                        ${tile.shipElementId === shipLength - 1 ? `last-${tile.orientation}` : ''}
+                                        ${tile.shipElementId !== 0 && tile.shipElementId !== shipLength - 1 ? 'inside' : ''}`}>
+
+                                        <div key={`${tile.key}-overview-${tile.id}`} className={`overview-grid-tile overview-sink`}>
+                                            <ImCross size="12" />
+                                        </div>
+
+                                    </div>
+                                </div>
+                            );
+                        }
+
+                        console.log(tile);
+
+                        return (
+                            <div className="overview-grid-tile-back">
+                                <div key={`${tile.key}-overview-${tile.id}`} className={`
+                                overview-grid-tile
+                                ${tile.shipType}
+                                ${tile.orientation}
+                                ${tile.shipElementId === 0 ? `first-${tile.orientation}` : ''}
+                                ${tile.shipElementId === shipLength - 1 ? `last-${tile.orientation}` : ''}
+                                ${tile.shipElementId !== 0 && tile.shipElementId !== shipLength - 1 ? 'inside' : ''}`}>
+                                </div>
                             </div>
                         );
                     })}
@@ -177,14 +321,22 @@ export default function Grid(props) {
             <div className={`battle-grid`}>
                 {props.tiles.map((tile) => {
                     return (
-                        <div
-                            className={`tile ${tile.state}
-                             ${props.shotFired === true ? "blocked" : ""}
-                             ${tile.state !== null ? "blocked" : ""}`}
-                            key={`battle-grid-${tile.id}`}
-                            id={tile.id}
-                            onClick={(e) => props.shoot(e, props.player, props.enemy, props.setPlayer, props.setEnemy)}
-                        >
+                        <div className={`tile-back`}>
+                            <div
+                                className={`tile ${tile.state}
+                                    ${props.shotFired === true ? "blocked" : ""}
+                                    ${tile.state !== null ? "blocked" : ""}`}
+                                key={`battle-grid-${tile.id}`}
+                                id={tile.id}
+                                onClick={(e) => {
+                                    if (props.shotFired !== true) {
+                                        props.shoot(e, props.player, props.enemy, props.setPlayer, props.setEnemy);
+                                    } else {
+                                        sound.playBlocked();
+                                    }
+                                }}
+                            >
+                            </div>
                         </div>
                     )
                 })}

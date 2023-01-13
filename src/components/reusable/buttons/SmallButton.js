@@ -5,9 +5,9 @@ export default function SmallButton({ content, IconLeft, IconRight, color, onCli
 
     return (
         <button className="small-button" style={{ backgroundColor: `${color}` }} onClick={(e) => onClick(e)} disabled={disabled}>
-            {IconLeft !== null ? <IconLeft className="small-button-icon-left" size="16px" /> : <></>}
+            {IconLeft !== null ? <IconLeft className="small-button-icon-left" size="20px" /> : <></>}
             <p className="small-button-content">{content}</p>
-            {IconRight !== null ? <IconRight className="small-button-icon-right" size="16px" /> : <></>}
+            {IconRight !== null ? <IconRight className="small-button-icon-right" size="2px" /> : <></>}
         </button>
     )
 }
