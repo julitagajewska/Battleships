@@ -13,7 +13,7 @@ import api, { getNewId } from '../../../api/axios';
 import { getUsers } from '../../../api/axios';
 import pick from '../../assets/pick2.mp3';
 import { Howl, Howler } from 'howler';
-import logo from '../../assets/logo6.png';
+import logo from '../../assets/logo7.png';
 
 export default function Menu(props) {
 
@@ -59,8 +59,8 @@ export default function Menu(props) {
             </Sidebar>
 
             <div className="menu-logo-container">
-                {/* <img className='logo' src={logo} alt="logo" /> */}
-                LOGO
+                <img className='logo' src={logo} alt="logo" />
+                {/* LOGO */}
             </div>
 
             <div className="menu-buttons-group">

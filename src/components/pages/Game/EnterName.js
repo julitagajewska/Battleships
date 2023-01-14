@@ -37,7 +37,7 @@ export default function EnterName(props) {
             return;
         }
 
-        let nweUser = new User(null, username, null, null, null, null);
+        let nweUser = new User(null, username, null, null, "/user-picture.png", null);
 
         sound.playPick();
         props.setUser(nweUser);

@@ -1,7 +1,7 @@
 .score-component-container {
     position: relative;
     left: 0;
-    /* left: 1rem; */
+    left: 1.5rem;
     top: 3rem;
     width: 7rem;
     /* min-height: 7rem; */

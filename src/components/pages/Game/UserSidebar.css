@@ -36,11 +36,11 @@
 
 .waiting {
     position: relative;
-    top: 0;
     margin-bottom: 22rem;
 }
 
 .turn {
+    position: relative;
     margin-bottom: 18rem;
 }
 

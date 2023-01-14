@@ -8,6 +8,9 @@ import { User } from '../../../Models/User';
 import { useAuth } from '../../utils/auth';
 import { useSound } from '../../utils/Sound';
 
+import { HiCheck } from 'react-icons/hi';
+import { ImCross } from 'react-icons/im';
+
 import WaitingForUserOVerlay from './WaitingForUserOVerlay';
 import GameModeChoice from './GameModeChoice';
 import PlayerTypeChoice from './PlayerTypeChoice';
@@ -16,9 +19,12 @@ import EnterName from './EnterName';
 import UserSidebar from './UserSidebar';
 import Grid from './Grid';
 import Score from './Score';
+import GameOver from './GameOver';
+import Sidebar from '../../reusable/ui/Sidebar';
+import OverviewButton from '../../reusable/buttons/OverviewButton';
+import IconOnlyOverviewButton from '../../reusable/buttons/IconOnlyOverviewButton';
 
 import './Game.css';
-import GameOver from './GameOver';
 
 export default function Game(props) {
 
@@ -71,7 +77,7 @@ export default function Game(props) {
             "Komputer",
             null,
             null,
-            'https://raw.githubusercontent.com/julitagajewska/Battleships/scraped-version/src/components/assets/computer2.png?token=GHSAT0AAAAAAB4QLGQPVVEMF25EOQH3B57YY6BWZ3A',
+            '/computer-picture.png',
             null
         );
 
@@ -817,6 +823,64 @@ export default function Game(props) {
 
 
                 <div className='game-container'>
+                    <Sidebar type="left">
+                        <div>
+                            <h3>Oddanie strzału</h3>
+                            <p align="justify" style={{ lineHeight: '1.6' }}>Aby oddać strzał kliknij na jedno z pól na planszy znajdującej się na środku ekranu. <br /><br />
+                                Po kliknięciu na pole, pojawi się jeden z poniższych symboli: <br /> </p>
+
+                            <IconOnlyOverviewButton
+                                Icon={null}
+                                color={"rgb(211, 211, 211, 0.7)"}
+                                disabled={false} /> nie trafiono <br />
+
+                            <IconOnlyOverviewButton
+                                Icon={null}
+                                color={"rgb(139, 0, 0, 0.7)"}
+                                disabled={false} /> trafiono w element statku <br />
+
+                            <IconOnlyOverviewButton
+                                Icon={null}
+                                color={"rgba(0, 56, 0, 0.7)"}
+                                disabled={false} /> zatopiono cały statek <br /><br />
+
+                            Aby przejść do tury przeciwnika, po oddaniu strzału, naciśnij
+                            <OverviewButton
+                                IconLeft={HiCheck}
+                                IconRight={null}
+                                content="Gotowe"
+                                color={"var(--gradient-1)"} />
+
+                            <h3>Podgląd statków</h3>
+                            <p align="justify" style={{ lineHeight: '1.6' }}>Na planszy w lewym dolnym rogu ekranu zaznaczone są Twoje statki, oraz strzały oddane przez Twojego przeciwnika.</p>
+
+                            <IconOnlyOverviewButton
+                                Icon={ImCross}
+                                color={"rgba(30, 105, 138, 0.35)"}
+                                iconColor={"rgb(211, 211, 211, 0.7)"}
+                                disabled={false}
+                                shape={"square"}
+                                shadow={"no-shadow"} /> nie trafiono <br />
+
+                            <IconOnlyOverviewButton
+                                Icon={ImCross}
+                                animation={"animated"}
+                                color={"rgba(30, 105, 138, 0.35)"}
+                                iconColor={"rgb(139, 0, 0, 0.7)"}
+                                disabled={false}
+                                shape={"square"}
+                                shadow={"no-shadow"} /> trafiono w element statku <br />
+
+                            <IconOnlyOverviewButton
+                                Icon={ImCross}
+                                color={"rgba(0, 56, 0, 0.7)"}
+                                iconColor={"white"}
+                                disabled={false}
+                                shape={"square"}
+                                shadow={"no-shadow"} /> zatopiono Twój statek<br />
+
+                        </div>
+                    </Sidebar>
                     <div className="panel-left">
                         <UserSidebar
                             type="my-turn-A"
@@ -861,7 +925,66 @@ export default function Game(props) {
 
                 <div className='game-container'>
 
-                    <div>
+                    <Sidebar type="left">
+                        <div>
+                            <h3>Oddanie strzału</h3>
+                            <p align="justify" style={{ lineHeight: '1.6' }}>Aby oddać strzał kliknij na jedno z pól na planszy znajdującej się na środku ekranu. <br /><br />
+                                Po kliknięciu na pole, pojawi się jeden z poniższych symboli: <br /> </p>
+
+                            <IconOnlyOverviewButton
+                                Icon={null}
+                                color={"rgb(211, 211, 211, 0.7)"}
+                                disabled={false} /> nie trafiono <br />
+
+                            <IconOnlyOverviewButton
+                                Icon={null}
+                                color={"rgb(139, 0, 0, 0.7)"}
+                                disabled={false} /> trafiono w element statku <br />
+
+                            <IconOnlyOverviewButton
+                                Icon={null}
+                                color={"rgba(0, 56, 0, 0.7)"}
+                                disabled={false} /> zatopiono cały statek <br /><br />
+
+                            Aby przejść do tury przeciwnika, po oddaniu strzału, naciśnij
+                            <OverviewButton
+                                IconLeft={HiCheck}
+                                IconRight={null}
+                                content="Gotowe"
+                                color={"var(--gradient-1)"} />
+
+                            <h3>Podgląd statków</h3>
+                            <p align="justify" style={{ lineHeight: '1.6' }}>Na planszy w prawym dolnym rogu ekranu zaznaczone są Twoje statki, oraz strzały oddane przez Twojego przeciwnika.</p>
+
+                            <IconOnlyOverviewButton
+                                Icon={ImCross}
+                                color={"rgba(30, 105, 138, 0.35)"}
+                                iconColor={"rgb(211, 211, 211, 0.7)"}
+                                disabled={false}
+                                shape={"square"}
+                                shadow={"no-shadow"} /> nie trafiono <br />
+
+                            <IconOnlyOverviewButton
+                                Icon={ImCross}
+                                animation={"animated"}
+                                color={"rgba(30, 105, 138, 0.35)"}
+                                iconColor={"rgb(139, 0, 0, 0.7)"}
+                                disabled={false}
+                                shape={"square"}
+                                shadow={"no-shadow"} /> trafiono w element statku <br />
+
+                            <IconOnlyOverviewButton
+                                Icon={ImCross}
+                                color={"rgba(0, 56, 0, 0.7)"}
+                                iconColor={"white"}
+                                disabled={false}
+                                shape={"square"}
+                                shadow={"no-shadow"} /> zatopiono Twój statek<br />
+
+                        </div>
+                    </Sidebar>
+
+                    <div className="panel-left">
                         <UserSidebar
                             type="not-my-turn-A"
                             player={playerA} />
@@ -904,6 +1027,66 @@ export default function Game(props) {
                 </div>
 
                 <div className='game-container'>
+
+                    <Sidebar type="left">
+                        <div>
+                            <h3>Oddanie strzału</h3>
+                            <p align="justify" style={{ lineHeight: '1.6' }}>Aby oddać strzał kliknij na jedno z pól na planszy znajdującej się na środku ekranu. <br /><br />
+                                Po kliknięciu na pole, pojawi się jeden z poniższych symboli: <br /> </p>
+
+                            <IconOnlyOverviewButton
+                                Icon={null}
+                                color={"rgb(211, 211, 211, 0.7)"}
+                                disabled={false} /> nie trafiono <br />
+
+                            <IconOnlyOverviewButton
+                                Icon={null}
+                                color={"rgb(139, 0, 0, 0.7)"}
+                                disabled={false} /> trafiono w element statku <br />
+
+                            <IconOnlyOverviewButton
+                                Icon={null}
+                                color={"rgba(0, 56, 0, 0.7)"}
+                                disabled={false} /> zatopiono cały statek <br /><br />
+
+                            Aby zakończyć swoją turę, po oddaniu strzału, naciśnij
+                            <OverviewButton
+                                IconLeft={HiCheck}
+                                IconRight={null}
+                                content="Gotowe"
+                                color={"var(--gradient-1)"} />
+
+                            <h3>Podgląd statków</h3>
+                            <p align="justify" style={{ lineHeight: '1.6' }}>Na planszy w prawym dolnym rogu ekranu zaznaczone są Twoje statki, oraz strzały oddane przez Twojego przeciwnika.</p>
+
+                            <IconOnlyOverviewButton
+                                Icon={ImCross}
+                                color={"rgba(30, 105, 138, 0.35)"}
+                                iconColor={"rgb(211, 211, 211, 0.7)"}
+                                disabled={false}
+                                shape={"square"}
+                                shadow={"no-shadow"} /> nie trafiono <br />
+
+                            <IconOnlyOverviewButton
+                                Icon={ImCross}
+                                animation={"animated"}
+                                color={"rgba(30, 105, 138, 0.35)"}
+                                iconColor={"rgb(139, 0, 0, 0.7)"}
+                                disabled={false}
+                                shape={"square"}
+                                shadow={"no-shadow"} /> trafiono w element statku <br />
+
+                            <IconOnlyOverviewButton
+                                Icon={ImCross}
+                                color={"rgba(0, 56, 0, 0.7)"}
+                                iconColor={"white"}
+                                disabled={false}
+                                shape={"square"}
+                                shadow={"no-shadow"} /> zatopiono Twój statek<br />
+
+                        </div>
+                    </Sidebar>
+
                     <div className="panel-left">
                         <UserSidebar
                             type="my-turn-A"
@@ -948,6 +1131,14 @@ export default function Game(props) {
                 </div>
 
                 <div className='game-container'>
+
+                    <Sidebar type="left">
+                        <div>
+                            <h3>Trwa tura Komputera</h3>
+                            <p align="justify">Po oddaniu strzału przez komputer nastąpi przejście do Twojej tury.</p>
+                        </div>
+                    </Sidebar>
+
                     <div className="panel-left">
                         <UserSidebar
                             type="not-my-turn-A"

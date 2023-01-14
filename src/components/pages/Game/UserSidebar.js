@@ -36,7 +36,7 @@ export default function UserSidebar(props) {
     if (props.shotFired && props.type === "my-turn-A") {
         return (
 
-            <div className='user-sidebar-right turn'>
+            <div className='user-sidebar-left turn'>
                 <div className="user-sidebar-header-left">
                     <ProfilePictureMedium src={props.player.user.image} />
                     <div className="user-sidebar-header-username-left">
@@ -60,7 +60,7 @@ export default function UserSidebar(props) {
 
     if (props.shotFired && props.type === "my-turn-B") {
         return (
-            <div className='user-sidebar-left turn'>
+            <div className='user-sidebar-right turn'>
                 <div className="user-sidebar-header-right">
                     <div className="user-sidebar-header-username-right">
                         <h3>{props.player.user.username}</h3>
@@ -404,7 +404,7 @@ export default function UserSidebar(props) {
     if (props.type === 'my-turn-B') {
 
         return (
-            <div className='user-sidebar-left turn'>
+            <div className='user-sidebar-right turn'>
                 <div className="user-sidebar-header-right">
                     <div className="user-sidebar-header-username-right">
                         <h3>{props.player.user.username}</h3>
@@ -442,7 +442,7 @@ export default function UserSidebar(props) {
 
     if (props.type === 'not-my-turn-B') {
         return (
-            <div className='user-sidebar-right waiting'>
+            <div className='user-sidebar-right waiting user-A'>
                 <div className="user-sidebar-header-right">
                     <div className="user-sidebar-header-username-right">
                         <h3>{props.player.user.username}</h3>
