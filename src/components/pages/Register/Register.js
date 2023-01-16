@@ -4,11 +4,12 @@ import React from 'react';
 import { useRef, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSound } from '../../utils/Sound';
-import FormInput from '../../reusable/inputs/FormInput';
 import ErrorMessage from '../../reusable/messages/ErrorMessage';
 import api, { checkUsername, registerUser } from '../../../api/axios';
+
 import { HiCheckCircle } from 'react-icons/hi';
 import { BiLogInCircle } from 'react-icons/bi';
+import { IoChevronBackSharp } from 'react-icons/io5';
 
 import UsernameInput from '../../reusable/inputs/UsernameInput';
 import PasswordInput from '../../reusable/inputs/PasswordInput';
@@ -17,6 +18,8 @@ import MailInput from '../../reusable/inputs/MailInput';
 import InputErrors from '../../reusable/messages/InputErrors';
 import MediumButton from '../../reusable/buttons/MediumButton';
 import Sidebar from '../../reusable/ui/Sidebar';
+import IconOnlyButton from '../../reusable/buttons/IconOnlyButton';
+import IconOnlyOverviewButton from '../../reusable/buttons/IconOnlyOverviewButton';
 
 export default function Rejsetracja() {
 
@@ -141,16 +144,15 @@ export default function Rejsetracja() {
                 :
                 (
                     <>
-                        <Sidebar type="left">
+                        <Sidebar type="left" overflow="overflow-auto">
                             <div className="info-align-left">
                                 <h3>REJESTRACJA</h3>
                                 <div>
-                                    <p align="justify">Na tej stronie możesz utworzyć swój własny profil. Poniżej znajdują się wymagania dotyczące wprowadzanych w formularzu danych.</p>
+                                    <p align="justify">Na tej stronie możesz utworzyć swój własny profil. Poniżej znajdują się wymagania dotyczące wprowadzanych w formularzu danych.<br /><br /></p>
                                 </div>
 
-                                <br />
                                 <p>
-                                    <b>Nazywa użytkownika</b>
+                                    <b>Nazwa użytkownika</b>
                                     <ul>
                                         <li>3 - 10 znaków</li>
                                         <li>Nie może zawierać spacji</li>
@@ -169,6 +171,7 @@ export default function Rejsetracja() {
                                     <ul>
                                         <li>Musi być w formacie: abc@def.xyz</li>
                                     </ul>
+
                                     <b>Hasło</b>
                                     <ul>
                                         <li>Musi zawierać:</li>
@@ -181,13 +184,35 @@ export default function Rejsetracja() {
                                         <li>3 - 15 znaków</li>
                                         <li>Nie może  zawierać spacji</li>
                                     </ul>
-                                    <br />
-                                    <p align="justify">Hasło oraz jego potwierdzenie muszą być takie same.</p>
+
+                                    <p align="justify"><br />Hasło oraz jego potwierdzenie muszą być takie same.<br /><br /></p>
+
+                                    <p align="justify"> Możesz powrócić do ekranu logowania klikając
+                                        <IconOnlyOverviewButton
+                                            Icon={IoChevronBackSharp}
+                                            color={"rgba(18, 66, 87, 0.2)"}
+                                            shadow={"no-shadow"}
+                                            type={"back"} />
+                                        .
+                                    </p>
                                 </p>
                             </div>
 
+
                         </Sidebar>
                         <CenteredContainer>
+
+                            <IconOnlyButton
+                                Icon={IoChevronBackSharp}
+                                color={"rgba(18, 66, 87, 0.2)"}
+                                onClick={() => navigate("../login")}
+                                disabled={false}
+                                position={"top-left"}
+                                shadow={"no-shadow"}
+                                type={"back"}
+                            />
+
+
                             <div className='upper section'>
                                 <h3>REJESTRACJA</h3>
                                 <ErrorMessage state={false} message={errorMsg} />

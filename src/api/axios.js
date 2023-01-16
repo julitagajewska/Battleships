@@ -181,16 +181,20 @@ export const saveGame = async (game) => {
     }
 }
 
-export const getLastThreeGames = async (user) => {
+export const getLastThreeGames = async (username) => {
     let games = [];
     let response = await axios.get('games');
     games = response.data;
 
-    games.filter((game) => {
-        if (game.userA.username === user.username || game.userB.username === user.username) {
+    let lastThreeGames = games.filter((game) => {
+        if (game.userA.username === username || game.userB.username === username) {
             return game
         }
     })
 
-    return games.slice(games.length - 1);
+    if (lastThreeGames.length <= 3) {
+        return lastThreeGames
+    }
+
+    return lastThreeGames.slice(lastThreeGames.length - 3);
 }

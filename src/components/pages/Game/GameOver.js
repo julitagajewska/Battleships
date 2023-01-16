@@ -1,19 +1,16 @@
 import React from 'react';
-import { Game } from '../../../Models/Game';
-import { getNewGameId, saveGame } from '../../../api/axios';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { IoMdArrowRoundBack } from 'react-icons/io';
 
-import CenteredContainer from '../../reusable/containers/CenteredContainer';
+import { IoArrowBack } from 'react-icons/io5';
+
 import MediumButton from '../../reusable/buttons/MediumButton';
+import CenteredContainer from '../../reusable/containers/CenteredContainer';
+import CenteredContainerLight from '../../reusable/containers/CenteredContainerLight';
+import ProfilePictureMedium from '../../reusable/images/ProfilePictureMedium';
+import Overlay from '../../reusable/ui/Overlay';
 
-export default function GameOver({ playerA, playerB }) {
-
-    const navigate = useNavigate();
+export default function GameOver({ playerA, playerB, exit }) {
 
     let winner;
-    let scoreTable = [];
 
     if (playerA.score === 17) {
         winner = playerA
@@ -23,51 +20,28 @@ export default function GameOver({ playerA, playerB }) {
         winner = playerB
     }
 
-    scoreTable = [playerA.score, playerB.score]
-
-    let newId;
-
-    const generateId = async () => {
-        newId = await getNewGameId();
-    }
-
-    generateId();
-
-    const save = async () => {
-
-        let gameObject = new Game(
-            newId,
-            playerA.user,
-            playerB.user,
-            scoreTable,
-        );
-
-        console.log(gameObject);
-
-        await saveGame(gameObject);
-        navigate('../');
-    }
-
     return (
-        <CenteredContainer>
+        <CenteredContainerLight>
             <div className="upper section">
-                <h3> Koniec gry! </h3>
+                <h3> KONIEC GRY </h3>
             </div>
 
-            <div className="upper section">
-                <h4> Wygrywa {winner.user.username} </h4>
+            <div className="middle section">
+                <ProfilePictureMedium src={winner.user.image} />
+                <br /><br />
+                <h3> Wygrywa {winner.user.username}! </h3>
             </div>
 
             <div className="upper section">
                 <MediumButton
-                    IconLeft={IoMdArrowRoundBack}
+                    IconLeft={IoArrowBack}
                     IconRight={null}
-                    onClick={() => save()}
-                    content="powrót do menu głównego"
+                    onClick={() => exit()}
+                    content="powrót"
                     color="var(--gradient-1)"
                     disabled={false}
                 />
             </div>
-        </CenteredContainer>
+        </CenteredContainerLight>
     )
 }

@@ -1,15 +1,15 @@
 .profile-picture-img {
-    height: 150px;
-    width: 150px;
+    height: 120px;
+    width: 120px;
     object-fit: cover;
-    border-radius: 75px;
+    border-radius: 60px;
     /* box-shadow: 8px 8px 24px 0px rgba(0, 0, 0, 0.5); */
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .profile-picture-container {
-    height: 150px;
-    width: 150px;
+    height: 120px;
+    width: 120px;
 }
 
 .active {
@@ -25,12 +25,12 @@
 .change-profile-picture-button {
     height: 30px;
     width: 30px;
-    background-color: #FFE9CF;
+    background-color: var(--gradient-1);
     color: black;
     position: relative;
     cursor: pointer;
     top: -30px;
-    left: 100px;
+    left: 85px;
     border-radius: 15px;
     display: flex;
     align-items: center;

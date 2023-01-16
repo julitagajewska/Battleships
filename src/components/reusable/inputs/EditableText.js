@@ -10,15 +10,18 @@ import UsernameInput from './UsernameInput';
 import MailInput from './MailInput';
 import PasswordInput from './PasswordInput';
 import ErrorMessage from '../messages/ErrorMessage';
+import IconOnlyButton from '../buttons/IconOnlyButton';
+import { useSound } from '../../utils/Sound';
 
 export default function EditableText(props) {
 
     const auth = useAuth();
+    const sound = useSound();
 
     const [toggle, setToggle] = useState(true);
 
-    let eyeIconOpen = <RxEyeOpen className="icon eye" size={"1.25rem"} onClick={() => setEyeIcon(eyeIconClosed)} />
-    let eyeIconClosed = <RxEyeClosed className="icon eye" size={"1.25rem"} onClick={() => setEyeIcon(eyeIconOpen)} />
+    let eyeIconOpen = <RxEyeOpen className="icon eye" size={"1.25rem"} onClick={() => { setEyeIcon(eyeIconClosed) }} />
+    let eyeIconClosed = <RxEyeClosed className="icon eye" size={"1.25rem"} onClick={() => { setEyeIcon(eyeIconOpen) }} />
 
     const [eyeIcon, setEyeIcon] = useState(toggle === true ? eyeIconOpen : eyeIconClosed);
     const [passwordDisplay, setPasswordDisplay] = useState('');
@@ -75,12 +78,13 @@ export default function EditableText(props) {
 
     if (editMode === true) {
         return (
-            <div>
+            <div className="editable-text-container">
                 <div className="label-value-container">
                     <form className="edit-form-container" onSubmit={handleSubmit}>
                         <label>{props.label}</label>
                         {props.id === 'username' ?
                             <UsernameInput
+                                size="small"
                                 placeholder={props.value}
                                 setUsernameTaken={setUsernameTaken}
                                 setFocus={setFocus}
@@ -92,6 +96,7 @@ export default function EditableText(props) {
                             : <></>}
                         {props.id === 'mail' ?
                             <MailInput
+                                size="small"
                                 placeholder={props.value}
                                 setFocus={setFocus}
                                 setValue={setValue}
@@ -101,6 +106,7 @@ export default function EditableText(props) {
                             : <></>}
                         {props.id === 'password' ?
                             <PasswordInput
+                                size="small"
                                 placeholder={props.value}
                                 setFocus={setFocus}
                                 setValue={setValue}
@@ -108,7 +114,13 @@ export default function EditableText(props) {
                                 setErrors={setErrors}
                                 required={false} />
                             : <></>}
-                        <button type='submit' disabled={!valid ? true : false}><BsCheckLg className="icon" size={"1.25rem"} /></button>
+                        <IconOnlyButton
+                            Icon={BsCheckLg}
+                            color={"var(--gradient-1)"}
+                            disabled={!valid}
+                            onClick={(e) => { sound.playPick(); handleSubmit(e); }}
+                            oval={"oval"}
+                        />
                     </form>
                 </div>
                 {
@@ -151,7 +163,7 @@ export default function EditableText(props) {
             {props.label === "Hasło" ?
                 <p className="user-data-p">{passwordDisplay}</p> :
                 <p className="user-data-p">{auth.user[props.id]}</p>}
-            <AiTwotoneEdit className="icon" size={"1.25rem"} onClick={() => setEditMode(!editMode)} />
+            <AiTwotoneEdit className="icon" size={"1.25rem"} onClick={() => { sound.playPick(); setEditMode(!editMode) }} />
             {props.label === "Hasło" ? eyeIcon : <></>}
         </div>
     )

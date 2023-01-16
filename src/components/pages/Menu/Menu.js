@@ -1,35 +1,30 @@
 import React from 'react';
+
 import { TbSwords } from 'react-icons/tb';
 import { BsDoorOpenFill } from 'react-icons/bs';
 import { HiWrenchScrewdriver } from 'react-icons/hi2';
-import RoutingButton from '../../reusable/RoutingButton';
+import { RiUser5Line } from 'react-icons/ri';
+import { FaPlus } from 'react-icons/fa';
+
 import './Menu.css';
+
+import { useAuth } from '../../utils/auth';
+import { useSound } from '../../utils/Sound';
+import { useNavigate } from 'react-router-dom';
+
 import Profile from '../Profile/Profile';
 import Sidebar from '../../reusable/ui/Sidebar.js';
-import { useAuth } from '../../utils/auth';
-import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import api, { getNewId } from '../../../api/axios';
-import { getUsers } from '../../../api/axios';
-import pick from '../../assets/pick2.mp3';
-import { Howl, Howler } from 'howler';
+import OverviewButton from '../../reusable/buttons/OverviewButton';
+import IconOnlyOverviewButton from '../../reusable/buttons/IconOnlyOverviewButton';
+
 import logo from '../../assets/logo7.png';
 
 export default function Menu(props) {
 
-    let src = pick;
-
     const auth = useAuth();
     const navigate = useNavigate();
+    const sound = useSound();
 
-    const callTheSound = (src) => {
-        const sound = new Howl({
-            src,
-            html5: true
-        });
-
-        sound.play();
-    }
 
     const logOut = () => {
         auth.logout();
@@ -37,30 +32,78 @@ export default function Menu(props) {
     }
 
     const newGameButton = () => {
-        callTheSound(src);
+        sound.playPick();
         navigate("/game");
     }
 
     const settingsButton = () => {
-        callTheSound(src);
+        sound.playPick();
         navigate("/settings");
     }
 
     const logOutButton = () => {
-        callTheSound(src);
+        sound.playPick();
         logOut();
     }
 
     return (
         <div className="menu-container">
 
-            <Sidebar type={"left"}>
-                <p>To jest menu</p>
+            <Sidebar type={"left"} overflow={"overflow-auto"}>
+                <div>
+                    <h3>Menu gry</h3>
+                    <p>Witaj w menu głównym gry Staćki!</p><br />
+
+                    <h3>Sterowanie</h3>
+                    <p align="justify" style={{ lineHeight: "2" }}>
+                        Kliknięcie w ikonę użytkownika
+                        <IconOnlyOverviewButton
+                            Icon={RiUser5Line}
+                            color="transparent"
+                            shadow="no-shadow" />
+                        , znajdującą się po prawej stronie ekranu,
+                        wyświetli podgląd profilu użytkownika. <br /><br />
+                    </p>
+
+                    <h3>Profil użytkownika</h3>
+
+                    <p align="justify" style={{ lineHeight: "2" }}><b>Edycja zdjęcia użytkownika</b><br />
+                        Zdjęcie użytkownika może zostać zmienione poprzez klikniecie w przycisk
+                        <IconOnlyOverviewButton
+                            Icon={FaPlus}
+                            color="var(--gradient-1)"
+                            shadow="no-shadow" />
+                        , znajduący się w prawej dolnej części obecnego zdjęcia profilowego.<br />
+                        Po kliknieciu pojawi się okno, w którym można podać adres URL nowego zdjęcia.
+                    </p>
+
+                    <p align="justify" style={{ lineHeight: "2" }}>
+                        <b>Edycja danych użytkownika</b><br />
+                        Dane użytkownika takie jak:
+                        <ul>
+                            <li> nazwa użytkownika </li>
+                            <li> adres e-mail </li>
+                            <li> hasło </li>
+                        </ul>
+                        mogą zostać zmienione w zakładce "Dane użytkownika". <br /><br />
+                        Aby zmienić wybraną informację, kliknij symbol <IconOnlyOverviewButton
+                            Icon={FaPlus}
+                            color="var(--gradient-1)"
+                            shadow="no-shadow" /> i wprowadź odpowiednie dane. <br /><br />
+                        Kliknięcie przycisku <IconOnlyOverviewButton
+                            Icon={FaPlus}
+                            color="var(--gradient-1)"
+                            shadow="no-shadow" /> bez wprowadzenia nowych danych,
+                        spowoduje zachowanie dotychczasowej wartości.
+
+                    </p>
+                    <p align="justify" style={{ lineHeight: "2" }}><b>Podgląd rozgrywek</b><br />
+                        W tej części profilu możesz podejrzeć wynik swoich trzech ostatnich gier.</p>
+                </div>
             </Sidebar>
 
             <div className="menu-logo-container">
                 <img className='logo' src={logo} alt="logo" />
-                {/* LOGO */}
             </div>
 
             <div className="menu-buttons-group">
@@ -81,8 +124,8 @@ export default function Menu(props) {
                 </button>
 
             </div>
-            <Sidebar type={"right"} startAnimation={props.startAnimationRight} toggle={props.toggleRight}>
-                <Profile sound={callTheSound} />
+            <Sidebar type={"right"}>
+                <Profile />
             </Sidebar>
         </div>
 

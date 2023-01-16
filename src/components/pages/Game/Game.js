@@ -1,17 +1,21 @@
 /* eslint-disable default-case */
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../utils/auth';
+import { useSound } from '../../utils/Sound'
+import { useNavigate } from 'react-router-dom';
+import { getNewGameId, saveGame } from '../../../api/axios';
+
 import { Ship } from '../../../Models/Ship';
 import { Tile } from '../../../Models/Tile';
 import { Player } from '../../../Models/Player';
 import { User } from '../../../Models/User';
-
-import { useAuth } from '../../utils/auth';
-import { useSound } from '../../utils/Sound';
+import { Game } from '../../../Models/Game';
 
 import { HiCheck } from 'react-icons/hi';
 import { ImCross } from 'react-icons/im';
+import { VscChromeClose } from 'react-icons/vsc';
 
-import WaitingForUserOVerlay from './WaitingForUserOVerlay';
+import WaitingForUserOverlay from './WaitingForUserOVerlay';
 import GameModeChoice from './GameModeChoice';
 import PlayerTypeChoice from './PlayerTypeChoice';
 import PlayersList from './PlayersList';
@@ -23,15 +27,19 @@ import GameOver from './GameOver';
 import Sidebar from '../../reusable/ui/Sidebar';
 import OverviewButton from '../../reusable/buttons/OverviewButton';
 import IconOnlyOverviewButton from '../../reusable/buttons/IconOnlyOverviewButton';
+import IconOnlyButton from '../../reusable/buttons/IconOnlyButton';
+import ExitGameOverlay from './ExitGameOverlay';
 
 import './Game.css';
+import BattleInfo from '../../reusable/ui/BattleInfo';
 
-export default function Game(props) {
+export default function GameLoop(props) {
 
     // Constant varaibles
     const gridWidth = 10;
     const auth = useAuth();
     const sound = useSound();
+    const navigate = useNavigate();
 
 
     // Game state
@@ -56,7 +64,11 @@ export default function Game(props) {
     const [shotFired, setShotFired] = useState(false);
     const [cursorDisabled, setCursorDisabled] = useState(false);
 
-    const [toggleOverlay, setToggleOverlay] = useState(true);
+    // Overlays
+    const [gameOverOverlay, setGameOverOverlay] = useState(false);
+    const [exitOverlay, setExitOverlay] = useState(false);
+    const [waitingOverlay, setWaitingOverlay] = useState(false);
+
 
 
 
@@ -420,11 +432,7 @@ export default function Game(props) {
             setGamePhase("placement-player-B");
         }
 
-        if (gameMode === 'pvp' && gamePhase === 'turn-0') {
-            setGamePhase("waiting-for-player-B");
-        }
-
-        if (gameMode === 'pvp' && gamePhase === 'waiting-for-player-A') {
+        if (gameMode === 'pvp' && gamePhase === 'turn-1') {
             setShotFired(false);
             setGamePhase('turn-0');
         }
@@ -445,7 +453,7 @@ export default function Game(props) {
             setGamePhase(`turn-${randomTurn()}`);
         }
 
-        if (gamePhase === 'waiting-for-player-B') {
+        if (gamePhase === 'turn-0') {
             setShotFired(false);
             setGamePhase('turn-1');
         }
@@ -690,6 +698,32 @@ export default function Game(props) {
 
     }
 
+    const exit = async () => {
+
+        let id = await getNewGameId();
+        let game;
+
+        if (gameMode === 'pvc') {
+            game = new Game(
+                id,
+                playerA.user,
+                computer.user,
+                [playerA.score, computer.score]
+            )
+        } else {
+            game = new Game(
+                id,
+                playerA.user,
+                playerB.user,
+                [playerA.score, playerB.score]
+            )
+        }
+
+
+        await saveGame(game);
+        navigate("../");
+    }
+
     // Game phases
 
     if (gamePhase === 'game-mode-choice') {
@@ -728,55 +762,48 @@ export default function Game(props) {
 
     if (gamePhase === 'placement-player-A') {
         return (
-            <div className='game-container'>
-                <div className="panel-left">
-                    <UserSidebar
-                        player={playerA}
-                        setState={setPlayerA}
-                        type={"placement-player-A"}
-                        ships={playerA.ships}
-                        orientation={orientation}
-                        toggleOrientation={toggleOrientation}
-                        setNotAllowed={setNotAllowed}
-                        resetShips={resetShips}
-                        setTilesNotAllowedEmpty={setTilesNotAllowedEmpty}
-                        toggleAdjacentVisibility={toggleAdjacentVisibility}
-                        playerReady={readyPlayerA}
-                        randomShipPlacement={randomShipPlacement}
-                        allowRandom={allowRandom}
-                        setAllowRandom={setAllowRandom} />
-                </div>
-                <Grid
-                    type={"placement"}
-                    player={playerA}
-                    setState={setPlayerA}
-                    tiles={playerA.shipsGrid}
-                    tilesNotAllowed={tilesNotAllowed}
-                    adjacentTiles={adjacent}
-                    canDrop={canDrop}
-                    orientation={orientation}
-                    removeShip={removeShip}
-                    setShipsGrid={setShipsGrid}
-                    setAdjacentTiles={setAdjacentTiles}
-                    setTilesNotAllowedEmpty={setTilesNotAllowedEmpty}
-                    toggleAdjacentVisibility={toggleAdjacentVisibility}
-                    setCoordinates={setCoordinates}
-                    adjecentVisibility={displayAdjacent}
-                    setAllowRandom={setAllowRandom} />
-            </div>
+            <>
+                <IconOnlyButton
+                    Icon={VscChromeClose}
+                    color={"rgba(18, 66, 87, 0.2)"}
+                    onClick={() => { sound.playPick(); setExitOverlay(true) }}
+                    disabled={false}
+                    position={"top-right"}
+                    shadow={"no-shadow"}
+                    type={"back"} />
 
-        );
-    }
+                <div className='game-container'>
 
-    if (gamePhase === 'placement-player-B') {
-        return (
-            <div className='game-container'>
-                <div className="panel-left">
+                    {exitOverlay === true ?
+                        <ExitGameOverlay
+                            setExitOverlay={() => setExitOverlay(false)}
+                            exit={() => exit()} />
+                        :
+                        <></>
+                    }
+
+                    <div className="panel-left">
+                        <UserSidebar
+                            player={playerA}
+                            setState={setPlayerA}
+                            type={"placement-player-A"}
+                            ships={playerA.ships}
+                            orientation={orientation}
+                            toggleOrientation={toggleOrientation}
+                            setNotAllowed={setNotAllowed}
+                            resetShips={resetShips}
+                            setTilesNotAllowedEmpty={setTilesNotAllowedEmpty}
+                            toggleAdjacentVisibility={toggleAdjacentVisibility}
+                            playerReady={readyPlayerA}
+                            randomShipPlacement={randomShipPlacement}
+                            allowRandom={allowRandom}
+                            setAllowRandom={setAllowRandom} />
+                    </div>
                     <Grid
                         type={"placement"}
-                        player={playerB}
-                        setState={setPlayerB}
-                        tiles={playerB.shipsGrid}
+                        player={playerA}
+                        setState={setPlayerA}
+                        tiles={playerA.shipsGrid}
                         tilesNotAllowed={tilesNotAllowed}
                         adjacentTiles={adjacent}
                         canDrop={canDrop}
@@ -788,27 +815,74 @@ export default function Game(props) {
                         toggleAdjacentVisibility={toggleAdjacentVisibility}
                         setCoordinates={setCoordinates}
                         adjecentVisibility={displayAdjacent}
-                        allowRandom={allowRandom}
                         setAllowRandom={setAllowRandom} />
                 </div>
-                <div>
-                    <UserSidebar
-                        player={playerB}
-                        setState={setPlayerB}
-                        type={"placement-player-B"}
-                        ships={playerB.ships}
-                        orientation={orientation}
-                        toggleOrientation={toggleOrientation}
-                        setNotAllowed={setNotAllowed}
-                        resetShips={resetShips}
-                        setTilesNotAllowedEmpty={setTilesNotAllowedEmpty}
-                        toggleAdjacentVisibility={toggleAdjacentVisibility}
-                        playerReady={readyPlayerB}
-                        randomShipPlacement={randomShipPlacement}
-                        allowRandom={allowRandom}
-                        setAllowRandom={setAllowRandom} />
+            </>
+        );
+    }
+
+    if (gamePhase === 'placement-player-B') {
+        return (
+
+            <>
+                <IconOnlyButton
+                    Icon={VscChromeClose}
+                    color={"rgba(18, 66, 87, 0.2)"}
+                    onClick={() => { sound.playPick(); setExitOverlay(true) }}
+                    disabled={false}
+                    position={"top-right"}
+                    shadow={"no-shadow"}
+                    type={"back"} />
+
+                <div className='game-container'>
+
+                    {exitOverlay === true ?
+                        <ExitGameOverlay
+                            setExitOverlay={() => setExitOverlay(false)}
+                            exit={() => exit()} />
+                        :
+                        <></>
+                    }
+
+                    <div className="panel-left">
+                        <Grid
+                            type={"placement"}
+                            player={playerB}
+                            setState={setPlayerB}
+                            tiles={playerB.shipsGrid}
+                            tilesNotAllowed={tilesNotAllowed}
+                            adjacentTiles={adjacent}
+                            canDrop={canDrop}
+                            orientation={orientation}
+                            removeShip={removeShip}
+                            setShipsGrid={setShipsGrid}
+                            setAdjacentTiles={setAdjacentTiles}
+                            setTilesNotAllowedEmpty={setTilesNotAllowedEmpty}
+                            toggleAdjacentVisibility={toggleAdjacentVisibility}
+                            setCoordinates={setCoordinates}
+                            adjecentVisibility={displayAdjacent}
+                            allowRandom={allowRandom}
+                            setAllowRandom={setAllowRandom} />
+                    </div>
+                    <div>
+                        <UserSidebar
+                            player={playerB}
+                            setState={setPlayerB}
+                            type={"placement-player-B"}
+                            ships={playerB.ships}
+                            orientation={orientation}
+                            toggleOrientation={toggleOrientation}
+                            setNotAllowed={setNotAllowed}
+                            resetShips={resetShips}
+                            setTilesNotAllowedEmpty={setTilesNotAllowedEmpty}
+                            toggleAdjacentVisibility={toggleAdjacentVisibility}
+                            playerReady={readyPlayerB}
+                            randomShipPlacement={randomShipPlacement}
+                            allowRandom={allowRandom}
+                            setAllowRandom={setAllowRandom} />
+                    </div>
                 </div>
-            </div>
+            </>
         );
     }
 
@@ -821,76 +895,50 @@ export default function Game(props) {
                         playerB={playerB} />
                 </div>
 
+                <IconOnlyButton
+                    Icon={VscChromeClose}
+                    color={"rgba(18, 66, 87, 0.2)"}
+                    onClick={() => { sound.playPick(); setExitOverlay(true) }}
+                    disabled={false}
+                    position={"top-right"}
+                    shadow={"no-shadow"}
+                    type={"back"} />
 
                 <div className='game-container'>
-                    <Sidebar type="left">
-                        <div>
-                            <h3>Oddanie strzału</h3>
-                            <p align="justify" style={{ lineHeight: '1.6' }}>Aby oddać strzał kliknij na jedno z pól na planszy znajdującej się na środku ekranu. <br /><br />
-                                Po kliknięciu na pole, pojawi się jeden z poniższych symboli: <br /> </p>
 
-                            <IconOnlyOverviewButton
-                                Icon={null}
-                                color={"rgb(211, 211, 211, 0.7)"}
-                                disabled={false} /> nie trafiono <br />
+                    {exitOverlay === true ?
+                        <ExitGameOverlay
+                            setExitOverlay={() => setExitOverlay(false)}
+                            exit={() => exit()} />
+                        :
+                        <></>
+                    }
 
-                            <IconOnlyOverviewButton
-                                Icon={null}
-                                color={"rgb(139, 0, 0, 0.7)"}
-                                disabled={false} /> trafiono w element statku <br />
+                    {
+                        waitingOverlay === true ?
+                            <WaitingForUserOverlay
+                                setWaitingOverlay={() => setWaitingOverlay(false)}
+                                username={playerB.user.username}
+                                ready={readyPlayerB}
+                                player={playerB} />
+                            :
+                            <></>
+                    }
 
-                            <IconOnlyOverviewButton
-                                Icon={null}
-                                color={"rgba(0, 56, 0, 0.7)"}
-                                disabled={false} /> zatopiono cały statek <br /><br />
+                    <BattleInfo side="left" />
 
-                            Aby przejść do tury przeciwnika, po oddaniu strzału, naciśnij
-                            <OverviewButton
-                                IconLeft={HiCheck}
-                                IconRight={null}
-                                content="Gotowe"
-                                color={"var(--gradient-1)"} />
-
-                            <h3>Podgląd statków</h3>
-                            <p align="justify" style={{ lineHeight: '1.6' }}>Na planszy w lewym dolnym rogu ekranu zaznaczone są Twoje statki, oraz strzały oddane przez Twojego przeciwnika.</p>
-
-                            <IconOnlyOverviewButton
-                                Icon={ImCross}
-                                color={"rgba(30, 105, 138, 0.35)"}
-                                iconColor={"rgb(211, 211, 211, 0.7)"}
-                                disabled={false}
-                                shape={"square"}
-                                shadow={"no-shadow"} /> nie trafiono <br />
-
-                            <IconOnlyOverviewButton
-                                Icon={ImCross}
-                                animation={"animated"}
-                                color={"rgba(30, 105, 138, 0.35)"}
-                                iconColor={"rgb(139, 0, 0, 0.7)"}
-                                disabled={false}
-                                shape={"square"}
-                                shadow={"no-shadow"} /> trafiono w element statku <br />
-
-                            <IconOnlyOverviewButton
-                                Icon={ImCross}
-                                color={"rgba(0, 56, 0, 0.7)"}
-                                iconColor={"white"}
-                                disabled={false}
-                                shape={"square"}
-                                shadow={"no-shadow"} /> zatopiono Twój statek<br />
-
-                        </div>
-                    </Sidebar>
                     <div className="panel-left">
                         <UserSidebar
                             type="my-turn-A"
                             player={playerA}
                             switchPlayer={readyPlayerA}
-                            shotFired={shotFired} />
+                            shotFired={shotFired}
+                            setWaitingOverlay={setWaitingOverlay} />
                         <Grid
-                            type="ships-overview-right"
+                            type="ships-overview-left"
                             shipTiles={playerA.shipsGrid}
-                            battleTiles={playerB.battleGrid} />
+                            battleTiles={playerB.battleGrid}
+                            animation={waitingOverlay} />
                     </div>
 
                     <Grid
@@ -923,66 +971,38 @@ export default function Game(props) {
                         playerB={playerB} />
                 </div>
 
+                <IconOnlyButton
+                    Icon={VscChromeClose}
+                    color={"rgba(18, 66, 87, 0.2)"}
+                    onClick={() => { sound.playPick(); setExitOverlay(true) }}
+                    disabled={false}
+                    position={"top-right"}
+                    shadow={"no-shadow"}
+                    type={"back"} />
+
+
                 <div className='game-container'>
 
-                    <Sidebar type="left">
-                        <div>
-                            <h3>Oddanie strzału</h3>
-                            <p align="justify" style={{ lineHeight: '1.6' }}>Aby oddać strzał kliknij na jedno z pól na planszy znajdującej się na środku ekranu. <br /><br />
-                                Po kliknięciu na pole, pojawi się jeden z poniższych symboli: <br /> </p>
+                    {exitOverlay === true ?
+                        <ExitGameOverlay
+                            setExitOverlay={() => setExitOverlay(false)}
+                            exit={() => exit()} />
+                        :
+                        <></>
+                    }
 
-                            <IconOnlyOverviewButton
-                                Icon={null}
-                                color={"rgb(211, 211, 211, 0.7)"}
-                                disabled={false} /> nie trafiono <br />
+                    {
+                        waitingOverlay === true ?
+                            <WaitingForUserOverlay
+                                setWaitingOverlay={() => setWaitingOverlay(false)}
+                                username={playerA.user.username}
+                                ready={readyPlayerA}
+                                player={playerA} />
+                            :
+                            <></>
+                    }
 
-                            <IconOnlyOverviewButton
-                                Icon={null}
-                                color={"rgb(139, 0, 0, 0.7)"}
-                                disabled={false} /> trafiono w element statku <br />
-
-                            <IconOnlyOverviewButton
-                                Icon={null}
-                                color={"rgba(0, 56, 0, 0.7)"}
-                                disabled={false} /> zatopiono cały statek <br /><br />
-
-                            Aby przejść do tury przeciwnika, po oddaniu strzału, naciśnij
-                            <OverviewButton
-                                IconLeft={HiCheck}
-                                IconRight={null}
-                                content="Gotowe"
-                                color={"var(--gradient-1)"} />
-
-                            <h3>Podgląd statków</h3>
-                            <p align="justify" style={{ lineHeight: '1.6' }}>Na planszy w prawym dolnym rogu ekranu zaznaczone są Twoje statki, oraz strzały oddane przez Twojego przeciwnika.</p>
-
-                            <IconOnlyOverviewButton
-                                Icon={ImCross}
-                                color={"rgba(30, 105, 138, 0.35)"}
-                                iconColor={"rgb(211, 211, 211, 0.7)"}
-                                disabled={false}
-                                shape={"square"}
-                                shadow={"no-shadow"} /> nie trafiono <br />
-
-                            <IconOnlyOverviewButton
-                                Icon={ImCross}
-                                animation={"animated"}
-                                color={"rgba(30, 105, 138, 0.35)"}
-                                iconColor={"rgb(139, 0, 0, 0.7)"}
-                                disabled={false}
-                                shape={"square"}
-                                shadow={"no-shadow"} /> trafiono w element statku <br />
-
-                            <IconOnlyOverviewButton
-                                Icon={ImCross}
-                                color={"rgba(0, 56, 0, 0.7)"}
-                                iconColor={"white"}
-                                disabled={false}
-                                shape={"square"}
-                                shadow={"no-shadow"} /> zatopiono Twój statek<br />
-
-                        </div>
-                    </Sidebar>
+                    <BattleInfo side="right" />
 
                     <div className="panel-left">
                         <UserSidebar
@@ -1006,95 +1026,77 @@ export default function Game(props) {
                             type="my-turn-B"
                             player={playerB}
                             switchPlayer={readyPlayerB}
-                            shotFired={shotFired} />
+                            shotFired={shotFired}
+                            setWaitingOverlay={setWaitingOverlay} />
+                        <Grid
+                            type="ships-overview-right"
+                            shipTiles={playerB.shipsGrid}
+                            battleTiles={playerA.battleGrid}
+                            animation={waitingOverlay} />
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    if ((gamePhase === 'turn-0' || gamePhase === 'turn-1') && gameMode === 'pvc') {
+        return (
+            <div className='container'>
+
+                <div className='score-container'>
+                    <Score
+                        playerA={playerA}
+                        playerB={computer} />
+                </div>
+
+                <IconOnlyButton
+                    Icon={VscChromeClose}
+                    color={"rgba(18, 66, 87, 0.2)"}
+                    onClick={() => { sound.playPick(); setExitOverlay(true) }}
+                    disabled={false}
+                    position={"top-right"}
+                    shadow={"no-shadow"}
+                    type={"back"} />
+
+                {exitOverlay === true ?
+                    <ExitGameOverlay
+                        setExitOverlay={() => setExitOverlay(false)}
+                        exit={() => exit()} />
+                    :
+                    <></>
+                }
+
+                <div className='game-container'>
+
+                    {gamePhase === 'turn-1' && gameMode === 'pvc' ?
+                        <BattleInfo side="left" />
+                        :
+                        <Sidebar type="left">
+                            <div>
+                                <h3>Trwa tura Komputera</h3>
+                                <p align="justify">Po oddaniu strzału przez komputer nastąpi przejście do Twojej tury.</p>
+                            </div>
+                        </Sidebar>
+                    }
+
+                    <div className="panel-left">
+                        {gamePhase === 'turn-1' && gameMode === 'pvc' ?
+                            <UserSidebar
+                                type="not-my-turn-A"
+                                player={playerA}
+                                switchPlayer={readyPlayerA}
+                                shotFired={shotFired} />
+                            :
+                            <UserSidebar
+                                type="my-turn-A"
+                                player={playerA}
+                                computer={true}
+                                switchPlayer={readyPlayerA}
+                                shotFired={shotFired}
+                                playerReady={() => readyPlayerA()} />
+                        }
                         <Grid
                             type="ships-overview-left"
-                            shipTiles={playerB.shipsGrid}
-                            battleTiles={playerA.battleGrid} />
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    if (gamePhase === 'turn-0' && gameMode === 'pvc') {
-        return (
-            <div className='container'>
-                <div className='score-container'>
-                    <Score
-                        playerA={playerA}
-                        playerB={computer} />
-                </div>
-
-                <div className='game-container'>
-
-                    <Sidebar type="left">
-                        <div>
-                            <h3>Oddanie strzału</h3>
-                            <p align="justify" style={{ lineHeight: '1.6' }}>Aby oddać strzał kliknij na jedno z pól na planszy znajdującej się na środku ekranu. <br /><br />
-                                Po kliknięciu na pole, pojawi się jeden z poniższych symboli: <br /> </p>
-
-                            <IconOnlyOverviewButton
-                                Icon={null}
-                                color={"rgb(211, 211, 211, 0.7)"}
-                                disabled={false} /> nie trafiono <br />
-
-                            <IconOnlyOverviewButton
-                                Icon={null}
-                                color={"rgb(139, 0, 0, 0.7)"}
-                                disabled={false} /> trafiono w element statku <br />
-
-                            <IconOnlyOverviewButton
-                                Icon={null}
-                                color={"rgba(0, 56, 0, 0.7)"}
-                                disabled={false} /> zatopiono cały statek <br /><br />
-
-                            Aby zakończyć swoją turę, po oddaniu strzału, naciśnij
-                            <OverviewButton
-                                IconLeft={HiCheck}
-                                IconRight={null}
-                                content="Gotowe"
-                                color={"var(--gradient-1)"} />
-
-                            <h3>Podgląd statków</h3>
-                            <p align="justify" style={{ lineHeight: '1.6' }}>Na planszy w prawym dolnym rogu ekranu zaznaczone są Twoje statki, oraz strzały oddane przez Twojego przeciwnika.</p>
-
-                            <IconOnlyOverviewButton
-                                Icon={ImCross}
-                                color={"rgba(30, 105, 138, 0.35)"}
-                                iconColor={"rgb(211, 211, 211, 0.7)"}
-                                disabled={false}
-                                shape={"square"}
-                                shadow={"no-shadow"} /> nie trafiono <br />
-
-                            <IconOnlyOverviewButton
-                                Icon={ImCross}
-                                animation={"animated"}
-                                color={"rgba(30, 105, 138, 0.35)"}
-                                iconColor={"rgb(139, 0, 0, 0.7)"}
-                                disabled={false}
-                                shape={"square"}
-                                shadow={"no-shadow"} /> trafiono w element statku <br />
-
-                            <IconOnlyOverviewButton
-                                Icon={ImCross}
-                                color={"rgba(0, 56, 0, 0.7)"}
-                                iconColor={"white"}
-                                disabled={false}
-                                shape={"square"}
-                                shadow={"no-shadow"} /> zatopiono Twój statek<br />
-
-                        </div>
-                    </Sidebar>
-
-                    <div className="panel-left">
-                        <UserSidebar
-                            type="my-turn-A"
-                            player={playerA}
-                            switchPlayer={readyPlayerA}
-                            shotFired={shotFired} />
-                        <Grid
-                            type="ships-overview-right"
                             shipTiles={playerA.shipsGrid}
                             battleTiles={computer.battleGrid} />
                     </div>
@@ -1108,93 +1110,94 @@ export default function Game(props) {
                         type={"battle"}
                         tiles={playerA.battleGrid}
                         shoot={shoot}
-                        shotFired={shotFired} />
+                        shotFired={gamePhase === 'turn-0' && gameMode === 'pvc' ? { shotFired } : true} />
 
-                    <div className="panel-right">
-                        <UserSidebar
-                            type="not-my-turn-B"
-                            player={computer} />
-                    </div>
-                </div>
-            </div>
-        )
-
-    }
-
-    if (gamePhase === 'turn-1' && gameMode === 'pvc') {
-        return (
-            <div className='container'>
-                <div className='score-container'>
-                    <Score
-                        playerA={playerA}
-                        playerB={computer} />
-                </div>
-
-                <div className='game-container'>
-
-                    <Sidebar type="left">
-                        <div>
-                            <h3>Trwa tura Komputera</h3>
-                            <p align="justify">Po oddaniu strzału przez komputer nastąpi przejście do Twojej tury.</p>
+                    {gamePhase === 'turn-1' && gameMode === 'pvc' ?
+                        <div className="panel-right">
+                            <UserSidebar
+                                type="computer-turn"
+                                player={computer}
+                                computerShot={computerShot} />
                         </div>
-                    </Sidebar>
-
-                    <div className="panel-left">
-                        <UserSidebar
-                            type="not-my-turn-A"
-                            player={playerA}
-                            switchPlayer={readyPlayerA}
-                            shotFired={shotFired} />
-                        <Grid
-                            type="ships-overview-right"
-                            shipTiles={playerA.shipsGrid}
-                            battleTiles={computer.battleGrid} />
-                    </div>
-
-                    <Grid
-                        username={playerA.user.username}
-                        player={playerA}
-                        setPlayer={setPlayerA}
-                        enemy={computer}
-                        setEnemy={setComputer}
-                        type={"battle"}
-                        tiles={playerA.battleGrid}
-                        shoot={shoot}
-                        shotFired={true} />
-
-                    <div className="panel-right">
-                        <UserSidebar
-                            type="computer-turn"
-                            player={computer}
-                            computerShot={computerShot} />
-                    </div>
+                        :
+                        <div className="panel-right">
+                            <UserSidebar
+                                type="not-my-turn-B"
+                                player={computer} />
+                        </div>}
                 </div>
             </div>
-        )
-    }
 
-    if (gamePhase === 'waiting-for-player-B') {
-        return (
-            <WaitingForUserOVerlay
-                overlayVisible={toggleOverlay}
-                username={playerB.user.username}
-                ready={readyPlayerB} />
         )
 
     }
 
-    if (gamePhase === 'waiting-for-player-A') {
-        return (
-            <WaitingForUserOVerlay
-                overlayVisible={toggleOverlay}
-                username={playerA.user.username}
-                ready={readyPlayerA} />
-        )
-    }
+    // if (gamePhase === 'turn-1' && gameMode === 'pvc') {
+    //     return (
+    //         <div className='container'>
+    //             <div className='score-container'>
+    //                 <Score
+    //                     playerA={playerA}
+    //                     playerB={computer} />
+    //             </div>
+
+    //             <div className='game-container'>
+
+    //                 {exitOverlay === true ?
+    //                     <ExitGameOverlay
+    //                         setExitOverlay={() => setExitOverlay(false)}
+    //                         exit={() => exit()} />
+    //                     :
+    //                     <></>
+    //                 }
+
+    //                 <Sidebar type="left">
+    //                     <div>
+    //                         <h3>Trwa tura Komputera</h3>
+    //                         <p align="justify">Po oddaniu strzału przez komputer nastąpi przejście do Twojej tury.</p>
+    //                     </div>
+    //                 </Sidebar>
+
+    //                 <div className="panel-left">
+    //                     <UserSidebar
+    //                         type="not-my-turn-A"
+    //                         player={playerA}
+    //                         switchPlayer={readyPlayerA}
+    //                         shotFired={shotFired} />
+    //                     <Grid
+    //                         type="ships-overview-left"
+    //                         shipTiles={playerA.shipsGrid}
+    //                         battleTiles={computer.battleGrid} />
+    //                 </div>
+
+    //                 <Grid
+    //                     username={playerA.user.username}
+    //                     player={playerA}
+    //                     setPlayer={setPlayerA}
+    //                     enemy={computer}
+    //                     setEnemy={setComputer}
+    //                     type={"battle"}
+    //                     tiles={playerA.battleGrid}
+    //                     shoot={shoot}
+    //                     shotFired={true} />
+
+    //                 <div className="panel-right">
+    //                     <UserSidebar
+    //                         type="computer-turn"
+    //                         player={computer}
+    //                         computerShot={computerShot} />
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     )
+    // }
 
     if (gamePhase === 'game-over') {
         return (
-            <GameOver playerA={playerA} playerB={playerB} />
+            <GameOver
+                playerA={playerA}
+                playerB={playerB}
+                exit={() => exit()} />
         );
     }
 

@@ -1,15 +1,19 @@
+.editable-text-container {
+    min-height: 2rem;
+}
+
 .label-value-container {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
-    font-size: 20px;
-    height: fit-content;
-    padding: 0 0 1rem 0;
+    align-items: center;
+    font-size: 18px;
+    min-height: 2.25rem;
+    /* padding: 0 0 1rem 0; */
 }
 
 .label-value-container label {
     display: block;
-    width: 33%;
+    width: 5rem;
     padding-left: 1rem;
     padding-right: 1rem;
 }

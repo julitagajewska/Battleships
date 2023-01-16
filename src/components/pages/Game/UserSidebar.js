@@ -1,11 +1,12 @@
 import React from 'react';
 
 import { useSound } from '../../utils/Sound';
+
 import { RxRotateCounterClockwise } from 'react-icons/rx';
 import { RxCross2 } from 'react-icons/rx';
 import { BsDice5 } from 'react-icons/bs';
 import { HiCheck } from 'react-icons/hi';
-import { RiCloseFill } from 'react-icons/ri';
+import { VscChromeClose } from 'react-icons/vsc';
 
 import ShipsContainer from './ShipsContainer';
 import ProfilePictureMedium from '../../reusable/images/ProfilePictureMedium';
@@ -16,8 +17,10 @@ import IconOnlyLargeButton from '../../reusable/buttons/IconOnlyLargeButton';
 import Sidebar from '../../reusable/ui/Sidebar';
 import IconOnlyOverviewButton from '../../reusable/buttons/IconOnlyOverviewButton';
 import OverviewButton from '../../reusable/buttons/OverviewButton';
+import ShipPlacementInfo from '../../reusable/ui/ShipPlacementInfo';
 
 import './UserSidebar.css';
+import AllShipsPlaced from '../../reusable/ui/AllShipsPlaced';
 
 export default function UserSidebar(props) {
 
@@ -52,7 +55,14 @@ export default function UserSidebar(props) {
                         content="Gotowe"
                         color={"var(--gradient-1)"}
                         disabled={!props.shotFired}
-                        onClick={() => { sound.playPick(); props.switchPlayer(); }} />
+                        onClick={() => {
+                            sound.playPick();
+                            if (props.computer === true) {
+                                props.playerReady();
+                            } else {
+                                props.setWaitingOverlay(true);
+                            }
+                        }} />
                 </div>
             </div>
         );
@@ -76,42 +86,16 @@ export default function UserSidebar(props) {
                         content="Gotowe"
                         color={"var(--gradient-1)"}
                         disabled={!props.shotFired}
-                        onClick={() => { sound.playPick(); props.switchPlayer(); }} />
+                        onClick={() => { sound.playPick(); props.setWaitingOverlay(true) }} />
                 </div>
             </div>
         );
     }
 
-    console.log(props.allowRandom)
     if (props.type === "placement-player-A" && allShipsPlaced === false) {
         return (
             <>
-                <Sidebar type="left">
-                    <div>
-                        <h3>Rozmieszczenie statków</h3>
-                        <p align="justify"> <br />Aby umieścić statek na planszy przeciągnij go z panelu "dostępne statki". <br /><br />
-                            W promieniu jednego pola wokół umieszczonego statku nie mogą znaleźć się inne statki. <br /><br />
-                            Statki nie mogą przenikać krawędzi ani siebie nawzajem. <br /><br />
-                            Wszystkie z dostępnych statków muszą zostać umieszczone na planszy. <br /><br /><br />
-                            <b> Sterowanie </b>
-                        </p>
-
-                        <IconOnlyOverviewButton
-                            Icon={RxRotateCounterClockwise}
-                            color={"var(--gradient-1)"}
-                            id="uneven-overview" /> obrócenie dostępnych statków <br />
-
-                        <IconOnlyOverviewButton
-                            Icon={RxCross2}
-                            color={"var(--gradient-2)"} /> zresetowanie statków <br />
-
-                        <IconOnlyOverviewButton
-                            Icon={BsDice5}
-                            color={"var(--gradient-3)"} /> losowe ustawienie statków <br />
-
-
-                    </div>
-                </Sidebar>
+                <ShipPlacementInfo />
 
                 <div className='user-sidebar-left'>
 
@@ -174,32 +158,7 @@ export default function UserSidebar(props) {
     } else if (props.type === "placement-player-B" && allShipsPlaced === false) {
         return (
             <>
-                <Sidebar type="left">
-                    <div>
-                        <h3>Rozmieszczenie statków</h3>
-                        <p align="justify"> <br />Aby umieścić statek na planszy przeciągnij go z panelu "dostępne statki". <br /><br />
-                            W promieniu jednego pola wokół umieszczonego statku nie mogą znaleźć się inne statki. <br /><br />
-                            Statki nie mogą przenikać krawędzi ani siebie nawzajem. <br /><br />
-                            Wszystkie z dostępnych statków muszą zostać umieszczone na planszy. <br /><br /><br />
-                            <b> Sterowanie </b>
-                        </p>
-
-                        <IconOnlyOverviewButton
-                            Icon={RxRotateCounterClockwise}
-                            color={"var(--gradient-1)"}
-                            id="uneven-overview" /> obrócenie dostępnych statków <br />
-
-                        <IconOnlyOverviewButton
-                            Icon={RxCross2}
-                            color={"var(--gradient-2)"} /> zresetowanie statków <br />
-
-                        <IconOnlyOverviewButton
-                            Icon={BsDice5}
-                            color={"var(--gradient-3)"} /> losowe ustawienie statków <br />
-
-
-                    </div>
-                </Sidebar>
+                <ShipPlacementInfo />
 
                 <div className='user-sidebar-right'>
 
@@ -254,7 +213,7 @@ export default function UserSidebar(props) {
                                 sound.playPick();
                                 props.randomShipPlacement(props.player, props.setState);
                             }}
-                            disabled={false} />
+                            disabled={!props.allowRandom} />
                     </div>
                 </div>
             </>
@@ -262,25 +221,7 @@ export default function UserSidebar(props) {
     } else if (props.type === "placement-player-A") {
         return (
             <>
-                <Sidebar type="left">
-                    <div>
-                        <h3>Rozmieszczono wszystkie statki!</h3>
-                        <p align="justify"> <br /> Wszystkie z Twoich staktów zostały umieszczone na planszy.</p> <br />
-                        <b> Sterowanie </b> <br /><br />
-                        <OverviewButton
-                            IconLeft={RxCross2}
-                            IconRight={null}
-                            content="resetuj"
-                            color={"var(--gradient-1)"}
-                            id={"font-light"} /> usuń statki z planszy <br />
-                        <OverviewButton
-                            IconLeft={HiCheck}
-                            IconRight={null}
-                            content="gotowe"
-                            color={"var(--gradient-3)"}
-                            id={"font-light"} /> zapisz rozmieszczenie <br />
-                    </div>
-                </Sidebar>
+                <AllShipsPlaced />
 
                 <div className='user-sidebar-left'>
 
@@ -321,25 +262,7 @@ export default function UserSidebar(props) {
         return (
 
             <>
-                <Sidebar type="left">
-                    <div>
-                        <h3>Rozmieszczono wszystkie statki!</h3>
-                        <p align="justify"> <br /> Wszystkie z Twoich staktów zostały umieszczone na planszy.</p> <br />
-                        <b> Sterowanie </b> <br /><br />
-                        <OverviewButton
-                            IconLeft={RxCross2}
-                            IconRight={null}
-                            content="resetuj"
-                            color={"var(--gradient-1)"}
-                            id={"font-light"} /> Zabierz statki z planszy <br />
-                        <OverviewButton
-                            IconLeft={HiCheck}
-                            IconRight={null}
-                            content="gotowe"
-                            color={"var(--gradient-3)"}
-                            id={"font-light"} /> Zapisz rozmieszczenie <br />
-                    </div>
-                </Sidebar>
+                <AllShipsPlaced />
 
                 <div className='user-sidebar-right'>
 
@@ -395,7 +318,14 @@ export default function UserSidebar(props) {
                         content="Gotowe"
                         color={"var(--gradient-1)"}
                         disabled={!props.shotFired}
-                        onClick={() => { sound.playPick(); props.playerReady(); }} />
+                        onClick={() => {
+                            sound.playPick();
+                            if (props.computer === true) {
+                                props.playerReady();
+                            } else {
+                                props.setWaitingOverlay(true);
+                            }
+                        }} />
                 </div>
             </div>
         );
@@ -420,7 +350,7 @@ export default function UserSidebar(props) {
                         content="Gotowe"
                         color={"var(--gradient-1)"}
                         disabled={!props.shotFired}
-                        onClick={() => { sound.playPick(); props.playerReady(); }} />
+                        onClick={() => { sound.playPick(); props.setWaitingOverlay(true) }} />
                 </div>
             </div>
         );

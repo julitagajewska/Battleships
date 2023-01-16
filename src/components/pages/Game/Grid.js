@@ -126,11 +126,15 @@ export default function Grid(props) {
         )
     }
 
+    console.log(props.animation)
+
     if (props.type === 'ships-overview-left') {
+
+        let animationState = props.animation === true ? 'animate-left-out' : 'animate-left-in';
         return (
-            <div className='ships-overview-container'>
+            <div className={`ships-overview-container-left ${animationState}`}>
                 <h3>Podgląd statków</h3>
-                <div className="overview-grid">
+                <div className={`overview-grid`}>
                     {props.shipTiles.map((tile) => {
 
                         let shipLength;
@@ -200,8 +204,6 @@ export default function Grid(props) {
                                 </div>
                             );
                         }
-
-                        console.log(tile);
 
                         return (
                             <div className="overview-grid-tile-back">
@@ -222,8 +224,11 @@ export default function Grid(props) {
     }
 
     if (props.type === 'ships-overview-right') {
+
+        let animationState = props.animation === true ? 'animate-right-out' : 'animate-right-in';
+
         return (
-            <div className='ships-overview-container'>
+            <div className={`ships-overview-container-right ${animationState}`}>
                 <h3>Podgląd statków</h3>
                 <div className="overview-grid">
                     {props.shipTiles.map((tile) => {
@@ -295,8 +300,6 @@ export default function Grid(props) {
                                 </div>
                             );
                         }
-
-                        console.log(tile);
 
                         return (
                             <div className="overview-grid-tile-back">

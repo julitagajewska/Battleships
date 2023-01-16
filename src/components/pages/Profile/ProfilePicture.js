@@ -1,16 +1,15 @@
 import React from 'react';
 import './ProfilePicture.css';
 import { FaPlus } from 'react-icons/fa';
-
-import pick from '../../assets/pick2.mp3';
+import { useSound } from '../../utils/Sound';
 
 export default function ProfilePicture(props) {
 
-    let src = pick;
+    const sound = useSound();
 
     const onClick = () => {
+        sound.playPick();
         props.toggleInput();
-        props.sound(src);
     }
 
     return (

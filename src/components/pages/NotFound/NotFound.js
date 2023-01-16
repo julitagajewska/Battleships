@@ -1,8 +1,10 @@
 import React from 'react';
-import './NotFound.css';
+
 import { useNavigate } from 'react-router-dom';
 import { TiArrowBack } from 'react-icons/ti';
+
 import { useSound } from '../../utils/Sound';
+
 import Sidebar from '../../reusable/ui/Sidebar.js';
 import CenteredContainer from '../../reusable/containers/CenteredContainer';
 import MediumButton from '../../reusable/buttons/MediumButton';
@@ -26,7 +28,7 @@ export default function NotFound(props) {
                 children={
                     <div className="info">
                         <h3>Błąd 404: nie znaleziono strony</h3>
-                        <p> Podany adres nie został odanleziony. Po naciśnięciu klawisza
+                        <p align="center"> Podany adres nie został odanleziony. <br />Po naciśnięciu
                             <OverviewButton
                                 IconLeft={TiArrowBack}
                                 IconRight={null}

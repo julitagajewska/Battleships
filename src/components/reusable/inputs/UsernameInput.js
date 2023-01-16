@@ -4,7 +4,7 @@ import './UsernameInput.css';
 
 export default function UsernameInput(props) {
 
-    const { required, reference, setErrors, setUsernameTaken, setValue, setValid, setFocus, placeholder, ...others } = props;
+    const { required, reference, setErrors, setUsernameTaken, setValue, setValid, setFocus, placeholder, size, ...others } = props;
 
     const onInputChange = (e) => {
         let isValid = true;
@@ -47,6 +47,7 @@ export default function UsernameInput(props) {
     return (
         <div className="input-container">
             <input
+                className={`${size}`}
                 type="text"
                 id="username"
                 autoComplete="off"

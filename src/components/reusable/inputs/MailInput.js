@@ -4,7 +4,7 @@ import './MailInput.css';
 
 export default function MailInput(props) {
 
-    const { required, setErrors, setUsername, setValue, setValid, setFocus, placeholder, ...others } = props;
+    const { required, setErrors, setUsername, setValue, setValid, setFocus, placeholder, size, ...others } = props;
 
     const onInputChange = (e) => {
         let isValid = true;
@@ -24,6 +24,7 @@ export default function MailInput(props) {
     return (
         <div className="input-container">
             <input
+                className={`${size}`}
                 type="mail"
                 id="mail"
                 autoComplete="off"

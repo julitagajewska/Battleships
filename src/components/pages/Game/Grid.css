@@ -76,9 +76,10 @@
     background-color: red !important;
 }
 
-.ships-overview-container {
+.ships-overview-container-left {
     position: fixed;
     top: 22rem;
+    left: 9rem;
     padding: 30px;
     width: 14rem;
     height: fit-content;
@@ -97,7 +98,98 @@
         rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
-.ships-overview-container h3 {
+.ships-overview-container-right {
+    position: fixed;
+    top: 22rem;
+    right: 6rem;
+    padding: 30px;
+    width: 14rem;
+    height: fit-content;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to top,
+            rgba(18, 66, 87, 0.3),
+            rgba(18, 66, 87, 0.1));
+    backdrop-filter: blur(3px);
+    border-radius: 0.75rem;
+    box-shadow:
+        rgba(0, 0, 0, 0.16) 0px 3px 6px,
+        rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+
+.animate-left-out {
+    left: -50rem;
+    animation: hide-left 1s ease;
+}
+
+.animate-left-in {
+    animation: show-left 0.5s ease;
+}
+
+.animate-right-out {
+    right: -50rem;
+    animation: hide-right 1s ease;
+}
+
+.animate-right-in {
+    animation: show-right 0.5s ease;
+}
+
+@keyframes hide-left {
+    0% {
+        top: 22rem;
+        left: 9rem;
+    }
+
+    100% {
+        top: 22rem;
+        left: -50rem;
+    }
+}
+
+@keyframes show-left {
+    0% {
+        top: 22rem;
+        left: -50rem;
+    }
+
+    100% {
+        top: 22rem;
+        left: 9rem;
+    }
+}
+
+@keyframes hide-right {
+    0% {
+        top: 22rem;
+        right: 6rem;
+    }
+
+    100% {
+        top: 22rem;
+        right: -50rem;
+    }
+}
+
+@keyframes show-right {
+    0% {
+        top: 22rem;
+        right: -50rem;
+    }
+
+    100% {
+        top: 22rem;
+        right: 6rem;
+    }
+}
+
+
+.ships-overview-container-left h3,
+.ships-overview-container-right h3 {
     margin: 0;
     margin-bottom: 1rem;
     padding: 0;

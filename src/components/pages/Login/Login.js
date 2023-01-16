@@ -2,10 +2,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../utils/auth';
 import { useNavigate, Link } from 'react-router-dom';
-import FormInput from '../../reusable/inputs/FormInput';
 import axios, { checkIfUserExists, checkPassword, getUser } from '../../../api/axios';
 import ErrorMessage from '../../reusable/messages/ErrorMessage';
-import { checkUsernameLength } from '../../utils/Validators';
 import { BiLogInCircle } from 'react-icons/bi';
 import { useSound } from '../../utils/Sound';
 

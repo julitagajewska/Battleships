@@ -21,3 +21,42 @@
 .last-game-overview-icon {
     cursor: pointer;
 } */
+
+.last-game-overview-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.last-game-user-a,
+.last-game-user-b {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 8rem;
+}
+
+.last-game-user-a p {
+    padding-left: 0.75rem;
+}
+
+.last-game-user-b {
+    justify-content: flex-end;
+}
+
+.last-game-user-b p {
+    padding-right: 0.75rem;
+}
+
+.last-game-score {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 3rem;
+}
+
+.profile-scrollable {
+    overflow: auto;
+}

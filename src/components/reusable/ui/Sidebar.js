@@ -19,8 +19,10 @@ export default function Sidebar(props) {
     return (
         <div>
             <div className={`sidebar-${props.type} ${transitionProperties}`}>
-                <div className={`sidebar-content-${props.type}`}>
-                    {props.children}
+                <div className={`sidebar-content-${props.type} ${props.overflow}`}>
+                    <div className={`sidebar-content-text-${props.type}`}>
+                        {props.children}
+                    </div>
                 </div>
             </div>
             <div

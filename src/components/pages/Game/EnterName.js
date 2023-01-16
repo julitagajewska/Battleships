@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
-import { BsCheckLg } from 'react-icons/bs';
+
 import { useSound } from '../../utils/Sound';
 import { checkIfUserExists } from '../../../api/axios';
 import { User } from '../../../Models/User';
 
+import { BsCheckLg } from 'react-icons/bs';
+import { IoChevronBackSharp } from 'react-icons/io5';
+
+import Sidebar from '../../reusable/ui/Sidebar';
 import UsernameInput from '../../reusable/inputs/UsernameInput';
 import ErrorMessage from '../../reusable/messages/ErrorMessage.js';
 import IconOnlyButton from '../../reusable/buttons/IconOnlyButton.js';
 import CenteredContainer from '../../reusable/containers/CenteredContainer';
+import IconOnlyOverviewButton from '../../reusable/buttons/IconOnlyOverviewButton';
+
 
 export default function EnterName(props) {
 
@@ -48,9 +54,54 @@ export default function EnterName(props) {
 
     return (
         <div className="upper-layer enter-name-container">
+            <Sidebar type="left">
+                <div>
+                    <h3>Nazwa przeciwnika</h3>
+                    <p align="justify">
+                        Na tej stronie możesz podać nazwę swojego przeciwnika. <br /><br />
+                    </p>
+
+                    <b>Nazwa użytkownika</b>
+                    <ul>
+                        <li>3 - 10 znaków</li>
+                        <li>Nie może zawierać spacji</li>
+                        <li>Nie może zawierać znaków specjalnych</li>
+                        <li>Może zawierać:</li>
+                        <ul>
+                            <li>
+                                Małe i wielkie litery
+                            </li>
+                            <li>Cyfry</li>
+                            <li>Dozwolone znaki: _ -</li>
+                        </ul>
+                        <li>Nie można użyć nazwy zajętej przez zarezerwowanego gracza.</li>
+                    </ul>
+
+                    <p align="justify"><br /> Możesz powrócić do wyboru rodzaju gracza klikając
+                        <IconOnlyOverviewButton
+                            Icon={IoChevronBackSharp}
+                            color={"rgba(18, 66, 87, 0.2)"}
+                            shadow={"no-shadow"}
+                            type={"back"} />
+                        .
+                    </p>
+                </div>
+            </Sidebar>
+
             <CenteredContainer>
+
+                <IconOnlyButton
+                    Icon={IoChevronBackSharp}
+                    color={"rgba(18, 66, 87, 0.2)"}
+                    onClick={() => { sound.playPick(); props.setGamePhase("player-type-choice") }}
+                    disabled={false}
+                    position={"top-left"}
+                    shadow={"no-shadow"}
+                    type={"back"} />
+
+
                 <div className="upper section">
-                    <h3>NAZWA PRZECIWNIKA</h3>
+                    <h3>Nazwa przeciwnika</h3>
                 </div>
 
                 <div className="middle section centered-row">

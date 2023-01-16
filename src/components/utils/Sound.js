@@ -1,11 +1,13 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import pick from '../assets/pick2.mp3';
 import blocked from '../assets/stop2.mp3'
-import { Howl, Howler } from 'howler';
+import { Howl } from 'howler';
 
 const SoundContext = createContext(null);
 
 export const SoundProvider = ({ children }) => {
+
+    let [soundOn, setSoundOn] = useState(true);
 
     let pickSound = pick;
     let blockedSound = blocked;
@@ -16,7 +18,10 @@ export const SoundProvider = ({ children }) => {
             html5: true
         });
 
-        sound.play();
+        if (soundOn) {
+            sound.play();
+        }
+
     }
 
     const playPick = () => {
@@ -27,7 +32,11 @@ export const SoundProvider = ({ children }) => {
         callTheSound(blockedSound)
     }
 
-    return <SoundContext.Provider value={{ playPick, playBlocked, callTheSound }}>{children}</SoundContext.Provider>
+    const toggleSound = () => {
+        setSoundOn(!soundOn)
+    }
+
+    return <SoundContext.Provider value={{ playPick, playBlocked, callTheSound, toggleSound, soundOn }}>{children}</SoundContext.Provider>
 }
 
 export const useSound = () => {

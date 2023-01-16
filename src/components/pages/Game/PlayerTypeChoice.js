@@ -1,12 +1,16 @@
 import React from 'react';
+
 import { GiHood } from 'react-icons/gi';
 import { RiUser5Fill } from 'react-icons/ri';
 import { useSound } from '../../utils/Sound';
+import { IoChevronBackSharp } from 'react-icons/io5';
 
 import Sidebar from '../../reusable/ui/Sidebar';
 import CenteredContainer from '../../reusable/containers/CenteredContainer';
 import LargeButton from '../../reusable/buttons/LargeButton';
 import OverviewButton from '../../reusable/buttons/OverviewButton';
+import IconOnlyButton from '../../reusable/buttons/IconOnlyButton';
+import IconOnlyOverviewButton from '../../reusable/buttons/IconOnlyOverviewButton';
 
 export default function PlayerTypeChoice(props) {
 
@@ -37,11 +41,30 @@ export default function PlayerTypeChoice(props) {
                         color="var(--gradient-3)" />
 
                     <p align="justify">Gra przeciwko graczowi, który nie posiada konta.
-                        Rozgrywka zostanie zapisana jedynie w Twojej historii gier.</p>
+                        Rozgrywka zostanie zapisana jedynie w Twojej historii gier.</p> <br />
+
+                    <p align="justify"> Możesz powrócić do wyboru przeciwnika klikając
+                        <IconOnlyOverviewButton
+                            Icon={IoChevronBackSharp}
+                            color={"rgba(18, 66, 87, 0.2)"}
+                            shadow={"no-shadow"}
+                            type={"back"} />
+                        .
+                    </p>
 
                 </div>
             </Sidebar>
             <CenteredContainer>
+
+                <IconOnlyButton
+                    Icon={IoChevronBackSharp}
+                    color={"rgba(18, 66, 87, 0.2)"}
+                    onClick={() => { sound.playPick(); props.setGamePhase("game-mode-choice") }}
+                    disabled={false}
+                    position={"top-left"}
+                    shadow={"no-shadow"}
+                    type={"back"} />
+
                 <div className="upper section">
                     <h3>Wybierz rodzaj gracza</h3>
                 </div>

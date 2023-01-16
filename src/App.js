@@ -12,11 +12,11 @@ import Register from './components/pages/Register/Register';
 import ConfirmProfileDelete from './components/pages/Profile/ConfirmProfileDelete';
 import ProfileDeleted from './components/pages/Profile/ProfileDeleted';
 import Menu from './components/pages/Menu/Menu';
-import Profile from './components/pages/Profile/Profile';
 import NotFound from './components/pages/NotFound/NotFound';
 import Login from './components/pages/Login/Login'
 import Background from './components/Background/Background';
-import Game from './components/pages/Game/Game';
+import GameLoop from './components/pages/Game/Game';
+import Settings from './components/pages/Settings/Settings';
 
 export default class App extends Component {
 
@@ -33,8 +33,8 @@ export default class App extends Component {
               <Routes>
                 <Route element={<PrivateRoutes />}>
                   <Route path="/" element={<Menu />} />
-                  <Route path="/game" element={<Game />} />
-                  <Route path="/settings" element={<Menu />} />
+                  <Route path="/game" element={<GameLoop />} />
+                  <Route path="/settings" element={<Settings />} />
                 </Route>
 
                 <Route path="/register" element={<Register />} />
