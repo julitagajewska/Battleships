@@ -1,14 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { IoArrowBack } from 'react-icons/io5';
 
 import MediumButton from '../../reusable/buttons/MediumButton';
-import CenteredContainer from '../../reusable/containers/CenteredContainer';
 import CenteredContainerLight from '../../reusable/containers/CenteredContainerLight';
 import ProfilePictureMedium from '../../reusable/images/ProfilePictureMedium';
-import Overlay from '../../reusable/ui/Overlay';
 
-export default function GameOver({ playerA, playerB, exit }) {
+function GameOver({ playerA, playerB, exit }) {
 
     let winner;
 
@@ -45,3 +44,11 @@ export default function GameOver({ playerA, playerB, exit }) {
         </CenteredContainerLight>
     )
 }
+
+GameOver.propTypes = {
+    playerA: PropTypes.object,
+    playerB: PropTypes.object,
+    exit: PropTypes.func
+}
+
+export default GameOver;

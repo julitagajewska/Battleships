@@ -10,7 +10,7 @@ import CenteredContainer from '../../reusable/containers/CenteredContainer';
 import MediumButton from '../../reusable/buttons/MediumButton';
 import OverviewButton from '../../reusable/buttons/OverviewButton';
 
-export default function NotFound(props) {
+export default function NotFound() {
 
     let sound = useSound();
 

@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../utils/auth';
-import { useNavigate, Link } from 'react-router-dom';
-import axios, { checkIfUserExists, checkPassword, getUser } from '../../../api/axios';
-import ErrorMessage from '../../reusable/messages/ErrorMessage';
-import { BiLogInCircle } from 'react-icons/bi';
+import { useNavigate } from 'react-router-dom';
+import { checkIfUserExists, checkPassword, getUser } from '../../../api/axios';
 import { useSound } from '../../utils/Sound';
+
+import { BiLogInCircle } from 'react-icons/bi';
 
 import UsernameInput from '../../reusable/inputs/UsernameInput';
 import PasswordInput from '../../reusable/inputs/PasswordInput';
 import CenteredContainer from '../../reusable/containers/CenteredContainer';
 import MediumButton from '../../reusable/buttons/MediumButton';
-
+import ErrorMessage from '../../reusable/messages/ErrorMessage';
 import StyledLink from '../../reusable/links/StyledLink';
 
 export default function Login() {
@@ -19,8 +19,6 @@ export default function Login() {
     let sound = useSound();
 
     const [user, setUser] = useState('');
-    const [usernameErrorMessage, setUsernameErrorMessage] = useState([]);
-    const [passwordErrorMessage, setPasswordErrorMessage] = useState([]);
 
     const auth = useAuth(user);
     const navigate = useNavigate();
@@ -30,11 +28,9 @@ export default function Login() {
     const [errorMsg, setErrorMsg] = useState('');
 
     const [username, setUsername] = useState('');
-    const [validUsername, setValidUsername] = useState(false);
     const [usernameFocus, setUsernameFocus] = useState(false);
 
     const [password, setPassword] = useState('');
-    const [validPassword, setValidPassword] = useState(false);
     const [passwordFocus, setPasswordFocus] = useState(false);
 
 
@@ -42,24 +38,12 @@ export default function Login() {
         usernameRef.current.focus();
     }, [])
 
-    const [values, setValues] = useState({
-        username: "",
-        password: "",
-        keepLoggedIn: false
-    });
-
     const onUsernameFocus = (value) => {
-        if (value === true) {
-            // sound.playPick();
-        }
         setErrorMsg('');
         setUsernameFocus(value);
     }
 
     const onPasswordFocus = (value) => {
-        if (value === true) {
-            // sound.playPick();
-        }
         setErrorMsg('');
         setPasswordFocus(value);
     }
@@ -128,18 +112,18 @@ export default function Login() {
                         reference={usernameRef}
                         setValue={setUsername}
                         setFocus={onUsernameFocus}
-                        setValid={setValidUsername}
+                        setValid={null}
                         placeholder='Nazwa użytkownika'
-                        setErrors={setUsernameErrorMessage}
+                        setErrors={null}
                         required={true}
                     />
 
                     <PasswordInput
                         setValue={setPassword}
                         setFocus={onPasswordFocus}
-                        setValid={setValidPassword}
+                        setValid={null}
                         placeholder='Hasło'
-                        setErrors={setPasswordErrorMessage}
+                        setErrors={null}
                         required={true}
                     />
 

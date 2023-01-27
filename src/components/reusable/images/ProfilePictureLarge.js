@@ -1,7 +1,19 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function ProfilePictureLarge() {
+import './ProfilePictureLarge.css';
+
+function ProfilePictureLarge({ src, alt }) {
     return (
-        <div>ProfilePictureLarge</div>
+        <img className="profile-picture-large" src={src} alt={alt} />
     )
 }
+
+ProfilePictureLarge.propTypes = {
+    src: PropTypes.string,
+    alt: PropTypes.string
+}
+
+export default ProfilePictureLarge;
+
+

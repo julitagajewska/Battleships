@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { useSound } from '../../utils/Sound';
-import { useNavigate } from 'react-router-dom';
 
 import MediumButton from '../../reusable/buttons/MediumButton';
 import CenteredContainerLight from '../../reusable/containers/CenteredContainerLight';
@@ -9,7 +10,7 @@ import Overlay from '../../reusable/ui/Overlay';
 import { ImExit } from 'react-icons/im';
 import { IoArrowBack } from 'react-icons/io5';
 
-export default function ExitGameOverlay({ setExitOverlay, exit }) {
+function ExitGameOverlay({ setExitOverlay, exit }) {
 
     const sound = useSound();
 
@@ -56,3 +57,10 @@ export default function ExitGameOverlay({ setExitOverlay, exit }) {
         </Overlay>
     )
 }
+
+ExitGameOverlay.propTypes = {
+    setExitOverlay: PropTypes.func,
+    exit: PropTypes.func
+}
+
+export default ExitGameOverlay;

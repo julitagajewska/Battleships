@@ -17,19 +17,6 @@
     z-index: 10;
 }
 
-/* .sidebar-content-right {
-    padding: 0 3rem 0 3rem;
-}
-
-.sidebar-content-left {
-    height: 100vh;
-    padding: 0 3rem 0 3rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-} */
-
 .sidebar-right {
     background-color: var(--sidebar-color);
     background: linear-gradient(to top,

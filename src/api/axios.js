@@ -15,8 +15,14 @@ const defaultImage = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profi
 
 export const getUsers = async () => {
     let users = [];
-    let response = await axios.get('users');
-    users = response.data;
+
+    try {
+        let response = await axios.get('users');
+        users = response.data;
+    } catch (error) {
+        console.log(error);
+    }
+
     return users;
 }
 
@@ -30,7 +36,6 @@ export const getUser = async (username) => {
         }
     })
 
-    console.log(tragetUser);
     return tragetUser;
 }
 
@@ -85,8 +90,6 @@ export const registerUser = async (user) => {
     user.id = newId;
     user.image = defaultImage;
 
-    console.log(user)
-
     try {
         await axios.post('users', user);
     } catch (error) {
@@ -113,14 +116,11 @@ export const checkPassword = async (username, password) => {
 
     users.forEach((user) => {
         if (user.username === username) {
-            console.log(user)
             if (user.password === password) {
                 result = true;
             }
         }
     })
-
-    console.log(result);
 
     return result;
 }

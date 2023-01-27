@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './IconOnlyLargeButton.css';
 
-export default function IconOnlyButton({ Icon, color, onClick, disabled, id }) {
+function IconOnlyButton({ Icon, color, onClick, disabled, id }) {
     console.log(disabled)
     return (
         <button className="icon-only-large-button" style={{ backgroundColor: `${color}` }} onClick={(e) => onClick(e)} disabled={disabled}>
@@ -9,3 +10,13 @@ export default function IconOnlyButton({ Icon, color, onClick, disabled, id }) {
         </button>
     )
 }
+
+IconOnlyButton.propTypes = {
+    Icon: PropTypes.func,
+    color: PropTypes.string,
+    onClick: PropTypes.func,
+    disabled: PropTypes.bool,
+    id: PropTypes.string
+}
+
+export default IconOnlyButton

@@ -1,64 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../utils/auth';
-import axios, { editUser, deleteUser, getLastThreeGames } from '../../../api/axios';
-import { useNavigate, Link } from 'react-router-dom';
+import { editUser, getLastThreeGames } from '../../../api/axios';
+import { useNavigate } from 'react-router-dom';
 import { useSound } from '../../utils/Sound';
-import { isValidURL } from '../../utils/Validators'
 
 import { TbSword } from 'react-icons/tb';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 import { BsCheckLg } from 'react-icons/bs';
 import { GrUser } from 'react-icons/gr';
 
-import ErrorMessage from '../../reusable//messages/ErrorMessage';
 import EditableText from '../../reusable/inputs/EditableText';
 import LastGameOverview from './LastGameOverview';
 import ProfilePicture from './ProfilePicture';
+import InputErrors from '../../reusable/messages/InputErrors';
 
 import './Profile.css';
+import URLInput from '../../reusable/inputs/URLInput';
+import LargeButton from '../../reusable/buttons/LargeButton';
+import IconOnlyButton from '../../reusable/buttons/IconOnlyButton';
 
-let panda = "https://i.pinimg.com/564x/6c/86/41/6c864199a6b727ba2ecb863c121991bc.jpg";
-
-export default function Profile(props) {
+export default function Profile() {
 
     const auth = useAuth();
     const sound = useSound();
     const navigate = useNavigate();
 
     let [update, setUpdate] = useState(true)
-    let [pictureInput, setPictureInput] = useState(false)
+    let [pictureInput, setPictureInput] = useState(false) // Picture input button - show/hide input
+
     let [pictureUrl, setPictureUrl] = useState(auth.user.image)
     let [isUrlValid, setIsUrlValid] = useState(true);
-    let [errorMessage, setErrorMessage] = useState([]);
+    let [urlErrorMessage, setUrlErrorMessage] = useState([]);
+
     let [urlFocus, setUrlFocus] = useState(false);
+
     let [lastThreeGames, setLastThreeGames] = useState([]);
 
     const getLastGames = async () => {
-        console.log(auth.user)
         let response = await getLastThreeGames(auth.user.username);
         setLastThreeGames(response.reverse())
     }
 
     useEffect(() => {
         getLastGames();
-        console.log(lastThreeGames)
     }, []);
-
-    useEffect(() => {
-        let valid = true;
-        if (isValidURL(pictureUrl) !== true) {
-            setErrorMessage([<p>Wprowadzono zły URL</p>])
-            valid = false;
-        } else {
-            setErrorMessage([]);
-        }
-
-        setIsUrlValid(valid);
-
-        console.log(isValidURL(pictureUrl))
-        console.log(errorMessage)
-        console.log(isUrlValid)
-    }, [pictureUrl])
 
     const togglePictureInput = () => {
         setPictureInput(!pictureInput)
@@ -94,36 +79,38 @@ export default function Profile(props) {
                     <div className="image-url-input-group">
 
                         <div className="profile-picture-input-upper-row">
-                            <input
-                                type="text"
-                                placeholder="url"
-                                onChange={(e) => setPictureUrl(e.target.value)}
-                                onFocus={() => setUrlFocus(true)}
-                                onBlur={() => setUrlFocus(false)} />
-                            <button onClick={saveImageUrl} disabled={isUrlValid ? false : true}>
-                                <BsCheckLg size={"14px"} />
-                            </button>
+                            <URLInput
+                                size="small"
+                                setValue={setPictureUrl}
+                                setUrlFocus={setUrlFocus}
+                                setValid={setIsUrlValid}
+                                placeholder="Adres URL obrazu"
+                                setErrors={setUrlErrorMessage} />
+
+                            <IconOnlyButton
+                                Icon={BsCheckLg}
+                                color={"var(--gradient-1)"}
+                                onClick={saveImageUrl}
+                                disabled={isUrlValid ? false : true}
+                                position={"centered"} />
                         </div>
 
                         <div className="profile-picture-input-lower-row">
-                            {urlFocus && isValidURL ?
-                                <ErrorMessage status={false} message={
-                                    <ul>
-                                        {errorMessage.map((error) => {
-                                            return error
-                                        })}
-                                    </ul>} />
-                                : <></>}
+                            <InputErrors
+                                focus={urlFocus}
+                                value={pictureUrl}
+                                isValid={isUrlValid}
+                                errors={urlErrorMessage} />
                         </div>
 
                     </div>
                     : <></>}
             </div>
             <div className="user-data-container">
-                <p className="user-profile-header">
+                <div className="user-profile-header">
                     <GrUser className="header-icon" size={"24px"} />
                     <p className="sub-header">Dane użytkownika</p>
-                </p>
+                </div>
                 <div>
                     <EditableText
                         label="Nazwa"
@@ -144,13 +131,14 @@ export default function Profile(props) {
             </div>
 
             <div className="last-games-container">
-                <p className="user-profile-header">
+                <div className="user-profile-header">
                     <TbSword className="header-icon" size={"24px"} />
                     <p className="sub-header">Ostatnie potyczki</p>
-                </p>
+                </div>
 
                 {lastThreeGames.map((game) => {
                     return <LastGameOverview
+                        key={`game-oberview-tile-${game.id}`}
                         currentUser={auth.user}
                         userA={game.userA}
                         userB={game.userB}
@@ -161,12 +149,14 @@ export default function Profile(props) {
 
             <div className="options-container">
                 <div className="delete-button-container">
-                    <button className="delete-button" onClick={() => navigate("./confirmProfileDelete")}>
-                        <RiDeleteBin5Fill className="button-icon" size={"24px"} />
-                        <p>USUŃ PROFIL</p>
-                    </button>
+                    <LargeButton
+                        IconLeft={RiDeleteBin5Fill}
+                        IconRight={null}
+                        color="var(--gradient-2)"
+                        content={"usuń profil"}
+                        onClick={() => navigate("./confirmProfileDelete")}
+                        disabled={false} />
                 </div>
-
             </div>
         </div>
     )

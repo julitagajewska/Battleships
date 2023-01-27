@@ -35,32 +35,6 @@
     justify-content: space-between;
 }
 
-.menu-button {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    background-color: var(--gradient-1);
-    color: black;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 0.75rem 3rem 1rem 2rem;
-    border: none;
-    border-radius: 2rem;
-    cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-    width: fit-content;
-    text-decoration: none;
-    transition: all 0.3s ease 0s;
-}
-
-.new-game {
-    background-color: var(--gradient-4);
-}
-
-.settings {
-    background-color: var(--gradient-3);
-}
-
 .menu-button p {
     margin: 0;
     padding-top: 0.5rem

@@ -1,9 +1,10 @@
-import React from 'react'
-import { BiChevronDown } from 'react-icons/bi';
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import ProfilePictureSmall from '../../reusable/images/ProfilePictureSmall';
 import './LastGameOverview.css'
 
-export default function LastGameOverview({ currentUser, userA, userB, score }) {
+function LastGameOverview({ userA, userB, score }) {
 
     let playerA, playerB;
     let scoreA, scoreB;
@@ -12,16 +13,6 @@ export default function LastGameOverview({ currentUser, userA, userB, score }) {
     scoreB = score[1];
     playerA = userA;
     playerB = userB;
-
-    // playerB = userB;
-    // scoreA = score[1];
-    // scoreB = score[0];
-
-    // if (currentUser.username === userA.username) {
-    //     playerA = userA;
-    //     scoreA = score[0];
-    //     scoreB = score[1];
-    // }
 
     return (
         <div className="last-game-overview-container">
@@ -41,3 +32,11 @@ export default function LastGameOverview({ currentUser, userA, userB, score }) {
         </div>
     )
 }
+
+LastGameOverview.propTypes = {
+    userA: PropTypes.object,
+    userB: PropTypes.object,
+    score: PropTypes.array,
+}
+
+export default LastGameOverview

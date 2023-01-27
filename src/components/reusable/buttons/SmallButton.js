@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './SmallButton.css';
 
-export default function SmallButton({ content, IconLeft, IconRight, color, onClick, disabled }) {
+function SmallButton({ content, IconLeft, IconRight, color, onClick, disabled }) {
 
     return (
         <button className="small-button" style={{ backgroundColor: `${color}` }} onClick={(e) => onClick(e)} disabled={disabled}>
@@ -11,3 +12,14 @@ export default function SmallButton({ content, IconLeft, IconRight, color, onCli
         </button>
     )
 }
+
+SmallButton.propTypes = {
+    content: PropTypes.string,
+    IconLeft: PropTypes.func,
+    IconRight: PropTypes.func,
+    color: PropTypes.string,
+    onClick: PropTypes.func,
+    disabled: PropTypes.bool
+}
+
+export default SmallButton

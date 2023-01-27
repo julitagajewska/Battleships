@@ -1,14 +1,17 @@
-import React from 'react'
+import React from 'react';
+
 import { useAuth } from '../../utils/auth';
-import { useNavigate, Link } from 'react-router-dom';
-import axios, { deleteUser } from '../../../api/axios';
+import { useNavigate } from 'react-router-dom';
+import { deleteUser } from '../../../api/axios';
+import { useSound } from '../../utils/Sound';
+
 import CenteredContainer from '../../reusable/containers/CenteredContainer';
 import MediumButton from '../../reusable/buttons/MediumButton';
-import { useSound } from '../../utils/Sound';
+
 import { IoArrowBack } from 'react-icons/io5';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 
-export default function ConfirmProfileDelete(props) {
+export default function ConfirmProfileDelete() {
 
     const auth = useAuth();
     const sound = useSound();

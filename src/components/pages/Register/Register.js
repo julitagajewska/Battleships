@@ -20,6 +20,7 @@ import MediumButton from '../../reusable/buttons/MediumButton';
 import Sidebar from '../../reusable/ui/Sidebar';
 import IconOnlyButton from '../../reusable/buttons/IconOnlyButton';
 import IconOnlyOverviewButton from '../../reusable/buttons/IconOnlyOverviewButton';
+import RegisterInfo from '../../reusable/ui/RegisterInfo';
 
 export default function Rejsetracja() {
 
@@ -27,7 +28,6 @@ export default function Rejsetracja() {
     const sound = useSound();
 
     const usernameRef = useRef();
-    const errorRef = useRef();
 
     const [username, setUsername] = useState('');
     const [validUsername, setValidUsername] = useState(false);
@@ -54,7 +54,6 @@ export default function Rejsetracja() {
 
     const onUsernameFocus = (value) => {
         if (value === true) {
-            // sound.playPick();
         }
         setErrorMsg('');
         setUsernameFocus(value);
@@ -62,7 +61,6 @@ export default function Rejsetracja() {
 
     const onMailFocus = (value) => {
         if (value === true) {
-            // sound.playPick();
         }
         setErrorMsg('');
         setMailFocus(value);
@@ -70,7 +68,6 @@ export default function Rejsetracja() {
 
     const onPasswordFocus = (value) => {
         if (value === true) {
-            // sound.playPick();
         }
         setErrorMsg('');
         setPasswordFocus(value);
@@ -78,7 +75,6 @@ export default function Rejsetracja() {
 
     const onMatchPasswordFocus = (value) => {
         if (value === true) {
-            // sound.playPick();
         }
         setErrorMsg('');
         setMatchPasswordFocus(value);
@@ -97,8 +93,6 @@ export default function Rejsetracja() {
     const handleSubmit = async (e) => {
 
         let isTaken = await checkUsername(username);
-
-        console.log(isTaken);
 
         if (isTaken === false) {
             sound.playBlocked();
@@ -121,8 +115,6 @@ export default function Rejsetracja() {
         setSuccess(true)
     }
 
-    console.log(validUsername, validMail, validPassword, validMatch);
-
     return (
         <div className="upper-layer">
             {success ?
@@ -144,62 +136,8 @@ export default function Rejsetracja() {
                 :
                 (
                     <>
-                        <Sidebar type="left" overflow="overflow-auto">
-                            <div className="info-align-left">
-                                <h3>REJESTRACJA</h3>
-                                <div>
-                                    <p align="justify">Na tej stronie możesz utworzyć swój własny profil. Poniżej znajdują się wymagania dotyczące wprowadzanych w formularzu danych.<br /><br /></p>
-                                </div>
+                        <RegisterInfo />
 
-                                <p>
-                                    <b>Nazwa użytkownika</b>
-                                    <ul>
-                                        <li>3 - 10 znaków</li>
-                                        <li>Nie może zawierać spacji</li>
-                                        <li>Nie może zawierać znaków specjalnych</li>
-                                        <li>Może zawierać:</li>
-                                        <ul>
-                                            <li>
-                                                Małe i wielkie litery
-                                            </li>
-                                            <li>Cyfry</li>
-                                            <li>Dozwolone znaki: _ -</li>
-                                        </ul>
-                                    </ul>
-
-                                    <b>Adres e-mail</b>
-                                    <ul>
-                                        <li>Musi być w formacie: abc@def.xyz</li>
-                                    </ul>
-
-                                    <b>Hasło</b>
-                                    <ul>
-                                        <li>Musi zawierać:</li>
-                                        <ul>
-                                            <li>Małą literę</li>
-                                            <li>Wielką literę</li>
-                                            <li>Znak specjalny</li>
-                                            <li>Cyfrę</li>
-                                        </ul>
-                                        <li>3 - 15 znaków</li>
-                                        <li>Nie może  zawierać spacji</li>
-                                    </ul>
-
-                                    <p align="justify"><br />Hasło oraz jego potwierdzenie muszą być takie same.<br /><br /></p>
-
-                                    <p align="justify"> Możesz powrócić do ekranu logowania klikając
-                                        <IconOnlyOverviewButton
-                                            Icon={IoChevronBackSharp}
-                                            color={"rgba(18, 66, 87, 0.2)"}
-                                            shadow={"no-shadow"}
-                                            type={"back"} />
-                                        .
-                                    </p>
-                                </p>
-                            </div>
-
-
-                        </Sidebar>
                         <CenteredContainer>
 
                             <IconOnlyButton
@@ -231,6 +169,12 @@ export default function Rejsetracja() {
                                         required={true}
                                     />
 
+                                    {/* { usernameErrorMessage.length !== 0 ?
+
+
+
+                                     : <></>
+                                     } */}
                                     <InputErrors
                                         focus={usernameFocus}
                                         value={username}

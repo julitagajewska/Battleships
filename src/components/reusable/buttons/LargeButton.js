@@ -1,10 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './LargeButton.css';
-import { useSound } from '../../utils/Sound';
 
-export default function LargeButton({ IconLeft, IconRight, color, content, onClick, disabled }) {
-
-    const sound = useSound();
+function LargeButton({ IconLeft, IconRight, color, content, onClick, disabled }) {
 
     return (
         <button className="large-button" style={{ backgroundColor: `${color}` }} onClick={(e) => onClick(e)} disabled={disabled}>
@@ -14,3 +12,15 @@ export default function LargeButton({ IconLeft, IconRight, color, content, onCli
         </button>
     )
 }
+
+
+LargeButton.propTypes = {
+    IconLeft: PropTypes.func,
+    IconRight: PropTypes.func,
+    color: PropTypes.string,
+    content: PropTypes.string,
+    disabled: PropTypes.bool,
+    onClick: PropTypes.func
+}
+
+export default LargeButton

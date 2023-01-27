@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { useSound } from '../../utils/Sound';
 
@@ -6,44 +7,42 @@ import { RxRotateCounterClockwise } from 'react-icons/rx';
 import { RxCross2 } from 'react-icons/rx';
 import { BsDice5 } from 'react-icons/bs';
 import { HiCheck } from 'react-icons/hi';
-import { VscChromeClose } from 'react-icons/vsc';
 
 import ShipsContainer from './ShipsContainer';
 import ProfilePictureMedium from '../../reusable/images/ProfilePictureMedium';
 import MediumButton from '../../reusable/buttons/MediumButton';
-import IconOnlyButton from '../../reusable/buttons/IconOnlyButton';
 import SmallButton from '../../reusable/buttons/SmallButton';
 import IconOnlyLargeButton from '../../reusable/buttons/IconOnlyLargeButton';
-import Sidebar from '../../reusable/ui/Sidebar';
-import IconOnlyOverviewButton from '../../reusable/buttons/IconOnlyOverviewButton';
-import OverviewButton from '../../reusable/buttons/OverviewButton';
 import ShipPlacementInfo from '../../reusable/ui/ShipPlacementInfo';
+import AllShipsPlaced from '../../reusable/ui/AllShipsPlaced';
+import Sidebar from '../../reusable/ui/Sidebar';
 
 import './UserSidebar.css';
-import AllShipsPlaced from '../../reusable/ui/AllShipsPlaced';
-
-export default function UserSidebar(props) {
+function UserSidebar({
+    ships, shotFired, type, player, computer, playerReady, setWaitingOverlay, orientation, setNotAllowed,
+    setTilesNotAllowedEmpty, toggleAdjacentVisibility, toggleOrientation, resetShips, setState,
+    randomShipPlacement, allowRandom }) {
 
     let sound = useSound();
 
     let allShipsPlaced = true;
 
-    if (props.ships !== undefined) {
-        props.ships.forEach(ship => {
+    if (ships !== undefined) {
+        ships.forEach(ship => {
             if (ship.coordinates.length === 0) {
                 allShipsPlaced = false;
             }
         });
     }
 
-    if (props.shotFired && props.type === "my-turn-A") {
+    if (shotFired && type === "my-turn-A") {
         return (
 
             <div className='user-sidebar-left turn'>
                 <div className="user-sidebar-header-left">
-                    <ProfilePictureMedium src={props.player.user.image} />
+                    <ProfilePictureMedium src={player.user.image} />
                     <div className="user-sidebar-header-username-left">
-                        <h3>{props.player.user.username}</h3>
+                        <h3>{player.user.username}</h3>
                         <p>Oddano strzał!</p>
                     </div>
                 </div>
@@ -54,13 +53,13 @@ export default function UserSidebar(props) {
                         IconRight={null}
                         content="Gotowe"
                         color={"var(--gradient-1)"}
-                        disabled={!props.shotFired}
+                        disabled={!shotFired}
                         onClick={() => {
                             sound.playPick();
-                            if (props.computer === true) {
-                                props.playerReady();
+                            if (computer === true) {
+                                playerReady();
                             } else {
-                                props.setWaitingOverlay(true);
+                                setWaitingOverlay(true);
                             }
                         }} />
                 </div>
@@ -68,15 +67,15 @@ export default function UserSidebar(props) {
         );
     }
 
-    if (props.shotFired && props.type === "my-turn-B") {
+    if (shotFired && type === "my-turn-B") {
         return (
             <div className='user-sidebar-right turn'>
                 <div className="user-sidebar-header-right">
                     <div className="user-sidebar-header-username-right">
-                        <h3>{props.player.user.username}</h3>
+                        <h3>{player.user.username}</h3>
                         <p>Oddano strzał!</p>
                     </div>
-                    <ProfilePictureMedium src={props.player.user.image} />
+                    <ProfilePictureMedium src={player.user.image} />
                 </div>
 
                 <div className="user-sidebar-shot-button-group">
@@ -85,24 +84,27 @@ export default function UserSidebar(props) {
                         IconRight={null}
                         content="Gotowe"
                         color={"var(--gradient-1)"}
-                        disabled={!props.shotFired}
-                        onClick={() => { sound.playPick(); props.setWaitingOverlay(true) }} />
+                        disabled={!shotFired}
+                        onClick={() => { sound.playPick(); setWaitingOverlay(true) }} />
                 </div>
             </div>
         );
     }
 
-    if (props.type === "placement-player-A" && allShipsPlaced === false) {
+    if (type === "placement-player-A" && allShipsPlaced === false) {
         return (
             <>
-                <ShipPlacementInfo />
+                <Sidebar type="left" overflow="overflow-auto">
+                    <ShipPlacementInfo />
+                </Sidebar>
+
 
                 <div className='user-sidebar-left'>
 
                     <div className="user-sidebar-header-left">
-                        <ProfilePictureMedium src={props.player.user.image} />
+                        <ProfilePictureMedium src={player.user.image} />
                         <div className="user-sidebar-header-username-left">
-                            <h3>{props.player.user.username}</h3>
+                            <h3>{player.user.username}</h3>
                             <p>Rozmieszczenie statków</p>
                         </div>
                     </div>
@@ -111,12 +113,12 @@ export default function UserSidebar(props) {
                         <h3>Dostępne statki</h3>
                         <div className="user-sidebar-ships-container">
                             <ShipsContainer
-                                ships={props.ships}
-                                username={props.player.user.username}
-                                orientation={props.orientation}
-                                setTilesNotAllowed={props.setNotAllowed}
-                                setTilesNotAllowedEmpty={props.setTilesNotAllowedEmpty}
-                                toggleAdjacentVisibility={props.toggleAdjacentVisibility} />
+                                ships={ships}
+                                username={player.user.username}
+                                orientation={orientation}
+                                setTilesNotAllowed={setNotAllowed}
+                                setTilesNotAllowedEmpty={setTilesNotAllowedEmpty}
+                                toggleAdjacentVisibility={toggleAdjacentVisibility} />
                         </div>
                     </div>
 
@@ -128,7 +130,7 @@ export default function UserSidebar(props) {
                             color="var(--gradient-1)"
                             onClick={() => {
                                 sound.playPick();
-                                props.toggleOrientation();
+                                toggleOrientation();
                             }}
                             disabled={false} />
 
@@ -138,7 +140,7 @@ export default function UserSidebar(props) {
                             color="var(--gradient-2)"
                             onClick={() => {
                                 sound.playPick();
-                                props.resetShips(props.player, props.setState);
+                                resetShips(player, setState);
                             }}
                             disabled={false} />
 
@@ -148,24 +150,26 @@ export default function UserSidebar(props) {
                             color="var(--gradient-3)"
                             onClick={() => {
                                 sound.playPick();
-                                props.randomShipPlacement(props.player, props.setState);
+                                randomShipPlacement(player, setState);
                             }}
-                            disabled={!props.allowRandom} />
+                            disabled={!allowRandom} />
                     </div>
                 </div>
             </>
         );
-    } else if (props.type === "placement-player-B" && allShipsPlaced === false) {
+    } else if (type === "placement-player-B" && allShipsPlaced === false) {
         return (
             <>
-                <ShipPlacementInfo />
+                <Sidebar type="left" overflow="overflow-auto">
+                    <ShipPlacementInfo />
+                </Sidebar>
 
                 <div className='user-sidebar-right'>
 
                     <div className="user-sidebar-header-left">
-                        <ProfilePictureMedium src={props.player.user.image} />
+                        <ProfilePictureMedium src={player.user.image} />
                         <div className="user-sidebar-header-username-left">
-                            <h3>{props.player.user.username}</h3>
+                            <h3>{player.user.username}</h3>
                             <p>Rozmieszczenie statków</p>
                         </div>
                     </div>
@@ -174,12 +178,12 @@ export default function UserSidebar(props) {
                         <h3>Dostępne statki</h3>
                         <div className="user-sidebar-ships-container">
                             <ShipsContainer
-                                ships={props.ships}
-                                username={props.player.user.username}
-                                orientation={props.orientation}
-                                setTilesNotAllowed={props.setNotAllowed}
-                                setTilesNotAllowedEmpty={props.setTilesNotAllowedEmpty}
-                                toggleAdjacentVisibility={props.toggleAdjacentVisibility} />
+                                ships={ships}
+                                username={player.user.username}
+                                orientation={orientation}
+                                setTilesNotAllowed={setNotAllowed}
+                                setTilesNotAllowedEmpty={setTilesNotAllowedEmpty}
+                                toggleAdjacentVisibility={toggleAdjacentVisibility} />
                         </div>
                     </div>
 
@@ -191,7 +195,7 @@ export default function UserSidebar(props) {
                             color="var(--gradient-1)"
                             onClick={() => {
                                 sound.playPick();
-                                props.toggleOrientation();
+                                toggleOrientation();
                             }}
                             disabled={false} />
 
@@ -201,7 +205,7 @@ export default function UserSidebar(props) {
                             color="var(--gradient-2)"
                             onClick={() => {
                                 sound.playPick();
-                                props.resetShips(props.player, props.setState);
+                                resetShips(player, setState);
                             }}
                             disabled={false} />
 
@@ -211,24 +215,28 @@ export default function UserSidebar(props) {
                             color="var(--gradient-3)"
                             onClick={() => {
                                 sound.playPick();
-                                props.randomShipPlacement(props.player, props.setState);
+                                randomShipPlacement(player, setState);
                             }}
-                            disabled={!props.allowRandom} />
+                            disabled={!allowRandom} />
                     </div>
                 </div>
             </>
         );
-    } else if (props.type === "placement-player-A") {
+    } else if (type === "placement-player-A") {
         return (
             <>
-                <AllShipsPlaced />
+
+                <Sidebar type="left">
+                    <AllShipsPlaced />
+                </Sidebar>
+
 
                 <div className='user-sidebar-left'>
 
                     <div className="user-sidebar-header-left">
-                        <ProfilePictureMedium src={props.player.user.image} />
+                        <ProfilePictureMedium src={player.user.image} />
                         <div className="user-sidebar-header-username-left">
-                            <h3>{props.player.user.username}</h3>
+                            <h3>{player.user.username}</h3>
                             <p>Rozmieszczenie statków</p>
                         </div>
                     </div>
@@ -244,7 +252,7 @@ export default function UserSidebar(props) {
                             content="resetuj"
                             color={"var(--gradient-1)"}
                             disabled={false}
-                            onClick={() => { sound.playPick(); props.resetShips(props.player, props.setState); }} />
+                            onClick={() => { sound.playPick(); resetShips(player, setState); }} />
 
                         <SmallButton
                             IconLeft={HiCheck}
@@ -252,24 +260,26 @@ export default function UserSidebar(props) {
                             content="gotowe"
                             color={"var(--gradient-3)"}
                             disabled={false}
-                            onClick={() => { sound.playPick(); props.playerReady(); }} />
+                            onClick={() => { sound.playPick(); playerReady(); }} />
                     </div>
                 </div>
             </>
 
         );
-    } else if (props.type === "placement-player-B") {
+    } else if (type === "placement-player-B") {
         return (
 
             <>
-                <AllShipsPlaced />
+                <Sidebar type="left">
+                    <AllShipsPlaced />
+                </Sidebar>
 
                 <div className='user-sidebar-right'>
 
                     <div className="user-sidebar-header-left">
-                        <ProfilePictureMedium src={props.player.user.image} />
+                        <ProfilePictureMedium src={player.user.image} />
                         <div className="user-sidebar-header-username-left">
-                            <h3>{props.player.user.username}</h3>
+                            <h3>{player.user.username}</h3>
                             <p>Rozmieszczenie statków</p>
                         </div>
                     </div>
@@ -285,7 +295,7 @@ export default function UserSidebar(props) {
                             content="resetuj"
                             color={"var(--gradient-1)"}
                             disabled={false}
-                            onClick={() => { sound.playPick(); props.resetShips(props.player, props.setState); }} />
+                            onClick={() => { sound.playPick(); resetShips(player, setState); }} />
 
                         <SmallButton
                             IconLeft={HiCheck}
@@ -293,20 +303,20 @@ export default function UserSidebar(props) {
                             content="gotowe"
                             color={"var(--gradient-3)"}
                             disabled={false}
-                            onClick={() => { sound.playPick(); props.playerReady(); }} />
+                            onClick={() => { sound.playPick(); playerReady(); }} />
                     </div>
                 </div>
             </>
         );
     }
 
-    if (props.type === 'my-turn-A') {
+    if (type === 'my-turn-A') {
         return (
             <div className='user-sidebar-left turn'>
                 <div className="user-sidebar-header-left">
-                    <ProfilePictureMedium src={props.player.user.image} />
+                    <ProfilePictureMedium src={player.user.image} />
                     <div className="user-sidebar-header-username-left">
-                        <h3>{props.player.user.username}</h3>
+                        <h3>{player.user.username}</h3>
                         <p>Strzelam!</p>
                     </div>
                 </div>
@@ -317,13 +327,13 @@ export default function UserSidebar(props) {
                         IconRight={null}
                         content="Gotowe"
                         color={"var(--gradient-1)"}
-                        disabled={!props.shotFired}
+                        disabled={!shotFired}
                         onClick={() => {
                             sound.playPick();
-                            if (props.computer === true) {
-                                props.playerReady();
+                            if (computer === true) {
+                                playerReady();
                             } else {
-                                props.setWaitingOverlay(true);
+                                setWaitingOverlay(true);
                             }
                         }} />
                 </div>
@@ -331,16 +341,16 @@ export default function UserSidebar(props) {
         );
     }
 
-    if (props.type === 'my-turn-B') {
+    if (type === 'my-turn-B') {
 
         return (
             <div className='user-sidebar-right turn'>
                 <div className="user-sidebar-header-right">
                     <div className="user-sidebar-header-username-right">
-                        <h3>{props.player.user.username}</h3>
+                        <h3>{player.user.username}</h3>
                         <p>Strzelam!</p>
                     </div>
-                    <ProfilePictureMedium src={props.player.user.image} />
+                    <ProfilePictureMedium src={player.user.image} />
                 </div>
 
                 <div className="user-sidebar-shot-button-group">
@@ -349,20 +359,20 @@ export default function UserSidebar(props) {
                         IconRight={null}
                         content="Gotowe"
                         color={"var(--gradient-1)"}
-                        disabled={!props.shotFired}
-                        onClick={() => { sound.playPick(); props.setWaitingOverlay(true) }} />
+                        disabled={!shotFired}
+                        onClick={() => { sound.playPick(); setWaitingOverlay(true) }} />
                 </div>
             </div>
         );
     }
 
-    if (props.type === 'not-my-turn-A') {
+    if (type === 'not-my-turn-A') {
         return (
             <div className='user-sidebar-left waiting'>
                 <div className="user-sidebar-header-left">
-                    <ProfilePictureMedium src={props.player.user.image} />
+                    <ProfilePictureMedium src={player.user.image} />
                     <div className="user-sidebar-header-username-left">
-                        <h3>{props.player.user.username}</h3>
+                        <h3>{player.user.username}</h3>
                         <p>Czekam na swoją truę C:</p>
                     </div>
                 </div>
@@ -370,32 +380,53 @@ export default function UserSidebar(props) {
         );
     }
 
-    if (props.type === 'not-my-turn-B') {
+    if (type === 'not-my-turn-B') {
         return (
             <div className='user-sidebar-right waiting user-A'>
                 <div className="user-sidebar-header-right">
                     <div className="user-sidebar-header-username-right">
-                        <h3>{props.player.user.username}</h3>
+                        <h3>{player.user.username}</h3>
                         <p>Czekam na swoją truę C:</p>
                     </div>
-                    <ProfilePictureMedium src={props.player.user.image} />
+                    <ProfilePictureMedium src={player.user.image} />
                 </div>
             </div>
         );
     }
 
-    if (props.type === 'computer-turn') {
+    if (type === 'computer-turn') {
         return (
             <div className='user-sidebar-right waiting'>
                 <div className="user-sidebar-header-right">
                     <div className="user-sidebar-header-username-right">
-                        <h3>{props.player.user.username}</h3>
+                        <h3>{player.user.username}</h3>
                         <p>{`Strzelam! >:C`}</p>
                     </div>
-                    <ProfilePictureMedium src={props.player.user.image} />
+                    <ProfilePictureMedium src={player.user.image} />
                 </div>
             </div>
         );
     }
 
 }
+
+UserSidebar.propTypes = {
+    ships: PropTypes.array,
+    shotFired: PropTypes.bool,
+    type: PropTypes.string,
+    player: PropTypes.object,
+    computer: PropTypes.bool,
+    playerReady: PropTypes.func,
+    setWaitingOverlay: PropTypes.func,
+    orientation: PropTypes.string,
+    setNotAllowed: PropTypes.func,
+    setTilesNotAllowedEmpty: PropTypes.func,
+    toggleAdjacentVisibility: PropTypes.func,
+    toggleOrientation: PropTypes.func,
+    resetShips: PropTypes.func,
+    setState: PropTypes.func,
+    randomShipPlacement: PropTypes.func,
+    allowRandom: PropTypes.bool
+}
+
+export default UserSidebar;

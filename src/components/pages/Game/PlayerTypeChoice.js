@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { GiHood } from 'react-icons/gi';
 import { RiUser5Fill } from 'react-icons/ri';
@@ -12,7 +13,7 @@ import OverviewButton from '../../reusable/buttons/OverviewButton';
 import IconOnlyButton from '../../reusable/buttons/IconOnlyButton';
 import IconOnlyOverviewButton from '../../reusable/buttons/IconOnlyOverviewButton';
 
-export default function PlayerTypeChoice(props) {
+function PlayerTypeChoice({ setGamePhase }) {
 
     let sound = useSound();
 
@@ -59,7 +60,7 @@ export default function PlayerTypeChoice(props) {
                 <IconOnlyButton
                     Icon={IoChevronBackSharp}
                     color={"rgba(18, 66, 87, 0.2)"}
-                    onClick={() => { sound.playPick(); props.setGamePhase("game-mode-choice") }}
+                    onClick={() => { sound.playPick(); setGamePhase("game-mode-choice") }}
                     disabled={false}
                     position={"top-left"}
                     shadow={"no-shadow"}
@@ -78,7 +79,7 @@ export default function PlayerTypeChoice(props) {
                         disabled={false}
                         onClick={() => {
                             sound.playPick();
-                            props.setGamePhase("players-list");
+                            setGamePhase("players-list");
                         }} />
 
                     <LargeButton
@@ -89,10 +90,16 @@ export default function PlayerTypeChoice(props) {
                         disabled={false}
                         onClick={() => {
                             sound.playPick();
-                            props.setGamePhase("enter-name-player-B");
+                            setGamePhase("enter-name-player-B");
                         }} />
                 </div>
             </CenteredContainer>
         </div>
     )
 }
+
+PlayerTypeChoice.propTypes = {
+    setGamePhase: PropTypes.func
+}
+
+export default PlayerTypeChoice;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { useSound } from '../../utils/Sound';
 import { BsCheckLg } from 'react-icons/bs';
@@ -8,7 +9,7 @@ import LargeButton from '../../reusable/buttons/LargeButton';
 import CenteredContainerLight from '../../reusable/containers/CenteredContainerLight';
 import ProfilePictureMedium from '../../reusable/images/ProfilePictureMedium';
 
-export default function WaitingForUserOverlay(props) {
+function WaitingForUserOverlay({ ready, setWaitingOverlay, player, username }) {
 
     let sound = useSound();
 
@@ -21,8 +22,8 @@ export default function WaitingForUserOverlay(props) {
 
                 <div className='middle section wiating-for-user-middle'>
                     <ProfilePictureMedium
-                        src={props.player.user.image} />
-                    <h2>{props.username}</h2>
+                        src={player.user.image} />
+                    <h2>{username}</h2>
                 </div>
 
                 <div className='lower section'>
@@ -34,13 +35,20 @@ export default function WaitingForUserOverlay(props) {
                         disabled={false}
                         onClick={() => {
                             sound.playPick();
-                            props.ready();
-                            props.setWaitingOverlay(false);
+                            ready();
+                            setWaitingOverlay(false);
                         }} />
                 </div>
             </CenteredContainerLight>
-
-
         </Overlay>
     )
 }
+
+WaitingForUserOverlay.propTypes = {
+    ready: PropTypes.func,
+    setWaitingOverlay: PropTypes.func,
+    player: PropTypes.object,
+    username: PropTypes.string
+}
+
+export default WaitingForUserOverlay;

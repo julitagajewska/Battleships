@@ -1,0 +1,37 @@
+.menu-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--gradient-1);
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 0.75rem 3rem 1rem 2rem;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    width: fit-content;
+    text-decoration: none;
+    transition: all 0.3s ease 0s;
+}
+
+.menu-button:hover {
+    background-color: #005B95 !important;
+    color: white;
+}
+
+.menu-button-content {
+    text-transform: uppercase;
+}
+
+.menu-button p {
+    margin: 0;
+    padding-top: 0.5rem
+}
+
+.menu-button-icon-left {
+    margin-right: 1.5rem;
+}
+
+.menu-button-icon-right {}

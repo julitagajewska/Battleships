@@ -1,10 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { hasUpperCaseLetter, hasLowerCaseLetter, hasNumber, hasSpecialCharacter, hasSpace, checkPasswordLength } from '../../utils/Validators';
 import './PasswordInput.css';
 
-export default function PasswordInput(props) {
-
-    const { required, reference, setErrors, setUsername, setValue, setValid, setFocus, placeholder, size, ...others } = props;
+function PasswordInput({ required, reference, setErrors, setValue, setValid, setFocus, placeholder, size }) {
 
     const onInputChange = (e) => {
         let isValid = true;
@@ -49,8 +48,8 @@ export default function PasswordInput(props) {
             isValid = false;
         }
 
-        setValid(isValid)
-        setErrors(errors);
+        if (setValid !== null) { setValid(isValid); }
+        if (setErrors !== null) { setErrors(errors); }
         setValue(e.target.value);
     }
 
@@ -59,7 +58,6 @@ export default function PasswordInput(props) {
             <input
                 className={`${size}`}
                 type="password"
-                id="password"
                 autoComplete="off"
                 required={required}
 
@@ -71,3 +69,16 @@ export default function PasswordInput(props) {
         </div>
     )
 }
+
+PasswordInput.propTypes = {
+    required: PropTypes.bool,
+    reference: PropTypes.object,
+    setErrors: PropTypes.func,
+    setValue: PropTypes.func,
+    setValid: PropTypes.func,
+    setFocus: PropTypes.func,
+    placeholder: PropTypes.string,
+    size: PropTypes.string
+}
+
+export default PasswordInput

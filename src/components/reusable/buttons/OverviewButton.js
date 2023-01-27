@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './OverviewButton.css';
 
-export default function OverviewButton({ IconLeft, IconRight, color, content, id }) {
+function OverviewButton({ IconLeft, IconRight, color, content, id }) {
 
     return (
         <button className="overview-button">
@@ -14,3 +15,13 @@ export default function OverviewButton({ IconLeft, IconRight, color, content, id
         </button>
     )
 }
+
+OverviewButton.propTypes = {
+    IconLeft: PropTypes.func,
+    IconRight: PropTypes.func,
+    color: PropTypes.string,
+    content: PropTypes.string,
+    id: PropTypes.string
+}
+
+export default OverviewButton

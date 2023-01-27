@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import './EditableText.css';
 import { AiTwotoneEdit } from 'react-icons/ai';
 import { RxEyeOpen } from 'react-icons/rx';
@@ -13,7 +14,7 @@ import ErrorMessage from '../messages/ErrorMessage';
 import IconOnlyButton from '../buttons/IconOnlyButton';
 import { useSound } from '../../utils/Sound';
 
-export default function EditableText(props) {
+function EditableText(props) {
 
     const auth = useAuth();
     const sound = useSound();
@@ -85,7 +86,7 @@ export default function EditableText(props) {
                         {props.id === 'username' ?
                             <UsernameInput
                                 size="small"
-                                placeholder={props.value}
+                                placeholder={value}
                                 setUsernameTaken={setUsernameTaken}
                                 setFocus={setFocus}
                                 setValue={setValue}
@@ -97,7 +98,7 @@ export default function EditableText(props) {
                         {props.id === 'mail' ?
                             <MailInput
                                 size="small"
-                                placeholder={props.value}
+                                placeholder={value}
                                 setFocus={setFocus}
                                 setValue={setValue}
                                 setValid={setValid}
@@ -107,7 +108,7 @@ export default function EditableText(props) {
                         {props.id === 'password' ?
                             <PasswordInput
                                 size="small"
-                                placeholder={props.value}
+                                placeholder={value}
                                 setFocus={setFocus}
                                 setValue={setValue}
                                 setValid={setValid}
@@ -168,3 +169,15 @@ export default function EditableText(props) {
         </div>
     )
 }
+
+EditableText.propTypes = {
+    label: PropTypes.string,
+    id: PropTypes.string,
+    trigger: PropTypes.func,
+    value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.object
+    ]),
+}
+
+export default EditableText

@@ -1,15 +1,14 @@
 import React from 'react'
-import { useAuth } from '../../utils/auth';
-import { useNavigate, Link } from 'react-router-dom';
-import axios, { deleteUser } from '../../../api/axios';
+
+import { useNavigate } from 'react-router-dom';
+import { useSound } from '../../utils/Sound';
+
 import CenteredContainer from '../../reusable/containers/CenteredContainer';
 import MediumButton from '../../reusable/buttons/MediumButton';
-import { useSound } from '../../utils/Sound';
-import { IoArrowBack } from 'react-icons/io5';
-import { RiDeleteBin5Fill } from 'react-icons/ri';
+
 import { BiLogInCircle } from 'react-icons/bi';
 
-export default function ProfileDeleted(props) {
+export default function ProfileDeleted() {
 
     const navigate = useNavigate();
     const sound = useSound();

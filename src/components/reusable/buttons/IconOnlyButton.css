@@ -25,6 +25,20 @@
     cursor: auto;
 }
 
+.no-shadow {
+    box-shadow: rgba(0, 0, 0, 0) 0px 3px 6px !important;
+}
+
+.back {
+    margin-right: 0.1rem;
+}
+
+.oval {
+    padding: 0 0.5rem;
+    margin: 0 0 0 1rem !important;
+}
+
+/* -------- Position -------- */
 .top-left {
     position: fixed;
     top: 1.5rem;
@@ -37,15 +51,7 @@
     right: 1.5rem;
 }
 
-.no-shadow {
-    box-shadow: rgba(0, 0, 0, 0) 0px 3px 6px !important;
-}
-
-.back {
-    margin-right: 0.1rem;
-}
-
-.oval {
-    padding: 0 0.5rem;
-    margin: 0 0 0 1rem !important;
+.centered {
+    margin-left: 0.75rem !important;
+    margin-bottom: 0rem !important;
 }

@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import './Sidebar.css';
-import { GrCircleQuestion } from 'react-icons/gr';
-import { RiUser5Line } from 'react-icons/ri';
+import PropTypes from 'prop-types';
+
 import { useSound } from '../../utils/Sound';
 
-export default function Sidebar(props) {
+import { GrCircleQuestion } from 'react-icons/gr';
+import { RiUser5Line } from 'react-icons/ri';
+
+import './Sidebar.css';
+
+function Sidebar({ type, children, overflow }) {
 
     const sound = useSound();
 
@@ -14,22 +18,22 @@ export default function Sidebar(props) {
         setStartAnimation(!startAnimation);
     }
 
-    const transitionProperties = startAnimation ? `out-${props.type}` : `in-${props.type}`;
+    const transitionProperties = startAnimation ? `out-${type}` : `in-${type}`;
 
     return (
         <div>
-            <div className={`sidebar-${props.type} ${transitionProperties}`}>
-                <div className={`sidebar-content-${props.type} ${props.overflow}`}>
-                    <div className={`sidebar-content-text-${props.type}`}>
-                        {props.children}
+            <div className={`sidebar-${type} ${transitionProperties}`}>
+                <div className={`sidebar-content-${type} ${overflow}`}>
+                    <div className={`sidebar-content-text-${type}`}>
+                        {children}
                     </div>
                 </div>
             </div>
             <div
-                className={`info-sidebar-button-${props.type} ${transitionProperties}`}
+                className={`info-sidebar-button-${type} ${transitionProperties}`}
                 onClick={() => { sound.playPick(); toggle(); }}>
                 {
-                    props.type === "left" ?
+                    type === "left" ?
                         <GrCircleQuestion className='sidebar-button-icon-left' size={"36px"} />
                         :
                         <RiUser5Line className='sidebar-button-icon-right' size={"38px"} />
@@ -38,3 +42,13 @@ export default function Sidebar(props) {
         </div>
     )
 }
+
+Sidebar.propTypes = {
+    type: PropTypes.string,
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node]),
+    overflow: PropTypes.string
+}
+
+export default Sidebar;

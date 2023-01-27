@@ -1,18 +1,34 @@
-import React from 'react'
-import './ErrorMessage.css'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function ErrorMessage(props) {
+import './ErrorMessage.css';
+
+function ErrorMessage({ status, message, keyString }) {
+
+    console.log(keyString)
+
     return (
-        <div>
-            {props.status ?
+        <div key={`${keyString}-container`}>
+            {status ?
                 (
-                    <span style={{ color: "green", fontWeight: "bold" }}>{props.message}</span>
+                    <span key={`${keyString}`} style={{ color: "green", fontWeight: "bold" }}>{message}</span>
                 )
                 :
                 (
-                    <span style={{ color: "red" }}>{props.message}</span>
+                    <span key={`${keyString}`} style={{ color: "red" }}>{message}</span>
                 )}
         </div>
 
     )
 }
+
+ErrorMessage.propTypes = {
+    status: PropTypes.bool,
+    message: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.object
+    ]),
+    keyString: PropTypes.string
+}
+
+export default ErrorMessage;

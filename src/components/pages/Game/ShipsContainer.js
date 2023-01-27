@@ -1,7 +1,15 @@
-import React from 'react'
-import './ShipsContainer.css'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function ShipsContainer(props) {
+import './ShipsContainer.css';
+
+function ShipsContainer({
+    setTilesNotAllowed,
+    setTilesNotAllowedEmpty,
+    orientation,
+    ships,
+    username
+}) {
 
     let draggedShip;
     let draggedShipElement;
@@ -20,8 +28,8 @@ export default function ShipsContainer(props) {
         e.dataTransfer.setData("dragged-element-id", draggedElementId);
         e.dataTransfer.setData("ship-owner", shipOwner);
 
-        props.setTilesNotAllowed(shipLength, draggedElementId);
-        // props.toggleAdjacentVisibility(true);
+        setTilesNotAllowed(shipLength, draggedElementId);
+        // toggleAdjacentVisibility(true);
 
     }
 
@@ -31,18 +39,18 @@ export default function ShipsContainer(props) {
 
     const dragEnd = (e) => {
         e.target.classList.remove('grabbing');
-        props.setTilesNotAllowedEmpty([]);
+        setTilesNotAllowedEmpty([]);
     }
 
     return (
-        <div className={`${'ships-container-' + props.orientation}`} id="ships-container">
-            {props.ships.map((ship) => {
+        <div className={`${'ships-container-' + orientation}`} id="ships-container">
+            {ships.map((ship) => {
 
                 let shipElements = []
                 let shipElementId = 0;
 
                 if (ship.coordinates.length !== 0) {
-                    return (<div key={props.username + '-' + ship.shipType + '-' + shipElementId}></div>);
+                    return (<div key={username + '-' + ship.shipType + '-' + shipElementId}></div>);
                 }
 
                 for (let i = 0; i < ship.shipLength; i++) {
@@ -50,8 +58,8 @@ export default function ShipsContainer(props) {
                     let shipElement = (
                         <div
                             className={`${ship.shipType} ship-element ${i === 0 ? 'first' : 'inside'} ${i === ship.shipLength - 1 ? 'last' : 'inside'}`}
-                            key={props.username + '-' + ship.shipType + '-' + shipElementId}
-                            id={props.username + '-' + ship.shipType + '-' + shipElementId}
+                            key={username + '-' + ship.shipType + '-' + shipElementId}
+                            id={username + '-' + ship.shipType + '-' + shipElementId}
                             onMouseDown={mouseDown}>
                         </div>
                     );
@@ -62,13 +70,13 @@ export default function ShipsContainer(props) {
 
                 let shipContainer = (
                     <div
-                        key={props.username + '-' + ship.shipType}
+                        key={username + '-' + ship.shipType}
                         className={`
                             ${ship.shipType} 
-                            ${'ship-container-' + props.orientation} 
-                            ${props.orientation} 
+                            ${'ship-container-' + orientation} 
+                            ${orientation} 
                             ${ship.shipLength}
-                            ${props.username}
+                            ${username}
                             ${'ship-container-draggable'}`}
                         draggable={true}
                         onDragStart={dragStart}
@@ -87,3 +95,13 @@ export default function ShipsContainer(props) {
         </div >
     )
 }
+
+ShipsContainer.propTypes = {
+    setTilesNotAllowed: PropTypes.func,
+    setTilesNotAllowedEmpty: PropTypes.func,
+    orientation: PropTypes.string,
+    ships: PropTypes.array,
+    username: PropTypes.string
+}
+
+export default ShipsContainer;

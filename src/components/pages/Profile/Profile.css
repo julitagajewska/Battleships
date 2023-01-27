@@ -8,7 +8,7 @@
 
 .image-username-container {
     height: fit-content;
-    padding: 2rem 0 2rem 0;
+    padding: 2rem 0 2.25rem 0;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -151,6 +151,10 @@
     margin: 0;
     padding: 0;
     position: fixed;
-    top: 11rem;
-    left: 11.5rem;
+    top: 9.25rem;
+    left: 11.75rem;
+}
+
+.profile-picture-input-lower-row span {
+    font-size: 13px;
 }

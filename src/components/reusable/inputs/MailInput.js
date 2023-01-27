@@ -1,10 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { isEmail } from '../../utils/Validators';
 import './MailInput.css';
 
-export default function MailInput(props) {
-
-    const { required, setErrors, setUsername, setValue, setValid, setFocus, placeholder, size, ...others } = props;
+function MailInput({ required, setErrors, setValue, setValid, setFocus, placeholder, size }) {
 
     const onInputChange = (e) => {
         let isValid = true;
@@ -37,3 +36,15 @@ export default function MailInput(props) {
         </div>
     )
 }
+
+MailInput.propTypes = {
+    required: PropTypes.bool,
+    setErrors: PropTypes.func,
+    setValue: PropTypes.func,
+    setValid: PropTypes.func,
+    setFocus: PropTypes.func,
+    placeholder: PropTypes.string,
+    size: PropTypes.string
+}
+
+export default MailInput

@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './MediumButton.css';
 
-export default function MediumButton({ content, IconLeft, IconRight, color, onClick, disabled }) {
+function MediumButton({ content, IconLeft, IconRight, color, onClick, disabled }) {
 
     return (
         <button className="medium-button" style={{ backgroundColor: `${color}` }} onClick={(e) => onClick(e)} disabled={disabled}>
@@ -12,3 +13,14 @@ export default function MediumButton({ content, IconLeft, IconRight, color, onCl
         </button>
     )
 }
+
+MediumButton.propTypes = {
+    IconLeft: PropTypes.func,
+    IconRight: PropTypes.func,
+    color: PropTypes.string,
+    content: PropTypes.string,
+    disabled: PropTypes.bool,
+    onClick: PropTypes.func
+}
+
+export default MediumButton

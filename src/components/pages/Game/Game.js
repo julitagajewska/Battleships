@@ -11,8 +11,6 @@ import { Player } from '../../../Models/Player';
 import { User } from '../../../Models/User';
 import { Game } from '../../../Models/Game';
 
-import { HiCheck } from 'react-icons/hi';
-import { ImCross } from 'react-icons/im';
 import { VscChromeClose } from 'react-icons/vsc';
 
 import WaitingForUserOverlay from './WaitingForUserOVerlay';
@@ -25,15 +23,14 @@ import Grid from './Grid';
 import Score from './Score';
 import GameOver from './GameOver';
 import Sidebar from '../../reusable/ui/Sidebar';
-import OverviewButton from '../../reusable/buttons/OverviewButton';
-import IconOnlyOverviewButton from '../../reusable/buttons/IconOnlyOverviewButton';
 import IconOnlyButton from '../../reusable/buttons/IconOnlyButton';
 import ExitGameOverlay from './ExitGameOverlay';
 
-import './Game.css';
 import BattleInfo from '../../reusable/ui/BattleInfo';
 
-export default function GameLoop(props) {
+import './Game.css';
+
+export default function GameLoop() {
 
     // Constant varaibles
     const gridWidth = 10;
@@ -62,15 +59,10 @@ export default function GameLoop(props) {
 
     // Gameplay
     const [shotFired, setShotFired] = useState(false);
-    const [cursorDisabled, setCursorDisabled] = useState(false);
 
     // Overlays
-    const [gameOverOverlay, setGameOverOverlay] = useState(false);
     const [exitOverlay, setExitOverlay] = useState(false);
     const [waitingOverlay, setWaitingOverlay] = useState(false);
-
-
-
 
     // Initialize known players
     useEffect(() => {
@@ -308,8 +300,6 @@ export default function GameLoop(props) {
                 notAllowed = getTilesNotAllowed(ship.shipLength, 0, orientation);
                 adjacent = getAdjacentTiles(shipsGrid);
 
-                console.log("Ble");
-
                 if (canPlaceRandomShip(randomTile, randomTile, lastTile, orientation, adjacent, notAllowed) === true) {
                     setCoordinates(player, setState, ship.shipType, coordinates);
 
@@ -410,7 +400,6 @@ export default function GameLoop(props) {
     }
 
     const resetShips = (player, setState) => {
-        console.log(player);
         player.ships = generateShips(player.user.username);
         player.shipsGrid = generateTiles(player.user.username, "ships_grid");
 
@@ -632,7 +621,7 @@ export default function GameLoop(props) {
             }
         }
 
-        console.log(`Computer shoots: [${clickedTileId}] State: ${playerA.shipsGrid[clickedTileId].state}`);
+        // console.log(`Computer shoots: [${clickedTileId}] State: ${playerA.shipsGrid[clickedTileId].state}`);
 
         await delay(1000);
         sound.playPick();
@@ -925,7 +914,9 @@ export default function GameLoop(props) {
                             <></>
                     }
 
-                    <BattleInfo side="left" />
+                    <Sidebar type="left" overflow="overflow-auto">
+                        <BattleInfo side="left" />
+                    </Sidebar>
 
                     <div className="panel-left">
                         <UserSidebar
@@ -1002,7 +993,10 @@ export default function GameLoop(props) {
                             <></>
                     }
 
-                    <BattleInfo side="right" />
+                    <Sidebar type="left" overflow="overflow-auto">
+                        <BattleInfo side="right" />
+                    </Sidebar>
+
 
                     <div className="panel-left">
                         <UserSidebar
@@ -1068,8 +1062,11 @@ export default function GameLoop(props) {
 
                 <div className='game-container'>
 
-                    {gamePhase === 'turn-1' && gameMode === 'pvc' ?
-                        <BattleInfo side="left" />
+                    {gamePhase === 'turn-0' && gameMode === 'pvc' ?
+                        <Sidebar type="left" overflow="overflow-auto">
+                            <BattleInfo side="left" />
+                        </Sidebar>
+
                         :
                         <Sidebar type="left">
                             <div>
@@ -1110,7 +1107,7 @@ export default function GameLoop(props) {
                         type={"battle"}
                         tiles={playerA.battleGrid}
                         shoot={shoot}
-                        shotFired={gamePhase === 'turn-0' && gameMode === 'pvc' ? { shotFired } : true} />
+                        shotFired={gamePhase === 'turn-0' && gameMode === 'pvc' ? shotFired : true} />
 
                     {gamePhase === 'turn-1' && gameMode === 'pvc' ?
                         <div className="panel-right">
@@ -1131,66 +1128,6 @@ export default function GameLoop(props) {
         )
 
     }
-
-    // if (gamePhase === 'turn-1' && gameMode === 'pvc') {
-    //     return (
-    //         <div className='container'>
-    //             <div className='score-container'>
-    //                 <Score
-    //                     playerA={playerA}
-    //                     playerB={computer} />
-    //             </div>
-
-    //             <div className='game-container'>
-
-    //                 {exitOverlay === true ?
-    //                     <ExitGameOverlay
-    //                         setExitOverlay={() => setExitOverlay(false)}
-    //                         exit={() => exit()} />
-    //                     :
-    //                     <></>
-    //                 }
-
-    //                 <Sidebar type="left">
-    //                     <div>
-    //                         <h3>Trwa tura Komputera</h3>
-    //                         <p align="justify">Po oddaniu strzału przez komputer nastąpi przejście do Twojej tury.</p>
-    //                     </div>
-    //                 </Sidebar>
-
-    //                 <div className="panel-left">
-    //                     <UserSidebar
-    //                         type="not-my-turn-A"
-    //                         player={playerA}
-    //                         switchPlayer={readyPlayerA}
-    //                         shotFired={shotFired} />
-    //                     <Grid
-    //                         type="ships-overview-left"
-    //                         shipTiles={playerA.shipsGrid}
-    //                         battleTiles={computer.battleGrid} />
-    //                 </div>
-
-    //                 <Grid
-    //                     username={playerA.user.username}
-    //                     player={playerA}
-    //                     setPlayer={setPlayerA}
-    //                     enemy={computer}
-    //                     setEnemy={setComputer}
-    //                     type={"battle"}
-    //                     tiles={playerA.battleGrid}
-    //                     shoot={shoot}
-    //                     shotFired={true} />
-
-    //                 <div className="panel-right">
-    //                     <UserSidebar
-    //                         type="computer-turn"
-    //                         player={computer}
-    //                         computerShot={computerShot} />
-    //                 </div>
-    //             </div>
-    //         </div>
-    //     )
-    // }
 
     if (gamePhase === 'game-over') {
         return (

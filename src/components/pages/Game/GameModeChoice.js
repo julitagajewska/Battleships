@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types';
+
 import { useNavigate } from 'react-router-dom';
 
 import { RiUser5Fill } from 'react-icons/ri';
@@ -13,7 +15,7 @@ import LargeButton from '../../reusable/buttons/LargeButton';
 import IconOnlyButton from '../../reusable/buttons/IconOnlyButton';
 import IconOnlyOverviewButton from '../../reusable/buttons/IconOnlyOverviewButton';
 
-export default function GameModeChoice(props) {
+function GameModeChoice({ setGameMode, setGamePhase, randomShipPlacement, setState, player }) {
 
     let sound = useSound();
     let navigate = useNavigate();
@@ -78,8 +80,8 @@ export default function GameModeChoice(props) {
                             color={"var(--gradient-2)"}
                             onClick={() => {
                                 sound.playPick();
-                                props.setGameMode('pvp');
-                                props.setGamePhase('player-type-choice');
+                                setGameMode('pvp');
+                                setGamePhase('player-type-choice');
                             }} />
 
                         <LargeButton
@@ -89,11 +91,11 @@ export default function GameModeChoice(props) {
                             color={"var(--gradient-3)"}
                             onClick={() => {
                                 sound.playPick();
-                                props.randomShipPlacement(props.player, props.setState);
-                                props.setGameMode('pvc');
-                                props.setGamePhase('placement-player-A');
-                                props.setState(props.player);
-                                // props.setGame(props.game);
+                                randomShipPlacement(player, setState);
+                                setGameMode('pvc');
+                                setGamePhase('placement-player-A');
+                                setState(player);
+                                // setGame(game);
                             }} />
                     </div>
                 </CenteredContainer>
@@ -102,3 +104,13 @@ export default function GameModeChoice(props) {
 
     )
 }
+
+GameModeChoice.propTypes = {
+    setGameMode: PropTypes.func,
+    setGamePhase: PropTypes.func,
+    randomShipPlacement: PropTypes.func,
+    setState: PropTypes.func,
+    player: PropTypes.object
+}
+
+export default GameModeChoice;

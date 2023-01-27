@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 import './PlayersList.css';
 
@@ -13,8 +14,9 @@ import ProfilePictureSmall from '../../reusable/images/ProfilePictureSmall';
 import CenteredContainer from '../../reusable/containers/CenteredContainer';
 import IconOnlyButton from '../../reusable/buttons/IconOnlyButton';
 import IconOnlyOverviewButton from '../../reusable/buttons/IconOnlyOverviewButton';
+import PlayersListTile from './PlayersListTile';
 
-export default function PlayersList(props) {
+function PlayersList({ setGamePhase, setUser }) {
 
     const [users, setUsers] = useState([]);
 
@@ -24,7 +26,6 @@ export default function PlayersList(props) {
     const getAllUsers = async () => {
         let response = await getUsers();
         setUsers(response)
-        console.log(users);
     }
 
     useEffect(() => {
@@ -56,7 +57,7 @@ export default function PlayersList(props) {
                 <IconOnlyButton
                     Icon={IoChevronBackSharp}
                     color={"rgba(18, 66, 87, 0.2)"}
-                    onClick={() => { sound.playPick(); props.setGamePhase("player-type-choice") }}
+                    onClick={() => { sound.playPick(); setGamePhase("player-type-choice") }}
                     disabled={false}
                     position={"top-left"}
                     shadow={"no-shadow"}
@@ -70,21 +71,16 @@ export default function PlayersList(props) {
                         {users.map((user) => {
 
                             if (user.username === auth.user.username) {
-                                return (<></>);
+                                // eslint-disable-next-line array-callback-return
+                                return;
                             }
 
                             return (
-                                <div className="user-entry" onClick={() => {
-                                    sound.playPick();
-                                    props.setUser(user);
-                                    props.setGamePhase("placement-player-A");
-                                }}>
-                                    <ProfilePictureSmall
-                                        src={user.image}
-                                        alt={"User's minature profile avatar"} />
-
-                                    <p>{user.username}</p>
-                                </div>
+                                <PlayersListTile
+                                    key={`players-list-tile-${user.username}`}
+                                    setUser={setUser}
+                                    user={user}
+                                    setGamePhase={setGamePhase} />
                             )
                         })}
                     </div>
@@ -93,3 +89,10 @@ export default function PlayersList(props) {
         </div>
     )
 }
+
+PlayersList.propTypes = {
+    setGamePhase: PropTypes.func,
+    setUser: PropTypes.func
+}
+
+export default PlayersList;

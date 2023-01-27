@@ -1,10 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { checkUsernameLength, hasSpecialCharacter, hasSpace } from '../../utils/Validators';
 import './UsernameInput.css';
 
-export default function UsernameInput(props) {
-
-    const { required, reference, setErrors, setUsernameTaken, setValue, setValid, setFocus, placeholder, size, ...others } = props;
+function UsernameInput({ required, reference, setErrors, setUsernameTaken, setValue, setValid, setFocus, placeholder, size }) {
 
     const onInputChange = (e) => {
         let isValid = true;
@@ -38,8 +37,8 @@ export default function UsernameInput(props) {
             setUsernameTaken([])
         }
 
-        setValid(isValid)
-        setErrors(errors);
+        if (setValid !== null) { setValid(isValid) }
+        if (setErrors !== null) { setErrors(errors); }
         setValue(e.target.value);
     }
 
@@ -62,4 +61,17 @@ export default function UsernameInput(props) {
     )
 }
 
+UsernameInput.propTypes = {
+    required: PropTypes.bool,
+    reference: PropTypes.object,
+    setErrors: PropTypes.func,
+    setUsernameTaken: PropTypes.func,
+    setValue: PropTypes.func,
+    setValid: PropTypes.func,
+    setFocus: PropTypes.func,
+    placeholder: PropTypes.string,
+    size: PropTypes.string
+}
+
+export default UsernameInput
 

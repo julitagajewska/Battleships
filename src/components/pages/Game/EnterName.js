@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import { useSound } from '../../utils/Sound';
 import { checkIfUserExists } from '../../../api/axios';
@@ -15,7 +16,7 @@ import CenteredContainer from '../../reusable/containers/CenteredContainer';
 import IconOnlyOverviewButton from '../../reusable/buttons/IconOnlyOverviewButton';
 
 
-export default function EnterName(props) {
+function EnterName({ setUser, setGamePhase }) {
 
     const [username, setUsername] = useState('');
     const [validUsername, setValidUsername] = useState(false);
@@ -46,11 +47,9 @@ export default function EnterName(props) {
         let nweUser = new User(null, username, null, null, "/user-picture.png", null);
 
         sound.playPick();
-        props.setUser(nweUser);
-        props.setGamePhase('placement-player-A');
+        setUser(nweUser);
+        setGamePhase('placement-player-A');
     }
-
-    console.log(validUsername);
 
     return (
         <div className="upper-layer enter-name-container">
@@ -93,7 +92,7 @@ export default function EnterName(props) {
                 <IconOnlyButton
                     Icon={IoChevronBackSharp}
                     color={"rgba(18, 66, 87, 0.2)"}
-                    onClick={() => { sound.playPick(); props.setGamePhase("player-type-choice") }}
+                    onClick={() => { sound.playPick(); setGamePhase("player-type-choice") }}
                     disabled={false}
                     position={"top-left"}
                     shadow={"no-shadow"}
@@ -148,3 +147,10 @@ export default function EnterName(props) {
         </div>
     )
 }
+
+EnterName.propTypes = {
+    setUser: PropTypes.func,
+    setGamePhase: PropTypes.func
+}
+
+export default EnterName;
