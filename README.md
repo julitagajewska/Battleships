@@ -22,7 +22,7 @@ Currently it supports only Polish language. Players can enjoy the game only in f
 !["Screenshot - menu](https://github.com/julitagajewska/Battleships/blob/master/src/components/assets/battleships-screenshot-2.png)
 
 
-### Technologies Used
+### Used technologies
 - React
 - HTML5 and CSS3
 - JavaScript ES6
@@ -65,7 +65,7 @@ To run this project locally, please follow these steps:
 - Open your browser and visit http://localhost:3000 to play the game
 
 
-### Future Improvements
+### Future improvements
 Here are some potential improvements and features that can be added to the game:
 - English support
 - Online multiplayer mode
