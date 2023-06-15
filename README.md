@@ -40,7 +40,7 @@ To run this project locally, please follow these steps:
   ```
 - Navigate to the project directory:
   ```
-  cd battleships
+  cd Battleships
   ```
 - Install the dependencies:
   ```
@@ -52,7 +52,7 @@ To run this project locally, please follow these steps:
   ```
 - In a new terminal, navigate to the server directory:
   ```
-  cd sercer
+  cd server
   ```
 - Install the dependencies:
   ```
