@@ -13,9 +13,9 @@ Welcome to Battleships Game! This is a simple React project that allows you to p
 - Sound effects: Enjoy the game with *immersive* sound effects.
 
 ### Screenshots
-![alt text]([https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png](https://github.com/julitagajewska/Battleships/blob/master/src/components/assets/battleships-screenshot-1.png) "Screenshot - battleships game")
+![Screenshot - battleships game](https://github.com/julitagajewska/Battleships/blob/master/src/components/assets/battleships-screenshot-1.png) "Screenshot - battleships game")
 
-![alt text]([https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png](https://github.com/julitagajewska/Battleships/blob/master/src/components/assets/battleships-screenshot-2.png) "Screenshot - menu")
+!["Screenshot - menu](https://github.com/julitagajewska/Battleships/blob/master/src/components/assets/battleships-screenshot-2.png) "Screenshot - menu")
 
 ### Technologies Used
 - React
