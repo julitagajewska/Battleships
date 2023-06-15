@@ -36,11 +36,11 @@ Currently it supports only Polish language. Players can enjoy the game only in f
 To run this project locally, please follow these steps:
 - Clone the repository:
   ```
-  git clone https://github.com/julitagajewska/Battleships.git
+  git clone https://github.com/julitagajewska/react-battleships.git
   ```
 - Navigate to the project directory:
   ```
-  cd Battleships
+  cd react-battleships
   ```
 - Install the dependencies:
   ```
