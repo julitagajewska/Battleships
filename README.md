@@ -1,5 +1,5 @@
 # Battleships
-## A Battleships game for two players
+### A Battleships game for two players
 Welcome to Battleships Game! This is a simple React project that allows you to play the classic game of Battleships right in your browser.
 
 
