@@ -40,14 +40,6 @@
         "lastGames": []
     },
     {
-        "id": 6,
-        "username": "Merśi",
-        "mail": "pfoo@gmail.com",
-        "password": "Haslo1+",
-        "image": "https://lh3.googleusercontent.com/pw/AL9nZEU4Uo__bmvpLXiSgC_EwYmPJ2PJxPx3Uhd4TFCsH0o4fnWb8nvxpcfV81R0XfM6SCS7uH6qsOd5aKx0C9Ch6B-MsFPhBbCRuRJ6cvTfs_YXqjzCQfyGieL-3hrBhfGncgEZxAahvfTtLnt3t7Kp-Swo=w982-h915-no?authuser=0",
-        "lastGames": []
-    },
-    {
         "id": 7,
         "username": "Pidżi",
         "mail": "pfoo@gmail.com",
@@ -77,30 +69,6 @@
         "mail": "hehe@gmail.com",
         "password": "Hehe1+",
         "image": "https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fphotos%2Fimages%2Fnewsfeed%2F002%2F205%2F309%2F1d3.jpg",
-        "lastGames": []
-    },
-    {
-        "id": 12,
-        "username": "abcde",
-        "mail": "abcd@gmail.com",
-        "password": "Haslo1+",
-        "image": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png",
-        "lastGames": []
-    },
-    {
-        "id": 13,
-        "username": "abcdef",
-        "mail": "abcdef@gmail.com",
-        "password": "Haslo1+",
-        "image": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png",
-        "lastGames": []
-    },
-    {
-        "id": 15,
-        "username": "123",
-        "mail": "abcd@gmail.com",
-        "password": "Haslo1+",
-        "image": "https://i.ytimg.com/vi/Zr-qM5Vrd0g/maxresdefault.jpg",
         "lastGames": []
     }
 ]
