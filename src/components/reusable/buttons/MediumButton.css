@@ -1,0 +1,39 @@
+.medium-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    box-shadow:
+        rgba(0, 0, 0, 0.16) 0px 3px 6px,
+        rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    transition: all 0.3s ease 0s;
+}
+
+.medium-button:hover {
+    background-color: var(--gradient-7) !important;
+    color: white;
+}
+
+.medium-button:disabled {
+    background-color: rgba(18, 66, 87, 0.3) !important;
+    color: rgba(18, 66, 87, 0.7);
+    cursor: auto;
+}
+
+.medium-button-content {
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 600;
+    padding-right: 0.75rem;
+}
+
+.medium-button-icon-left {
+    padding-right: 0.75rem;
+}

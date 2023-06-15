@@ -1,6 +1,135 @@
-.user-sidebar {
-    background-color: cornflowerblue;
-    width: 300px;
-    height: 500px;
+.user-sidebar-left {
+    position: relative;
+    top: 0;
+    width: 19.5rem;
+    min-width: 19.5rem;
+    max-width: 19.5rem;
+    height: fit-content;
     padding: 30px;
+    background: linear-gradient(to top,
+            rgba(18, 66, 87, 0.3),
+            rgba(18, 66, 87, 0.1));
+    backdrop-filter: blur(3px);
+    border-radius: 0.75rem;
+    box-shadow:
+        rgba(0, 0, 0, 0.16) 0px 3px 6px,
+        rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.user-sidebar-right {
+    position: relative;
+    top: 0;
+    width: 19.5rem;
+    min-width: 19.5rem;
+    max-width: 19.5rem;
+    height: fit-content;
+    padding: 30px;
+    background: linear-gradient(to top,
+            rgba(18, 66, 87, 0.3),
+            rgba(18, 66, 87, 0.1));
+    backdrop-filter: blur(3px);
+    border-radius: 0.75rem;
+    box-shadow:
+        rgba(0, 0, 0, 0.16) 0px 3px 6px,
+        rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.waiting {
+    position: relative;
+    margin-bottom: 22rem;
+}
+
+.turn {
+    position: relative;
+    margin-bottom: 18rem;
+}
+
+.user-sidebar-header-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.user-sidebar-header-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.user-sidebar-header-username-left {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: flex-start;
+    margin-top: 0.75rem;
+    margin-left: 1rem;
+}
+
+.user-sidebar-header-username-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin-top: 0.75rem;
+    margin-right: 1rem;
+}
+
+.user-sidebar-header-username-right h3,
+.user-sidebar-header-username-right p,
+.user-sidebar-header-username-left h3,
+.user-sidebar-header-username-left p {
+    padding: 0;
+    margin: 0;
+}
+
+.user-sidebar-button-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.user-sidebar-ships-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.user-sidebar-middle-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+}
+
+.user-sidebar-middle-section p {
+    margin: 3rem 0 2rem 0;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 0;
+}
+
+.user-sidebar-middle-section h3 {
+    margin-left: 0.5rem;
+    margin-top: 2rem;
+}
+
+.user-sidebar-ships-placed-button-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.user-sidebar-shot-button-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
 }

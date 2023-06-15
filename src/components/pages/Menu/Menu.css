@@ -1,0 +1,50 @@
+.menu-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.logo {
+    width: 100%;
+    opacity: 0.8;
+}
+
+.menu-logo-container {
+    /* background-color: cornflowerblue; */
+    width: 33.3%;
+    height: 12rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 4rem;
+}
+
+.menu-buttons-group {
+    width: 33%;
+    height: 35%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu-button p {
+    margin: 0;
+    padding-top: 0.5rem
+}
+
+.menu-button .button-icon {
+    margin-right: 1.5rem;
+}
+
+.menu-button:hover {
+    background-color: #005B95;
+    color: white;
+}

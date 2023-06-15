@@ -1,0 +1,336 @@
+.placement-grid,
+.battle-grid {
+    height: 420px;
+    min-width: 420px;
+    max-width: 420px;
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    background: linear-gradient(to top,
+            rgba(18, 66, 87, 0.3),
+            rgba(18, 66, 87, 0.1));
+    backdrop-filter: blur(3px);
+    border-radius: 0.75rem;
+    box-shadow:
+        rgba(0, 0, 0, 0.16) 0px 3px 6px,
+        rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.tile-back:nth-of-type(1) {
+    border-radius: 15px 0 0 0;
+}
+
+.tile-back:nth-of-type(10) {
+    border-radius: 0 15px 0 0;
+}
+
+.tile-back:nth-of-type(91) {
+    border-radius: 0 0 0 15px;
+}
+
+.tile-back:nth-of-type(100) {
+    border-radius: 0 0 15px 0;
+}
+
+.overview-grid-tile-back:nth-of-type(1) {
+    border-radius: 9px 0 0 0;
+}
+
+.overview-grid-tile-back:nth-of-type(10) {
+    border-radius: 0 9px 0 0;
+}
+
+.overview-grid-tile-back:nth-of-type(91) {
+    border-radius: 0 0 0 9px;
+}
+
+.overview-grid-tile-back:nth-of-type(100) {
+    border-radius: 0 0 9px 0;
+}
+
+
+.placement-grid .tile-back,
+.battle-grid .tile-back {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    margin: 1px;
+    background: rgba(30, 105, 138, 0.35);
+}
+
+.placement-grid .tile,
+.battle-grid .tile {
+    width: 40px;
+    height: 40px;
+}
+
+.battle-grid .tile:hover {
+    cursor: pointer;
+    background: rgba(30, 105, 138, 0.5);
+}
+
+.taken {
+    background-color: red !important;
+}
+
+.ships-overview-container-left {
+    position: fixed;
+    top: 22rem;
+    left: 9rem;
+    padding: 30px;
+    width: 14rem;
+    height: fit-content;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to top,
+            rgba(18, 66, 87, 0.3),
+            rgba(18, 66, 87, 0.1));
+    backdrop-filter: blur(3px);
+    border-radius: 0.75rem;
+    box-shadow:
+        rgba(0, 0, 0, 0.16) 0px 3px 6px,
+        rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.ships-overview-container-right {
+    position: fixed;
+    top: 22rem;
+    right: 6rem;
+    padding: 30px;
+    width: 14rem;
+    height: fit-content;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to top,
+            rgba(18, 66, 87, 0.3),
+            rgba(18, 66, 87, 0.1));
+    backdrop-filter: blur(3px);
+    border-radius: 0.75rem;
+    box-shadow:
+        rgba(0, 0, 0, 0.16) 0px 3px 6px,
+        rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+
+.animate-left-out {
+    left: -50rem;
+    animation: hide-left 1s ease;
+}
+
+.animate-left-in {
+    animation: show-left 0.5s ease;
+}
+
+.animate-right-out {
+    right: -50rem;
+    animation: hide-right 1s ease;
+}
+
+.animate-right-in {
+    animation: show-right 0.5s ease;
+}
+
+@keyframes hide-left {
+    0% {
+        top: 22rem;
+        left: 9rem;
+    }
+
+    100% {
+        top: 22rem;
+        left: -50rem;
+    }
+}
+
+@keyframes show-left {
+    0% {
+        top: 22rem;
+        left: -50rem;
+    }
+
+    100% {
+        top: 22rem;
+        left: 9rem;
+    }
+}
+
+@keyframes hide-right {
+    0% {
+        top: 22rem;
+        right: 6rem;
+    }
+
+    100% {
+        top: 22rem;
+        right: -50rem;
+    }
+}
+
+@keyframes show-right {
+    0% {
+        top: 22rem;
+        right: -50rem;
+    }
+
+    100% {
+        top: 22rem;
+        right: 6rem;
+    }
+}
+
+
+.ships-overview-container-left h3,
+.ships-overview-container-right h3 {
+    margin: 0;
+    margin-bottom: 1rem;
+    padding: 0;
+}
+
+.overview-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 200px;
+    padding: 5px;
+}
+
+.overview-grid-tile-back {
+    width: 18px;
+    height: 18px;
+    margin: 1px;
+    background: rgba(30, 105, 138, 0.35);
+}
+
+.overview-grid-tile {
+    width: 18px;
+    height: 18px;
+}
+
+.overview-hit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: rgb(139, 0, 0, 0.7) !important;
+}
+
+.overview-miss {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(211, 211, 211, 0.7) !important;
+    font-weight: bold;
+}
+
+.overview-sink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+.black {
+    background-color: rgba(0, 56, 0, 0.7) !important;
+}
+
+.clicked {
+    background-color: lightskyblue !important;
+    cursor: not-allowed;
+}
+
+.miss {
+    height: 20px !important;
+    width: 20px !important;
+    border-radius: 10px;
+    background-color: rgb(211, 211, 211, 0.7) !important;
+}
+
+.hit {
+    height: 20px !important;
+    width: 20px !important;
+    border-radius: 10px;
+    background-color: rgb(139, 0, 0, 0.7) !important;
+}
+
+.sink {
+    height: 20px !important;
+    width: 20px !important;
+    border-radius: 10px;
+    background-color: rgb(0, 100, 0, 0.7) !important;
+}
+
+.blocked {
+    cursor: not-allowed !important;
+    pointer-events: all !important;
+}
+
+.placement-grid .first-horizontal {
+    border-radius: 20px 0 0 20px;
+}
+
+.overview-grid .first-horizontal {
+    border-radius: 9px 0 0 9px;
+}
+
+
+.placement-grid .first-vertical {
+    border-radius: 20px 20px 0 0;
+}
+
+.overview-grid .first-vertical {
+    border-radius: 9px 9px 0 0;
+}
+
+
+.placement-grid .last-horizontal {
+    border-radius: 0 20px 20px 0;
+}
+
+.overview-grid .last-horizontal {
+    border-radius: 0 9px 9px 0;
+}
+
+
+.placement-grid .last-vertical {
+    border-radius: 0 0 20px 20px;
+}
+
+.overview-grid .last-vertical {
+    border-radius: 0 0 9px 9px;
+}
+
+
+.placement-grid .destroyer,
+.overview-grid .destroyer {
+    background-color: var(--gradient-1);
+}
+
+.placement-grid .submarine,
+.overview-grid .submarine {
+    background-color: var(--gradient-2);
+}
+
+.placement-grid .cruiser,
+.overview-grid .cruiser {
+    background-color: var(--gradient-3);
+}
+
+.placement-grid .battleship,
+.overview-grid .battleship {
+    background-color: var(--gradient-6);
+}
+
+.placement-grid .carrier,
+.overview-grid .carrier {
+    background-color: var(--gradient-7);
+}

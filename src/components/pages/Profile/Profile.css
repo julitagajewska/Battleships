@@ -1,0 +1,160 @@
+/* -------- User info -------- */
+
+.sub-header {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 1rem 0;
+}
+
+.image-username-container {
+    height: fit-content;
+    padding: 2rem 0 2.25rem 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    border-bottom: 1px white solid;
+}
+
+.user-data-container {
+    border-bottom: 1px white solid;
+    padding-bottom: 1rem;
+}
+
+.last-games-container {
+    padding-bottom: 1rem;
+    border-bottom: 1px white solid;
+}
+
+.username {
+    display: block;
+    font-size: 32px;
+    color: black;
+    font-weight: bold;
+    margin-left: 1.5rem;
+}
+
+.user-profile-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0;
+}
+
+.header-icon {
+    margin-right: 1rem;
+}
+
+.delete-button-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0 1rem 0;
+}
+
+.delete-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--gradient-2);
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0.5rem 1.5rem 0.5rem 1rem;
+    margin-top: 0.5rem;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    width: fit-content;
+    text-decoration: none;
+    transition: all 0.3s ease 0s;
+}
+
+.delete-button p {
+    margin: 0;
+    padding-top: 0.2rem
+}
+
+.delete-button .button-icon {
+    margin-right: 0.75rem;
+}
+
+.delete-button:hover {
+    background-color: #005B95;
+    color: white;
+}
+
+.image-url-input-group {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    left: 11.7rem;
+    top: 7.85rem;
+}
+
+.profile-picture-input-upper-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.profile-picture-input-upper-row input {
+    width: 7rem;
+    padding: 0.25rem 0.5rem;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    transition: all 0.3s ease 0s;
+}
+
+.profile-picture-input-upper-row input:focus {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.profile-picture-input-upper-row button {
+    width: 30px;
+    height: 30px;
+    margin-left: 0.5rem;
+    margin-bottom: 0.1rem;
+    padding: 0 0.5rem 0 0.5rem;
+    background-color: var(--gradient-1);
+    color: black;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    width: fit-content;
+    text-decoration: none;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    transition: all 0.3s ease 0s;
+}
+
+.profile-picture-input-upper-row button:hover {
+    background-color: #005B95;
+    color: white;
+}
+
+
+.profile-picture-input-upper-row button:disabled {
+    background-color: rgb(156, 156, 156, 0.5);
+    color: rgb(92, 92, 92, 0.5);
+}
+
+.profile-picture-input-lower-row {
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    top: 9.25rem;
+    left: 11.75rem;
+}
+
+.profile-picture-input-lower-row span {
+    font-size: 13px;
+}

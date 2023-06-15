@@ -1,10 +1,50 @@
+:root {
+  --gradient-0: #f6ffe9;
+  --gradient-1: #dbe9c8;
+  --gradient-2: #b0dfcf;
+  --gradient-3: #84D5D6;
+  --gradient-4: #2CC0E4;
+  --gradient-5: #21A7D1;
+  --gradient-6: #168EBD;
+  --gradient-7: #005B95;
+
+  --gradient-1-translucent: rgba(219, 233, 200, 0.5);
+  --gradient-6-translucent: rgb(22, 142, 189, 0.5);
+  --gradient-7-translucent: rgb(0, 91, 148, 0.5);
+}
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.upper-layer {
+  z-index: 4;
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  z-index: 4;
+}
+
+.component-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
+
+.header__container {
+  display: table-row;
+  height: 50px;
+}
+
+.main-content__container {
+  display: table-row;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -32,6 +72,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

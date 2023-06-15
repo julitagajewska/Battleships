@@ -1,0 +1,76 @@
+.icon-only-overview-button {
+    display: inline !important;
+    align-self: center;
+    vertical-align: middle;
+    border: none;
+    height: 1.5rem;
+    width: 1.5rem;
+    display: flex;
+    margin: 0.2rem 0.5rem 0.5rem 0.5rem !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    border-radius: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    transition: all 0.3s ease 0s;
+}
+
+.icon-only-overview-button-icon {
+    margin-top: 0.25rem;
+
+}
+
+.back {
+    margin-right: 0.1rem;
+}
+
+.square {
+    border-radius: 4px !important;
+}
+
+.no-shadow {
+    box-shadow: rgba(0, 0, 0, 0) 0px 3px 6px !important;
+}
+
+#uneven-overview {
+    margin-left: 0.15rem;
+}
+
+#animated {
+    animation: changeColors 15s infinite linear;
+}
+
+@keyframes changeColors {
+    0% {
+        background-color: var(--gradient-1);
+    }
+
+    14.2% {
+        background-color: var(--gradient-2);
+    }
+
+    28.4% {
+        background-color: var(--gradient-3);
+    }
+
+    42.6% {
+        background-color: var(--gradient-6);
+    }
+
+    56.8% {
+        background-color: var(--gradient-7);
+    }
+
+    71% {
+        background-color: var(--gradient-6);
+    }
+
+    85.2% {
+        background-color: var(--gradient-3);
+    }
+
+    100% {
+        background-color: var(--gradient-2);
+    }
+}

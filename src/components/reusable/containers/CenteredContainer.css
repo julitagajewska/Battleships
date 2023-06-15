@@ -1,0 +1,75 @@
+.centered-container {
+        height: fit-content;
+        min-height: 5rem;
+        width: 25rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        justify-content: space-evenly;
+        background: linear-gradient(to top,
+                        rgba(18, 66, 87, 0.3),
+                        rgba(18, 66, 87, 0.1));
+        padding: 3rem 5rem;
+        backdrop-filter: blur(3px);
+        border-radius: 0.75rem;
+        box-shadow:
+                rgba(0, 0, 0, 0.16) 0px 3px 6px,
+                rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.centered-container h3,
+.centered-container p {
+        margin: 0;
+}
+
+.centered-container h2 {
+        margin: 0;
+        margin-bottom: 0.5rem;
+        font-size: 20px;
+}
+
+.centered-container h3 {
+        margin: 0 0 1.75rem 0;
+}
+
+.upper {
+        margin-bottom: 1rem;
+}
+
+.middle {
+        margin-bottom: 1.5rem;
+}
+
+.lower {
+        margin-top: 1rem;
+}
+
+.centered {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+}
+
+.centered-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+}
+
+.centered-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+}
+
+.delete-button-group {
+        width: 25rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+}

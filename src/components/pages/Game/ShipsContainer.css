@@ -1,19 +1,52 @@
-.ships-container {
-    width: 290px;
+.ships-container-horizontal {
+    width: 95%;
+    min-width: 95%;
+    max-width: 95%;
+    height: 19rem;
+    min-height: 19rem;
+    max-height: 19rem;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    padding: 5px;
-    background-color: cadetblue;
 }
 
-.ship-container {
+.ships-container-vertical {
+    width: 97%;
+    min-width: 97%;
+    max-width: 97%;
+    height: 19rem;
+    min-height: 19rem;
+    max-height: 19rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.ship-container-horizontal {
     width: fit-content;
     display: flex;
-    margin: 10px 20px 10px 20px;
+    flex-direction: row;
+    margin: 10px 20px 10px 0px;
+}
+
+.ship-container-vertical {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    margin: 20px 10px 20px 10px;
+}
+
+.ship-container-draggable {
+    transform: translate(0, 0);
 }
 
 .ship-element {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
+    cursor: grab;
+}
+
+.grabbing {
+    cursor: grabbing;
 }

@@ -1,0 +1,41 @@
+.small-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    box-shadow:
+        rgba(0, 0, 0, 0.16) 0px 3px 6px,
+        rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    transition: all 0.3s ease 0s;
+}
+
+.small-button:hover {
+    background-color: var(--gradient-7) !important;
+    color: white;
+}
+
+.small-button:disabled {
+    background-color: rgba(18, 66, 87, 0.3) !important;
+    color: rgba(18, 66, 87, 0.7);
+    cursor: auto;
+}
+
+.small-button-content {
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 600;
+    padding-right: 0.75rem;
+    margin-top: 0.15rem;
+    margin-bottom: 0.15rem;
+}
+
+.small-button-icon-left {
+    padding-right: 0.75rem;
+}

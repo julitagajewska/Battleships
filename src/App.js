@@ -1,15 +1,55 @@
 import './App.css';
-import Game from './components/pages/Game/Game';
-import Header from './components/header/Header'
 
-function App() {
-  return (
-    <>
-      <Header />
-      <Game />
-    </>
+import { Component } from 'react';
+import { Route, Routes } from "react-router-dom";
+import { AuthProvider } from './components/utils/auth';
+import { SoundProvider } from './components/utils/Sound';
 
-  );
+import NotLoggedIn from './components/pages/Login/NotLoggedIn';
+import PrivateRoutes from './components/utils/PrivateRoutes';
+import Logout from './components/pages/Logout/Logout';
+import Register from './components/pages/Register/Register';
+import ConfirmProfileDelete from './components/pages/Profile/ConfirmProfileDelete';
+import ProfileDeleted from './components/pages/Profile/ProfileDeleted';
+import Menu from './components/pages/Menu/Menu';
+import NotFound from './components/pages/NotFound/NotFound';
+import Login from './components/pages/Login/Login'
+import Background from './components/Background/Background';
+import GameLoop from './components/pages/Game/Game';
+import Settings from './components/pages/Settings/Settings';
+
+export default class App extends Component {
+
+  render() {
+
+    return (
+      <SoundProvider>
+        <AuthProvider>
+          <div>
+            <div className="component-container">
+
+              <Background />
+
+              <Routes>
+                <Route element={<PrivateRoutes />}>
+                  <Route path="/" element={<Menu />} />
+                  <Route path="/game" element={<GameLoop />} />
+                  <Route path="/settings" element={<Settings />} />
+                </Route>
+
+                <Route path="/register" element={<Register />} />
+                <Route path="/logout" element={<Logout />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/notLoggedIn" element={<NotLoggedIn />} />
+                <Route path="/confirmProfileDelete" element={< ConfirmProfileDelete />} />
+                <Route path="/profileDeleted" element={<ProfileDeleted />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+
+            </div>
+          </div>
+        </AuthProvider>
+      </SoundProvider>
+    );
+  }
 }
-
-export default App;
