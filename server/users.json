@@ -70,29 +70,5 @@
         "password": "Hehe1+",
         "image": "https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fphotos%2Fimages%2Fnewsfeed%2F002%2F205%2F309%2F1d3.jpg",
         "lastGames": []
-    },
-    {
-        "id": 12,
-        "username": "abcde",
-        "mail": "abcd@gmail.com",
-        "password": "Haslo1+",
-        "image": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png",
-        "lastGames": []
-    },
-    {
-        "id": 13,
-        "username": "abcdef",
-        "mail": "abcdef@gmail.com",
-        "password": "Haslo1+",
-        "image": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png",
-        "lastGames": []
-    },
-    {
-        "id": 15,
-        "username": "123",
-        "mail": "abcd@gmail.com",
-        "password": "Haslo1+",
-        "image": "https://i.ytimg.com/vi/Zr-qM5Vrd0g/maxresdefault.jpg",
-        "lastGames": []
     }
 ]
