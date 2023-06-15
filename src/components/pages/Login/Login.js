@@ -52,7 +52,7 @@ export default function Login() {
         e.preventDefault();
         let error = '';
 
-        // Nie ma takiego użytkownika
+        // User not found
         let result = await checkIfUserExists(username);
         if (result === false) {
             error = "Nie znaleziono użytkownika o podanej nazwie"
@@ -67,11 +67,11 @@ export default function Login() {
         error = '';
         setErrorMsg(error);
 
-        // Wprowadzono błędne hasło
+        // Incorrect data
         result = await checkPassword(username, password);
         console.log(await checkPassword(username, password))
         if (result === false) {
-            error = "Wprowadzono błędne hasło"
+            error = "Wprowadzono błędne dane"
         }
 
         setErrorMsg(error);

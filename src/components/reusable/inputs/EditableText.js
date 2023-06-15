@@ -13,7 +13,7 @@ import PasswordInput from './PasswordInput';
 import ErrorMessage from '../messages/ErrorMessage';
 import IconOnlyButton from '../buttons/IconOnlyButton';
 import { useSound } from '../../utils/Sound';
-
+ 
 function EditableText(props) {
 
     const auth = useAuth();

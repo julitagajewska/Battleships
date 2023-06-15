@@ -59,7 +59,7 @@ function PasswordInput({ required, reference, setErrors, setValue, setValid, set
                 className={`${size}`}
                 type="password"
                 autoComplete="off"
-                required={required}
+                required={required} 
 
                 ref={reference}
                 placeholder={placeholder}

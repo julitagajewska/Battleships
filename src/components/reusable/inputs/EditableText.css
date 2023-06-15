@@ -5,7 +5,8 @@
 .label-value-container {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
+    width: 10rem;
     font-size: 18px;
     min-height: 2.25rem;
     /* padding: 0 0 1rem 0; */

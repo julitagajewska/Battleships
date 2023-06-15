@@ -94,7 +94,7 @@ export default function Rejsetracja() {
 
         let isTaken = await checkUsername(username);
 
-        if (isTaken === false) {
+        if (isTaken === false) { 
             sound.playBlocked();
             setErrorMsg('Podana nazwa użytkownika jest zajęta');
             return

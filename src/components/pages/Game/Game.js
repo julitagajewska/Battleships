@@ -294,9 +294,6 @@ export default function GameLoop() {
                         break;
                 }
 
-
-                // ------ //
-
                 notAllowed = getTilesNotAllowed(ship.shipLength, 0, orientation);
                 adjacent = getAdjacentTiles(shipsGrid);
 
@@ -620,8 +617,6 @@ export default function GameLoop() {
                 break;
             }
         }
-
-        // console.log(`Computer shoots: [${clickedTileId}] State: ${playerA.shipsGrid[clickedTileId].state}`);
 
         await delay(1000);
         sound.playPick();
