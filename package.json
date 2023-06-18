@@ -14,5 +14,8 @@
     "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.0"
+  }
 }
